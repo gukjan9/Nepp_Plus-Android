@@ -32,7 +32,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="이메일 양식" />
+        android:hint="이메일 양삭" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="비밀번호 입력" />
+        android:hint="비밀번호 입력" />
 
     <CheckBox
         android:layout_width="wrap_content"

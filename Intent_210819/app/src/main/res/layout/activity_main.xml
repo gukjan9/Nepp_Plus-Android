@@ -14,6 +14,17 @@
         android:layout_height="wrap_content"
         android:text="화면 전환 버튼" />
 
+    <EditText
+        android:id="@+id/msgEdt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="다른 화면에 전달할 내용 입력" />
+
+    <Button
+        android:id="@+id/sendMsgBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="입력한 내용 전달하기" />
 
 
 </LinearLayout>

@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Intent_210819">
         <activity
+            android:name=".ViewMessageActivity"
+            android:exported="true" />
+        <activity
             android:name=".OtherActivity"
             android:exported="true" />
         <activity

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="메세지 입력" />
+
+    <EditText
+        android:id="@+id/messageEdt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="아무 말이나 입력하세요."
+        android:singleLine="true" />
+
+    <Button
+        android:id="@+id/toastBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="입력한 메세지를 토스트로" />
+
+</LinearLayout>

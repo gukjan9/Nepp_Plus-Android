@@ -26,4 +26,17 @@
         android:layout_height="wrap_content"
         android:text="입력한 메세지를 토스트로" />
 
+    <Button
+        android:id="@+id/moveToTextViewBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="입력한 메세지를 텍스트뷰에 옮겨적기" />
+
+    <TextView
+        android:id="@+id/resultTxt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="입력한 메세지가 들어옵니다"
+        android:gravity="center" />
+
 </LinearLayout>

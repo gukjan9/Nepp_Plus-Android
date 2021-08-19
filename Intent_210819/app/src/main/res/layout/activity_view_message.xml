@@ -10,6 +10,7 @@
     tools:context=".ViewMessageActivity">
 
     <TextView
+        android:id="@+id/msgTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="메인에서 보내준 메세지 출력"

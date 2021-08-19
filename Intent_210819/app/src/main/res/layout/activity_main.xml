@@ -26,5 +26,36 @@
         android:layout_height="wrap_content"
         android:text="입력한 내용 전달하기" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="닉네임"
+        android:layout_marginTop="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:id="@+id/nicknameTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GukJang"
+            android:textSize="17sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/editNicknameBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="닉네임 변경" />
+
+    </LinearLayout>
 
 </LinearLayout>

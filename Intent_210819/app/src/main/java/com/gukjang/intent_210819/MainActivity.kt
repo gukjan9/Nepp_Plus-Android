@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(myIntent, REQ_FOR_NICKNAME)          // 왕복
         }
 
-        
+
         // Dial Action
         dialBtn.setOnClickListener {
             val inputPhoneNum = phoneNumEdt.text.toString()
@@ -41,6 +41,16 @@ class MainActivity : AppCompatActivity() {
             // 2. 완성된 정보로 전화 거는 Intent
             val myIntent = Intent(Intent.ACTION_DIAL, myUri)           // Intent.ACTION_~ - 안드로이드에서 제공하는 화면
             // 3. 실제로 Intent 실행
+            startActivity(myIntent)
+        }
+
+
+        // Call Action
+        callBtn.setOnClickListener {
+            val phoneNum = phoneNumEdt.text.toString()
+
+            val myUri = Uri.parse("tel${phoneNum}")
+            val myIntent = Intent(Intent.ACTION_CALL, myUri)
             startActivity(myIntent)
         }
     }

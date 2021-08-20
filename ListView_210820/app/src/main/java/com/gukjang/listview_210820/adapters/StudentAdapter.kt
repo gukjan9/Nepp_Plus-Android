@@ -17,10 +17,10 @@ class StudentAdapter(val mContext : Context,
     val mInflater =  LayoutInflater.from(mContext)
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var tempRow = convertView
+        var tempRow = convertView           // 재사용에 사용할 view 담는 변수 (null 상태라는건 재사용할만큼 충분히 만들어지지 않음, 아직 모자라니 inflate 더 하자)
 
         if(tempRow == null){
-            tempRow = mInflater.inflate(R.layout.student_list_item, null)
+            tempRow = mInflater.inflate(R.layout.student_list_item, null)           // 필요할 때만 inflate
         }
 
         val row = tempRow!!

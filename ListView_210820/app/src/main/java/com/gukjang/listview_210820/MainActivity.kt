@@ -1,8 +1,10 @@
 package com.gukjang.listview_210820
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.gukjang.listview_210820.adapters.StudentAdapter
 import com.gukjang.listview_210820.datas.StudentData
 import kotlinx.android.synthetic.main.activity_main.*
@@ -44,6 +46,18 @@ class MainActivity : AppCompatActivity() {
             val student = mStudentList[position]
 
             Toast.makeText(this, "${student.name} 길게 눌림", Toast.LENGTH_SHORT).show()
+
+            val alert = AlertDialog.Builder(this)
+            alert.setTitle("학생 명단 삭제")
+            alert.setMessage("정말 해당 학생을 삭제하시겠습니까?")
+            alert.setPositiveButton("확인", DialogInterface.OnClickListener{ dialog: DialogInterface?, i ->
+
+                // 클릭된 학생 목록에서 제거
+                mStudentList.remove(student)
+                mAdapter.notifyDataSetChanged()         // 리스트뷰에서 목록을 변경하면 어댑터에게 알려줘야한다.
+            })
+            alert.setNegativeButton("취소", null)
+            alert.show()
 
             return@setOnItemLongClickListener true
         }

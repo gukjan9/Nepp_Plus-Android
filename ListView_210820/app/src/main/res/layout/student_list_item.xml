@@ -12,12 +12,14 @@
         android:padding="10dp">
 
         <TextView
+            android:id="@+id/nameTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="학생 이름"
             android:textSize="17sp" />
 
         <TextView
+            android:id="@+id/ageTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="(?? 세)"
@@ -29,6 +31,7 @@
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/addressTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="서울시 동대문구" />

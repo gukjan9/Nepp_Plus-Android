@@ -11,7 +11,7 @@ import com.gukjang.jickbangcopy_210820.R
 import com.gukjang.jickbangcopy_210820.datas.RoomData
 import java.util.zip.Inflater
 
-class LanguageAdapter(val mContext : Context,
+class RoomAdapter(val mContext : Context,
                       val resID : Int,
                       val mList : ArrayList<RoomData>) : ArrayAdapter<RoomData>(mContext, resID, mList){
 
@@ -20,7 +20,9 @@ class LanguageAdapter(val mContext : Context,
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var tempRow = convertView
 
-        if(tempRow == null) tempRow = mInflater.inflate(R.layout.room_list_item, null)
+        if(tempRow == null){
+            tempRow = mInflater.inflate(R.layout.room_list_item, null)
+        }
 
         val row = tempRow!!
 
@@ -32,13 +34,13 @@ class LanguageAdapter(val mContext : Context,
         val roomFloor = row.findViewById<TextView>(R.id.roomFloor)
         val roomDesc = row.findViewById<TextView>(R.id.roomDesc)
 
+        // 질문 3. 여기서 Int로 받는 법
         roomImg.setImageResource(data.img)
         roomCost.text = data.cost
         roomAddress.text = data.address
         roomFloor.text = data.floor
         roomDesc.text = data.desc
+
+        return row
     }
-
-
-
 }

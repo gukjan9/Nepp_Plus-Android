@@ -47,9 +47,7 @@ class MainActivity : AppCompatActivity() {
             myIntent.putExtra("roomData", clickedRoom)
 
             startActivity(myIntent)
-
         }
-    }
 
     fun costToString(cost : String): String {
         val costInt = cost.toInt()

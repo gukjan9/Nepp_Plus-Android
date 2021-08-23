@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
                                   arr[i][2] as String, floorToString(arr[i][3] as String), arr[i][4] as String))
         }
 
+        // alt + 드래그 하고 적으면 여러 줄 동시에 적을 수 있음
         //roomList.add(RoomData(R.drawable.ic_launcher_background, "8000", "서울시 동대문구", "3", "아주 좋아요"))
 
         mAdapter = RoomAdapter(this, R.layout.room_list_item, roomList)
@@ -39,10 +40,10 @@ class MainActivity : AppCompatActivity() {
         val costInt = cost.toInt()
         val m100 = costInt / 10000                                  // 억 단위
 
-        val modifiedCost = costInt - (m100 * 10000)                 // 억 단위를 뺀 나머지
+        val modifiedCost = costInt % 10000                // 억 단위를 뺀 나머지
         val m10 = modifiedCost / 1000                               // 천의 자리 숫자
 
-        var restCost = (modifiedCost - (m10 * 1000)).toString()     // 천의 자리 뺀 나머지
+        var restCost = (modifiedCost % 1000).toString()     // 천의 자리 뺀 나머지
 
         if(restCost == "0") restCost = "000"
 

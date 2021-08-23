@@ -6,9 +6,9 @@ import java.util.*
 class RoomData (val img : Int, val cost : String, val address : String, val floor : String, val desc : String){
 
     fun getFormattedPrice() : String{
-        if(this.cost >= 10000){
-            val uk = this.cost / 10000
-            val rest = this.cost % 10000
+        if(this.cost.toInt() >= 10000){
+            val uk = this.cost.toInt() / 10000
+            val rest = this.cost.toInt() % 10000
 
             val result = "${uk}억${NumberFormat.getNumberInstance(Locale.KOREA).format(rest)}"
 
@@ -21,8 +21,8 @@ class RoomData (val img : Int, val cost : String, val address : String, val floo
     }
 
     fun getFormattedFloor() : String{
-        if(this.floor > 0) return "${this.floor}층"
-        else if(this.floor == 0) return "반지하"
-        else return "지하 ${-this.floor}층"
+        if(this.floor.toInt() > 0) return "${this.floor}층"
+        else if(this.floor.toInt() == 0) return "반지하"
+        else return "지하 ${-this.floor.toInt()}층"
     }
 }

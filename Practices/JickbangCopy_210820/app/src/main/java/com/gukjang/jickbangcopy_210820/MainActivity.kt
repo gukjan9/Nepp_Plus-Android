@@ -1,5 +1,6 @@
 package com.gukjang.jickbangcopy_210820
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.gukjang.jickbangcopy_210820.datas.RoomData
@@ -34,6 +35,17 @@ class MainActivity : AppCompatActivity() {
         mAdapter = RoomAdapter(this, R.layout.room_list_item, roomList)
 
         roomListView.adapter = mAdapter
+
+
+        // @@@@@@@@@@@@@@@@@@@@@@
+        roomListView.setOnItemClickListener{adapterView, view, position, l ->
+            val clickedRoom = roomList[position]
+
+            val myIntent = Intent(this, ViewRoomDetailActivity::class.java)             // this : 출발지
+
+
+            startActivity(myIntent)
+        }
     }
 
     fun costToString(cost : String): String {

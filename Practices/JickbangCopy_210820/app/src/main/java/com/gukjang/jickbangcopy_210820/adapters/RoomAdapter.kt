@@ -41,6 +41,18 @@ class RoomAdapter(val mContext : Context,
         roomFloor.text = data.floor
         roomDesc.text = data.desc
 
+        /* 강의
+        val roomCost = row.findViewById<TextView>(R.id.roomCost)
+        val roomAddress = row.findViewById<TextView>(R.id.roomAddress)
+        val roomDesc = row.findViewById<TextView>(R.id.roomDesc)
+
+        roomCost.text = data.getFormattedPrice()
+
+        roomDesc.text = data.desc
+
+        roomAddress.text = "${data.address},${data.getFormattedFloor()}"
+        */
+
         return row
     }
 }

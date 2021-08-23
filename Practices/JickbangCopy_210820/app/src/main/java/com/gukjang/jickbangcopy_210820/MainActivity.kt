@@ -38,13 +38,16 @@ class MainActivity : AppCompatActivity() {
 
 
         // @@@@@@@@@@@@@@@@@@@@@@
-        roomListView.setOnItemClickListener{adapterView, view, position, l ->
-            val clickedRoom = roomList[position]
+        roomListView.setOnItemClickListener { adapterView, view, position, l ->
 
-            val myIntent = Intent(this, ViewRoomDetailActivity::class.java)             // this : 출발지
+            val clickedRoom = roomList[ position ]
 
+            val myIntent = Intent(this, ViewRoomDetailActivity::class.java)         // this 출발지
+
+            myIntent.putExtra("roomData", clickedRoom)
 
             startActivity(myIntent)
+
         }
     }
 

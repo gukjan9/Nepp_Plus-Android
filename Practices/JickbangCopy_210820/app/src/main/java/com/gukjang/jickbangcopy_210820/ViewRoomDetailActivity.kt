@@ -14,8 +14,8 @@ class ViewRoomDetailActivity : AppCompatActivity() {
 
         roomCost.text = roomData.getFormattedPrice()
         roomDesc.text = roomData.desc
-
         roomAddress.text = roomData.address
+        roomFloor.text = roomData.getFormattedFloor()
 
     }
 }

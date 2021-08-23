@@ -36,7 +36,7 @@ class RoomAdapter(val mContext : Context,
 
         // 질문 3. 여기서 Int로 받는 법
         roomImg.setImageResource(data.img)
-        roomCost.text = data.cost
+        roomCost.text = data.cost         // Int로 받고 싶을 땐 ${data.Int변수} | data.cost.toString()
         roomAddress.text = data.address
         roomFloor.text = data.floor
         roomDesc.text = data.desc

@@ -21,7 +21,7 @@
         android:padding="20dp" >
 
         <TextView
-            android:id="@+id/roomCost"
+            android:id="@+id/roomCostDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
@@ -30,7 +30,7 @@
             android:text="cost"/>
 
         <TextView
-            android:id="@+id/roomDesc"
+            android:id="@+id/roomDescDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -62,7 +62,7 @@
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/roomAddress"
+            android:id="@+id/roomAddressDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="주소"
@@ -95,7 +95,7 @@
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/roomFloor"
+            android:id="@+id/roomFloorDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="반지하"

@@ -1,9 +1,10 @@
 package com.gukjang.jickbangcopy_210820.datas
 
+import java.io.Serializable
 import java.text.NumberFormat
 import java.util.*
 
-class RoomData (val img : Int, val cost : String, val address : String, val floor : String, val desc : String){
+class RoomData (val img : Int, val cost : String, val address : String, val floor : String, val desc : String) : Serializable{
 
     fun getFormattedPrice() : String{
         if(this.cost.toInt() >= 10000){

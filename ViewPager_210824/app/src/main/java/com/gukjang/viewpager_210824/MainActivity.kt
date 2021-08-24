@@ -15,5 +15,8 @@ class MainActivity : AppCompatActivity() {
 
         mvpa = MainViewPagerAdapter( supportFragmentManager )
         mainViewPager.adapter = mvpa
+
+        // 탭 레이아웃과 뷰페이저랑 연동
+        mainTabLayout.setupWithViewPager(mainViewPager)
     }
 }

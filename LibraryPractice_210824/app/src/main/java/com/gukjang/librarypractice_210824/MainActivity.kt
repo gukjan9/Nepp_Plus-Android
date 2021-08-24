@@ -4,6 +4,8 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import com.gun0912.tedpermission.PermissionListener
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
@@ -21,9 +23,19 @@ class MainActivity : BaseActivity() {
         }
 
         callBtn.setOnClickListener{
-            val myUri = Uri.parse("tel : 02-5555-8888")
-            val myIntent = Intent(Intent.ACTION_CALL, myUri)
-            startActivity(myIntent)
+            val pl = object : PermissionListener{
+
+                override fun onPermissionGranted() {
+                    // 권한이 승인되었을때 실행할 코드
+                    val myUri = Uri.parse("tel : 02-5555-8888")
+                    val myIntent = Intent(Intent.ACTION_CALL, myUri)
+                    startActivity(myIntent)
+                }
+                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+                    // 권한 안될 때
+                    Toast.makeText(mContext, "권한이 거부되어 전화 연결이 불가합니다", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
     override fun setValues(){

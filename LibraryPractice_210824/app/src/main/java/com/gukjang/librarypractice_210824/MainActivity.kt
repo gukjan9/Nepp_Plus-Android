@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.gun0912.tedpermission.PermissionListener
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -37,8 +38,14 @@ class MainActivity : BaseActivity() {
                 }
             }
         }
+        // 실제로 권한 확인 - manifest에서 권한 추가해줘야함
+        // 라이브러리 문제로 현재 작업 불가
     }
     override fun setValues(){
+        // 최근 활동 사진을 인터넷에서 곧바로 다운 받아 앱에서 보여주기
+        // drawable 에 붙여넣는 작업
+
+        Glide.with(mContext).load("https://cdn.mos.cms.futurecdn.net/VUL4TtyNpBkotYckYEjUrQ-1200-80.jpg").into(recentImg)
 
     }
 }

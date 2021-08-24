@@ -57,7 +57,20 @@
             android:layout_height="wrap_content"
             android:text="전화 걸기" />
 
-
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="최근 활동 사진"
+        android:layout_marginTop="20dp" />
+
+    <ImageView
+        android:id="@+id/recentImg"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop" />
 
 </LinearLayout>

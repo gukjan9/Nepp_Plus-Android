@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!-- table 말고 tabs.. 어쩌고로 -->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/mainTabLayout"
         android:layout_width="match_parent"

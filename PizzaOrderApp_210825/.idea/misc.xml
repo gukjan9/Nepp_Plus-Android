@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/GukJang/Git/Nepp_Plus-Android/PizzaOrderApp_210825/app/src/main/res/layout/activity_main.xml" value="0.36923076923076925" />
+        <entry key="..\:/GukJang/Git/Nepp_Plus-Android/PizzaOrderApp_210825/app/src/main/res/layout/activity_pizza_store_list_fragment.xml" value="0.36614583333333334" />
+        <entry key="..\:/GukJang/Git/Nepp_Plus-Android/PizzaOrderApp_210825/app/src/main/res/layout/fragment_my_profile.xml" value="0.36614583333333334" />
+        <entry key="..\:/GukJang/Git/Nepp_Plus-Android/PizzaOrderApp_210825/app/src/main/res/layout/fragment_pizza_store_list.xml" value="0.36614583333333334" />
       </map>
     </option>
   </component>

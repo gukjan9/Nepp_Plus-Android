@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PizzaOrderApp_210825">
         <activity
+            android:name=".fragments.PizzaStoreListFragment"
+            android:exported="true" />
+        <activity
             android:name=".BaseActivity"
             android:exported="true" />
         <activity

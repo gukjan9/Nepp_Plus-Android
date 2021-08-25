@@ -1,11 +1,13 @@
 package com.gukjang.pizzaorderapp_210825.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.gukjang.pizzaorderapp_210825.R
+import com.gukjang.pizzaorderapp_210825.ViewStoreDetailActivity
 import com.gukjang.pizzaorderapp_210825.adapters.PizzaStoreAdapter
 import com.gukjang.pizzaorderapp_210825.datas.StoreData
 import kotlinx.android.synthetic.main.fragment_pizza_store_list.*
@@ -34,5 +36,12 @@ class PizzaStoreListFragment : Fragment() {
 
         mPizzaStoreAdapter = PizzaStoreAdapter(requireContext(), R.layout.store_list_item, mPizzaStores)
         pizzaStoreListView.adapter = mPizzaStoreAdapter
+        
+        pizzaStoreListView.setOnItemClickListener{ adapterView, view, position, l ->
+            val clickedPizzaStore = mPizzaStores[position]
+            val myIntent = Intent(requireContext(), ViewStoreDetailActivity::class.java)
+            myIntent.putExtra("store", clickedPizzaStore)                   // putExtra 에러날 때 serialize
+            startActivity(myIntent)
+        }
     }
 }

@@ -17,4 +17,12 @@ class MainViewPagerAdapter (fm : FragmentManager) : FragmentPagerAdapter(fm) {
             else -> MyProfileFragment()
         }
     }
+
+    override fun getPageTitle(position: Int): CharSequence? {
+        // return super.getPageTitle(position) - 삭제하는 이유 : 결과가 정해져 있기 때문
+        return when(position){
+            0 -> "피자 주문"
+            else -> "내 정보 설정"
+        }
+    }
 }

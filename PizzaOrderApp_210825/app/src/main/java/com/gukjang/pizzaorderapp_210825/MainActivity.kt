@@ -3,6 +3,7 @@ package com.gukjang.pizzaorderapp_210825
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.gukjang.pizzaorderapp_210825.adapters.MainViewPagerAdapter
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
 
@@ -23,6 +24,6 @@ class MainActivity : BaseActivity() {
         mainViewPagerAdapter = MainViewPagerAdapter(supportFragmentManager)
         mainViewPager.adapter = mainViewPagerAdapter
 
-        mainTabLayout.setupIthViewPager(mainViewPager)
+        mainTabLayout.setupWithViewPager(mainViewPager)
     }
 }

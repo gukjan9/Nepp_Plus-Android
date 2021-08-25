@@ -36,7 +36,7 @@ class PizzaStoreListFragment : Fragment() {
 
         mPizzaStoreAdapter = PizzaStoreAdapter(requireContext(), R.layout.store_list_item, mPizzaStores)
         pizzaStoreListView.adapter = mPizzaStoreAdapter
-        
+
         pizzaStoreListView.setOnItemClickListener{ adapterView, view, position, l ->
             val clickedPizzaStore = mPizzaStores[position]
             val myIntent = Intent(requireContext(), ViewStoreDetailActivity::class.java)

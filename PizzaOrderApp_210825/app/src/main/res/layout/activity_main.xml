@@ -7,11 +7,13 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <!-- app : tabColor, indicator 변경 가능 -->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/mainTabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <!-- ViewPager : 여러 장의 Fragment를 책처럼 한 장씩 보도록 지원하는 기능 -->
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/mainViewPager"
         android:layout_width="match_parent"

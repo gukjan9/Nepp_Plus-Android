@@ -12,12 +12,13 @@ import com.gukjang.pizzaorderapp_210825.adapters.PizzaStoreAdapter
 import com.gukjang.pizzaorderapp_210825.datas.StoreData
 import kotlinx.android.synthetic.main.fragment_pizza_store_list.*
 
-class PizzaStoreListFragment : Fragment() {
+class PizzaStoreListFragment : Fragment() {                     // fragment 는 fragment 상속
 
     val mPizzaStores = ArrayList<StoreData>()
 
     lateinit var mPizzaStoreAdapter : PizzaStoreAdapter
 
+    // onCreateView - xml 과 kt 연결하는 함수 (fragment 관련끼리)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,6 +27,7 @@ class PizzaStoreListFragment : Fragment() {
         return inflater.inflate( R.layout.fragment_pizza_store_list, container, false )
     }
 
+    // onActivityCreated - 동작 관련
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 

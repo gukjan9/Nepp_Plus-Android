@@ -1,0 +1,4 @@
+#Wed Aug 18 16:59:33 KST 2021
+base.0=/Users/gukjang/GukJang/Git/Nepp_Plus-Android/LoginUIPractice_210818/app/build/intermediates/dex/debug/mergeDexDebug/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

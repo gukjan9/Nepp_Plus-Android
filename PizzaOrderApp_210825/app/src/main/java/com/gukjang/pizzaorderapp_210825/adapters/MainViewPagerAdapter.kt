@@ -12,6 +12,8 @@ class MainViewPagerAdapter (fm : FragmentManager) : FragmentPagerAdapter(fm) {  
     // tableLayout 제목 설정 함수
     override fun getPageTitle(position: Int): CharSequence? {
         // return super.getPageTitle(position) - 의미 : 부모 클래스에 있는 super.- 함수 실행해라 / 삭제하는 이유 : 그대로 리턴시 override 의미 x
+
+        // 탭 번호별 제목 설정
         return when(position){
             0 -> "피자 주문"
             else -> "내 정보 설정"

@@ -37,7 +37,7 @@ class PizzaStoreListFragment : Fragment() {                     // fragment 는 
         mPizzaStores.add(StoreData("도미노피자", "1577-3082", "https://pbs.twimg.com/profile_images/1098371010548555776/trCrCTDN_400x400.png"))
 
         mPizzaStoreAdapter = PizzaStoreAdapter(requireContext(), R.layout.store_list_item, mPizzaStores)
-        pizzaStoreListView.adapter = mPizzaStoreAdapter
+        pizzaStoreListView.adapter = mPizzaStoreAdapter             // 어댑터 <->  xml (ListView) 연결
 
         pizzaStoreListView.setOnItemClickListener{ adapterView, view, position, l ->
             val clickedPizzaStore = mPizzaStores[position]

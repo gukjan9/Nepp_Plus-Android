@@ -60,6 +60,18 @@ public class MainDrive {
 			}
 		}
 		
+		
+		// BubbleSort
+		for(int i = 0; i < winNumbers.length; i++) {
+			for(int j = 0; j < winNumbers.length-1; j++) {			// outOfBounds Error 발생
+				if(winNumbers[j] > winNumbers[j+1]) {
+					int temp = winNumbers[j];
+					winNumbers[j] = winNumbers[j+1];
+					winNumbers[j+1] = temp;
+				}
+			}
+		}
+		
 		for(int winNum : winNumbers) System.out.println(winNum);
 		
 		int correctNumCount = 0;

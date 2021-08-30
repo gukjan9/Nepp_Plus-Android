@@ -61,6 +61,29 @@ public class MainDrive {
 		}
 		
 		
+		// 보너스 번호
+		int bonusNum = 0;
+		
+		while(true) {
+			int randomNum = (int) (Math.random() * 45 +1);
+			
+			boolean isDuplOk = true;
+			
+			for (int num : winNumbers) {
+				if (num == randomNum) {
+					isDuplOk = false;
+					break;
+				}
+			}
+			
+			if (isDuplOk) {
+				bonusNum = randomNum;
+				break;
+			}
+		}
+		
+		
+		
 		// BubbleSort
 		for(int i = 0; i < winNumbers.length; i++) {
 			for(int j = 0; j < winNumbers.length-1; j++) {			// outOfBounds Error 발생
@@ -73,6 +96,7 @@ public class MainDrive {
 		}
 		
 		for(int winNum : winNumbers) System.out.println(winNum);
+		System.out.println("보너스 번호 : " + bonusNum);
 		
 		int correctNumCount = 0;
 		
@@ -85,8 +109,22 @@ public class MainDrive {
 		if (correctNumCount == 6) {
 			System.out.println("1등 - 10억");
 		}
-		else if (correctNumCount == 5) {
-			System.out.println("3등 - 2백만원");
+		else if (correctNumCount == 5) {			// 2등 보너스
+			boolean isBonusCorrect = false;
+			
+			for (int myNum : inputNumbers) {
+				if (myNum == bonusNum) {
+					isBonusCorrect = true;
+					break;
+				}
+			}
+			if (isBonusCorrect) {
+				System.out.println("2등 - 4천만원");
+			}
+			else {
+				System.out.println("3등 - 2백만원");	
+			}
+			
 		}
 		else if (correctNumCount == 4) { 
 			System.out.println("4등 - 5만원");

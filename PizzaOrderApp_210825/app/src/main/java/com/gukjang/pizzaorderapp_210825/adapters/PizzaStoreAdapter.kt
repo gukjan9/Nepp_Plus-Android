@@ -32,7 +32,8 @@ class PizzaStoreAdapter(
         val nameTxt = row.findViewById<TextView>(R.id.nameTxt)
 
         nameTxt.text = data.name
-        Glide.with(mContext).load(data.logoURL).into(logoImg)
+        Glide.with(mContext).load(data.logoURL).into(logoImg)           // mContext 대신 this(여기선 adapter 가리킴) 쓰면 안됨
+                                                                        // Internet 권한 부여 해야함
 
         return row
     }

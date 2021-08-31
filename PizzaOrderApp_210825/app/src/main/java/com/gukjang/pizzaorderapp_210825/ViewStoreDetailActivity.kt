@@ -41,8 +41,8 @@ class ViewStoreDetailActivity : BaseActivity() {
 //            }
 //            TedPermission.create()
 //                .setPermissionListener(pl)
-//                .setPermissions(Manifest.permission.CALL_PHONE)
-//                .setDeniedMessage("[설정] 에서 숸한을 허용해주셔야 합니다")
+//                .setPermissions(Manifest.permission.CALL_PHONE)                       // manifest 에서 CALL 권한 부여 해줘야함
+//                .setDeniedMessage("[설정] 에서 권한을 허용해주셔야 합니다")
 //                .check()
         }
     }

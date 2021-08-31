@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PizzaOrderApp_210825"
         android:usesCleartextTraffic="true">
+        <!-- http 주소로 된 이미지도 불러올 수 있음 -->
         <activity
             android:name=".EditNicknameActivity"
             android:exported="true" />

@@ -13,12 +13,12 @@ public class MainDrive {
 		c1.width = 5.8;
 		c1.height = 12.7;
 		
-		System.out.println(Card.width);
+		System.out.println(Card.width);			// 공통 속성 - 카드 전체 (종족 특성)
 		System.out.println(Card.height);
 		
 		c1.printCardInfo();
 		c2.printCardInfo();
 		
-		Card.printCardClassInfo();
+		Card.printCardClassInfo();			// static 붙이면 에러 x
 	}
 }

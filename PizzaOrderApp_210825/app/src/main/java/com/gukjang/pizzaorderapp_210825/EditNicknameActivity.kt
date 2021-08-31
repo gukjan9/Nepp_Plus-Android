@@ -17,11 +17,10 @@ class EditNicknameActivity : BaseActivity() {
         okBtn.setOnClickListener {
             val inputNickname = newNicknameEdt.text.toString()
 
-            val resultIntent = Intent()
-            resultIntent.putExtra("nickname", inputNickname)
-            setResult(RESULT_OK, resultIntent)
+            val resultIntent = Intent()                                  // 복귀 Intent -> 돌아갈 땐 출발-도착 안 적어도됨 (왕복)
+            resultIntent.putExtra("nickname", inputNickname)      // putExtra : 데이터 담기
+            setResult(RESULT_OK, resultIntent)                          // resultIntent 들고 간다
             finish()
-
         }
     }
 

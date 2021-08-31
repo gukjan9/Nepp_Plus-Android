@@ -24,22 +24,23 @@ class MyProfileFragment : Fragment() {
         return inflater.inflate( R.layout.fragment_my_profile, container, false )
     }
 
-
+    // 닉네임 변경 창으로 이동하기
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         editNicknameBtn.setOnClickListener {
-            val myIntent = Intent(requireContext(), EditNicknameActivity::class.java)
-            startActivityForResult(myIntent, REQ_FOR_NICKNAME)
+            val myIntent = Intent(requireContext(), EditNicknameActivity::class.java)   // 닉네임 변경 창으로
+            startActivityForResult(myIntent, REQ_FOR_NICKNAME)          // 결과 (닉네임) 를 가지러
         }
     }
 
+    // 닉네임 변경 후 돌아와서
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode == REQ_FOR_NICKNAME){
             if(resultCode == Activity.RESULT_OK){
-                val newNickname = data!!.getStringExtra("nickname")               // data? - NULL 일리가 없음
+                val newNickname = data!!.getStringExtra("nickname")               // Intent? 여서 data? 이지만 - NULL 일리가 없음 data!!
                 nickNameTxt.text = newNickname
             }
         }

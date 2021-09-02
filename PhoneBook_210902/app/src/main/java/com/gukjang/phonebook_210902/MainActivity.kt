@@ -23,10 +23,10 @@ class MainActivity : BaseActivity() {
     override fun setupEvents() {
 //        addPhoneNumBtn.setOnClickListener(object : View.OnClickListener{
 //            override fun onClick(v: View?) {
-//                TODO("Not yet implemented")
+//
 //            }
 
-        // JAVA의 interface 를 개량한 버전의 코드 (위 참조)
+        // JAVA의 interface 를 개량한 버전의 코드 (위 참고)
         // EditPhoneNumActivity 로 이동 : intent
         addPhoneNumBtn.setOnClickListener{
             val myIntent = Intent(mContext, EditPhoneNumActivity::class.java)
@@ -35,6 +35,6 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setValues() {
-        TODO("Not yet implemented")
+
     }
 }

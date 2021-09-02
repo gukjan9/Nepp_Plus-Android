@@ -123,6 +123,11 @@ public class MainDrive {
 				String line = br.readLine();
 				
 				if(line == null) break;
+				
+				String[] userInfo = line.split(",");
+				
+				// UserData 객체를 만들어서 -> 생성자의 파라미터로 대입 -> list 에 추가
+				list.add(new UserData(userInfo[0], userInfo[1], Integer.parseInt(userInfo[2])));
 			}
 		}
 		catch (FileNotFoundException e) {

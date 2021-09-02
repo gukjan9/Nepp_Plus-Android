@@ -1,5 +1,9 @@
 package codes;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class MainDrive {
@@ -23,7 +27,72 @@ public class MainDrive {
 			int inputMenu = scanner.nextInt();
 			
 			if(inputMenu == 0) break;
+			else if(inputMenu == 1){
+				addPhoneNum();
+			}
+			else if(inputMenu == 2) {
+				showAllPhoneNum();
+			}
+			else {
+				System.out.println("잘못된 입력입니다. 메뉴로 돌아갑니다...");
+				
+				// 2초 정도 프로그램 정지 -> 그 후에 메뉴로
+				try {
+					Thread.sleep(2000);
+					
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		System.out.println("프로그램을 종료합니다...");
+	}
+	
+	static void addPhoneNum() {
+		Scanner scanner = new Scanner(System.in);
+		
+		System.out.println("이름 입력 : ");
+		String name = scanner.next();
+		
+		System.out.println("전화번호 입력 : ");
+		String phoneNum = scanner.next();
+		
+		System.out.println("출생년도 입력 : ");
+		int birthYear = scanner.nextInt();
+		
+		String content = String.format("%s,%s,%d", name, phoneNum, birthYear);
+		// System.out.println(content);
+		
+		savePhoneNumToFile(content);
+	}
+	
+	// 가공된 한 줄을 파일 (myPhoneBook.csv) 에 추가해주는 함수
+	static void savePhoneNumToFile(String content) {
+		File myFile = new File("myPhoneBook.csv");
+		
+		// 지정된 파일에, 데이터 작성을 해주는 클래스
+		try {
+			FileWriter fw = new FileWriter(myFile, true);		// 기존 내용에 추가
+			
+			// FileWriter 는 2byte씩 데이터 처리 -> 한 글자씩 적는다.
+			// BufferedWriter 사용
+			BufferedWriter bw = new BufferedWriter(fw);
+			
+			bw.append(content);
+			bw.newLine();
+			
+			// 다른 경우에도 파일에 접근할 수 있게 사용이 끝나면 파일을 닫자
+			bw.close();
+			fw.close();
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	static void showAllPhoneNum() {
+		
 	}
 }

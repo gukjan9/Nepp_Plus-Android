@@ -28,7 +28,7 @@ class EditPhoneNumActivity : BaseActivity() {
 
                 // 날짜가 선택되면 실행해줄 코드
                 // 날짜 선택이 완료되면 birthDayTxt 에 반영
-                override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+                override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
                     mSelectedDate.set(year, month, dayOfMonth)
 
                     val sdf = SimpleDateFormat("yyyy. MM. dd.")

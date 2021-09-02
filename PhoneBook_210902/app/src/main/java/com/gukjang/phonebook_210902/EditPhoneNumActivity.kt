@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.DatePicker
 import kotlinx.android.synthetic.main.activity_edit_phone_num.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 class EditPhoneNumActivity : BaseActivity() {
@@ -28,9 +29,14 @@ class EditPhoneNumActivity : BaseActivity() {
                 // 날짜가 선택되면 실행해줄 코드
                 // 날짜 선택이 완료되면 birthDayTxt 에 반영
                 override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+                    mSelectedDate.set(year, month, dayOfMonth)
 
+                    val sdf = SimpleDateFormat("yyyy. MM. dd.")
+
+                    birthDayTxt.text = sdf.format(mSelectedDate.time)
                 }
             }
+
             // 달력이 뜰 때 기본으로 설정된 날짜 : 오늘 날짜로 설정하기
             val datePickerDialog = DatePickerDialog(mContext, dateSetListener,
                 mSelectedDate.get(Calendar.YEAR), mSelectedDate.get(Calendar.MONTH), mSelectedDate.get(Calendar.DAY_OF_MONTH))

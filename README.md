@@ -2,7 +2,7 @@
 Developing Android Apps with Kotlin<br>
 
 ### 📚 Class Progress 👩‍💻
-&nbsp;&nbsp;&nbsp;&nbsp;🟨🟨🟨🟨🟨🟨🟨🟨⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️ __(__ 3️⃣6️⃣ __% )__ <br>
+&nbsp;&nbsp;&nbsp;&nbsp;🟨🟨🟨🟨🟨🟨🟨🟨⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️⬜️ __(__ 3️⃣9️⃣ __% )__ <br>
 210818&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

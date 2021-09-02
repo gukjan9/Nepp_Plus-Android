@@ -1,10 +1,17 @@
 package codes;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+import codes.datas.UserData;
 
 public class MainDrive {
 	public static void main(String[] args) {
@@ -93,6 +100,38 @@ public class MainDrive {
 	}
 	
 	static void showAllPhoneNum() {
+		// ArrayList 로 UserData 목록에 담기
+		List<UserData> userList = new ArrayList<>();
 		
+		addUsersByFile(userList);
+		
+		for(UserData user : userList) {
+			System.out.println(user);
+		}
+	}
+	
+	static void addUsersByFile(List<UserData> list) {
+		File myFile = new File("myPhoneBook.csv");
+		
+		try {
+			FileReader fr = new FileReader(myFile);
+			
+			BufferedReader br = new BufferedReader(fr);
+			
+			// br 이 한 줄씩 계속 내려오게
+			while(true) {
+				String line = br.readLine();
+				
+				if(line == null) break;
+			}
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("아직 저장된 번호가 없습니다.");
+			System.out.println("전화번호부 파일이 만들어지지 않았습니다.");
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -7,6 +7,25 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <!-- 화면에서 겹치게 배치하고 싶을 때 -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
+        <ListView
+            android:id="@+id/phoneNumListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/addPhoneNumBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="새 전화번호 등록" />
+
+    </FrameLayout>
 
 </LinearLayout>

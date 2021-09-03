@@ -1,10 +1,13 @@
 package com.gukjang.phonebook_210902.adapters
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.TextView
 import com.gukjang.phonebook_210902.R
 import com.gukjang.phonebook_210902.datas.PhoneNumData
@@ -26,6 +29,7 @@ class PhoneNumAdapter(val mContext : Context,
         val nameTxt = row.findViewById<TextView>(R.id.nameTxt)              // 위에 row!! 안 적으면 row!!.findViewById 한 번 써주면 된다
         val birthDayTxt = row.findViewById<TextView>(R.id.birthDayTxt)
         val phoneNumTxt = row.findViewById<TextView>(R.id.phoneNumTxt)
+        val dialImg = row.findViewById<ImageView>(R.id.dialImg)
 
 
         // 폰 번호 꺼내오기
@@ -35,6 +39,14 @@ class PhoneNumAdapter(val mContext : Context,
         phoneNumTxt.text = data.phoneNum
 
         birthDayTxt.text = data.getFormattedBirthday()
+
+        dialImg.setOnClickListener{
+            val myUri = Uri.parse("tel:${data.phoneNum}")
+            val myIntent = Intent(Intent.ACTION_DIAL, myUri)
+
+            // 어댑터 안에서 액티비티의 기능인 startActivity 함수를 실행하고 싶다.
+            mContext.startActivity(myIntent)
+        }
 
         return row
     }

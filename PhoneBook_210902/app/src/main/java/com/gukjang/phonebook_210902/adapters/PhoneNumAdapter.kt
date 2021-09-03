@@ -25,6 +25,16 @@ class PhoneNumAdapter(val mContext : Context,
 
         val nameTxt = row.findViewById<TextView>(R.id.nameTxt)              // 위에 row!! 안 적으면 row!!.findViewById 한 번 써주면 된다
         val birthDayTxt = row.findViewById<TextView>(R.id.birthDayTxt)
+        val phoneNumTxt = row.findViewById<TextView>(R.id.phoneNumTxt)
+
+
+        // 폰 번호 꺼내오기
+        val data = mList[position]          // mList.get(position) - Java 스러운
+
+        nameTxt.text = data.name            // nameTxt.setText(data.getName())
+        phoneNumTxt.text = data.phoneNum
+
+        birthDayTxt.text = data.getFormattedBirthday()
 
         return row
     }

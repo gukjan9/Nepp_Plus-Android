@@ -7,7 +7,10 @@ import android.view.View
 import com.gukjang.phonebook_210902.adapters.PhoneNumAdapter
 import com.gukjang.phonebook_210902.datas.PhoneNumData
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.ArrayList
+import java.io.BufferedInputStream
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileReader
 
 class MainActivity : BaseActivity() {
     val mPhoneNumList = ArrayList<PhoneNumData>()
@@ -43,14 +46,35 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setValues() {
-        mPhoneNumList.add(PhoneNumData("테스트1", "010-1111-2222"))
-        mPhoneNumList.add(PhoneNumData("테스트1", "010-1111-2222"))
-        mPhoneNumList.add(PhoneNumData("테스트1", "010-1111-2222"))
+//        mPhoneNumList.add(PhoneNumData("테스트1", "010-1111-2222"))
+//        mPhoneNumList.add(PhoneNumData("테스트1", "010-1111-2222"))
+//        mPhoneNumList.add(PhoneNumData("테스트1", "010-1111-2222"))
 
         // 어댑터 초기화
         mAdapter = PhoneNumAdapter(mContext, R.layout.phone_num_list_item, mPhoneNumList)
 
         // ListView의 Adapter로 연결
         phoneNumListView.adapter = mAdapter
+    }
+
+    fun readPhoneBookFromFile(){
+        val myFile = File(filesDir, "phoneBook.txt")
+
+        val fr = FileReader(myFile)
+        val br = BufferedReader(fr)
+
+        while(true){
+            val line = br.readLine()
+
+            if(line == "") break
+
+            // 읽어온 line 을 , 기준으로 분리
+            val info = line.split(",")
+
+            val phoneNumData = PhoneNumData(info[0], info[1])
+
+            // 폰번을 데이터로 저장
+            mPhoneNumList.add(phoneNumData)
+        }
     }
 }

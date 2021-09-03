@@ -69,39 +69,54 @@ class EditPhoneNumActivity : BaseActivity() {
         }
     }
 
+//    fun savePhoneNumToFile(content : String){
+//        val mainFolder = File("${Environment.getExternalStorageDirectory()}/phoneBookData")
+//
+//        var success = true
+//
+//        // 해당 폴더 없으면 새로 만들고 -> 성공 여부 저장
+//        if(!mainFolder.exists()) success = mainFolder.mkdir()
+//
+//        // 폴더가 만들어졌다면
+//        if(success){
+//            val myFile = File("phoneNumData.txt")
+//
+//            if(!myFile.exists()) success = myFile.mkdir()
+//
+//            // 폴더 / 파일 전부 준비된 상태
+//            if(success){
+//                val realFilePath = File(mainFolder, "phoneNumData.txt")
+//
+//                val fw = FileWriter(realFilePath)
+//                val bw = BufferedWriter(fw)
+//
+//                bw.append(content)
+//                bw.newLine()
+//
+//                bw.close()
+//                fw.close()
+//
+//                Log.d("폰번 추가 성공", content)
+//            }
+//        }
+//    }
+
     override fun setValues() {
 
     }
 
-    fun savePhoneNumToFile(content : String){
-        val mainFolder = File("${Environment.getExternalStorageDirectory()}/phoneBookData")
+    fun savePhoneNumToFile(content: String){
+        val myFile = File(filesDir, "phoneBook.txt")
 
-        var success = true
+        val fw = FileWriter(myFile, true)
+        val bw = BufferedWriter(fw)
 
-        // 해당 폴더 없으면 새로 만들고 -> 성공 여부 저장
-        if(!mainFolder.exists()) success = mainFolder.mkdir()
+        bw.append(content)
+        bw.newLine()
 
-        // 폴더가 만들어졌다면
-        if(success){
-            val myFile = File("phoneNumData.txt")
+        fw.close()
+        bw.close()
 
-            if(!myFile.exists()) success = myFile.mkdir()
-
-            // 폴더 / 파일 전부 준비된 상태
-            if(success){
-                val realFilePath = File(mainFolder, "phoneNumData.txt")
-
-                val fw = FileWriter(realFilePath)
-                val bw = BufferedWriter(fw)
-
-                bw.append(content)
-                bw.newLine()
-
-                bw.close()
-                fw.close()
-
-                Log.d("폰번 추가 성공", content)
-            }
-        }
+        Log.d("파일 추가", content)
     }
 }

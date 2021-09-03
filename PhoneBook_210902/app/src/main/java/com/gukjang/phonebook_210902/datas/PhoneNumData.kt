@@ -23,4 +23,10 @@ class PhoneNumData(name :String, phoneNum : String) {
         // 코틀린에서 String 가공
         return "${this.name},${this.phoneNum},${fileDateFormat.format(this.birthDay.time)}"
     }
+
+    val birthDayFormatter = SimpleDateFormat("M월 d일")
+
+    fun getFormattedBirthday() : String {
+        return birthDayFormatter.format(this.birthDay.time)
+    }
 }

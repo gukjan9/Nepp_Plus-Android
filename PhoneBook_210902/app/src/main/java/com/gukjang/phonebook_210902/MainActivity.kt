@@ -7,10 +7,10 @@ import android.view.View
 import com.gukjang.phonebook_210902.adapters.PhoneNumAdapter
 import com.gukjang.phonebook_210902.datas.PhoneNumData
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.BufferedInputStream
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
+import java.text.SimpleDateFormat
 
 class MainActivity : BaseActivity() {
     val mPhoneNumList = ArrayList<PhoneNumData>()
@@ -55,13 +55,29 @@ class MainActivity : BaseActivity() {
 
         // ListView의 Adapter로 연결
         phoneNumListView.adapter = mAdapter
+
+        readPhoneBookFromFile()
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        // 파일에서 폰번을 화면에 올 때마다 새로 읽어준다.
+        readPhoneBookFromFile()
+    }
+
 
     fun readPhoneBookFromFile(){
         val myFile = File(filesDir, "phoneBook.txt")
 
         val fr = FileReader(myFile)
         val br = BufferedReader(fr)
+
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+
+        // 코드가 반복 실행되면 데이터가 누적으로 쌓임
+        // 기존에 있던건 날리고 새로 데이터 담아준다.
+        mPhoneNumList.clear()
 
         while(true){
             val line = br.readLine()
@@ -73,8 +89,17 @@ class MainActivity : BaseActivity() {
 
             val phoneNumData = PhoneNumData(info[0], info[1])
 
+            // SimpleDateFormat 의 parse 기능
+            phoneNumData.birthDay.time = sdf.parse(info[2])
+
             // 폰번을 데이터로 저장
             mPhoneNumList.add(phoneNumData)
         }
+
+        br.close()
+        fr.close()
+
+        // 목록에 내용물이 추가됨 -> 리스트뷰도 인지해야함
+        mAdapter.notifyDataSetChanged()
     }
 }

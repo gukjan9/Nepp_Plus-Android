@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.DatePicker
+import com.gukjang.phonebook_210902.datas.PhoneNumData
 import kotlinx.android.synthetic.main.activity_edit_phone_num.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -21,6 +22,21 @@ class EditPhoneNumActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+
+        okBtn.setOnClickListener {
+            // 1. 입력한 값들을 변수에 저장
+            val inputName = nameEdt.text.toString()
+            val inputPhoneNum = phoneNumEdt.text.toString()
+
+            val sdf = SimpleDateFormat("yyyy-MM-dd")
+            val birthDayStr = sdf.format(mSelectedDate.time)
+
+            // 2. 폰번 데이터 객체 만들기
+            val savePhoneNumData = PhoneNumData(inputName, inputPhoneNum)           // 폰번데이터의 생년월일 -> 선택한 날짜에 적힌 년월일 그대로 대입
+            savePhoneNumData.birthDay.time = mSelectedDate.time
+
+        }
+
         selectBirthDayBtn.setOnClickListener {
 
             // 달력처럼 날짜 선택 팝업 출현

@@ -14,7 +14,7 @@
         android:text="이름" />
 
     <EditText
-        android:id="@+id/nameTxt"
+        android:id="@+id/nameEdt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="저장할 이름"
@@ -27,7 +27,7 @@
         android:layout_marginTop="15dp" />
 
     <EditText
-        android:id="@+id/phoneNumTxt"
+        android:id="@+id/phoneNumEdt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="상대방 전화번호 입력"

@@ -2,6 +2,7 @@ package com.gukjang.colosseum_210903
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.gukjang.colosseum_210903.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
@@ -18,7 +19,7 @@ class MainActivity : BaseActivity() {
             val inputPw = passwordEdt.text.toString()
 
             // 서버에 이 데이터가 회원이 맞는지 확인 요청
-
+            ServerUtil.postRequestSignIn(inputId, inputPw)
         }
     }
 

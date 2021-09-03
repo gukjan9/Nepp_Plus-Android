@@ -1,8 +1,9 @@
 package com.gukjang.colosseum_210903.utils
 
-import okhttp3.FormBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import android.util.Log
+import okhttp3.*
+import org.json.JSONObject
+import java.io.IOException
 
 // 단순 기능 수행 -> 서버에 요청 날리고 -> 응답을 화면에 전달
 class ServerUtil {
@@ -31,7 +32,28 @@ class ServerUtil {
             // 만들어진 request를 실제로 호출해야함
             // 요청 -> 앱이 클라이언트로 동작
             val client = OkHttpClient()
-            client.newCall(request)
+
+            // 만들어진 요청 호출 -> 응답 왔을 때 분석
+            // 호출을 하면 -> 응답 받아서 처리 (처리할 코드 등록)
+            client.newCall(request).enqueue(object : Callback {
+                //
+                override fun onFailure(call: Call, e: IOException) {
+
+                }
+
+                // 로그인 성공, 실패 - 응답 온 경우
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val jsonObj = JSONObject(bodyString)
+
+                    Log.d("서버 응답 본문", jsonObj.toString())
+
+                    // 코드값 추출 연습
+//                    val code = jsonObj.getInt("code")
+//                    Log.d("코드값", code.toString())
+                }
+
+            })
         }
 
     }

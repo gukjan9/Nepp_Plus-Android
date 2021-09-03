@@ -7,13 +7,22 @@ import java.io.IOException
 
 // 단순 기능 수행 -> 서버에 요청 날리고 -> 응답을 화면에 전달
 class ServerUtil {
+
+    // 응답을 화면에 전달 : 나에게 발생한 이벤트를 화면단에서 대신 해달라고 한다. (Interface 활용)
+    interface JsonResponseHandler{
+        fun onResponse(jsonObj : JSONObject)
+    }
+
     // 이 안에 만드는 변수 / 함수는 전부 static 처럼 동작
     companion object{
+
         // 호스트 주소를 변수로 저장 (ServerUtil 안에서만)
         private val HOST_URL = "http://54.180.52.26"
 
         // 로그인 기능 실행 함수
-        fun postRequestSignIn(id: String, pw: String){
+        // ID/ PW 전달 -> 서버에 다녀오면 어떤 일을 할건지 : 인터페이스 객체 같이 전달
+
+        fun postRequestSignIn(id: String, pw: String, handler : JsonResponseHandler?){
             // 1. 어느 URL 로 갈 것인가? HOST_URL + Endpoint
             val urlString = "${HOST_URL}/user"
 
@@ -51,6 +60,9 @@ class ServerUtil {
                     // 코드값 추출 연습
 //                    val code = jsonObj.getInt("code")
 //                    Log.d("코드값", code.toString())
+
+                    // 받아낸 jsonObj를 통째로 화면의 응답 처리 코드로
+                    handler?.onResponse(jsonObj)
                 }
 
             })

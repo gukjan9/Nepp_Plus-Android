@@ -70,6 +70,11 @@ class MainActivity : BaseActivity() {
     fun readPhoneBookFromFile(){
         val myFile = File(filesDir, "phoneBook.txt")
 
+        // 처음 깔았으면 txt 없음 -> 파일 읽기 막기
+        if(!myFile.exists()){
+            return
+        }
+
         val fr = FileReader(myFile)
         val br = BufferedReader(fr)
 
@@ -82,7 +87,7 @@ class MainActivity : BaseActivity() {
         while(true){
             val line = br.readLine()
 
-            if(line == "") break
+            if(line == null) break
 
             // 읽어온 line 을 , 기준으로 분리
             val info = line.split(",")

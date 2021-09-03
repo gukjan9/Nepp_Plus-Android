@@ -35,7 +35,7 @@ class EditPhoneNumActivity : BaseActivity() {
             val inputPhoneNum = phoneNumEdt.text.toString()
 
             val sdf = SimpleDateFormat("yyyy-MM-dd")
-            val birthDayStr = sdf.format(mSelectedDate.time)
+            // val birthDayStr = sdf.format(mSelectedDate.time)
 
             // 2. 폰번 데이터 객체 만들기
             val savePhoneNumData = PhoneNumData(inputName, inputPhoneNum)           // 폰번데이터의 생년월일 -> 선택한 날짜에 적힌 년월일 그대로 대입

@@ -3,16 +3,14 @@ package com.gukjang.phonebook_210902.datas
 import java.text.SimpleDateFormat
 import java.util.*
 
-class PhoneNumData(name :String, phoneNum : String) {
+class PhoneNumData(var name :String, var phoneNum : String) {
 
     // 생성자가 실행될 때 추가 동작시킬 코드 작성
-    init {
+//    init {
+//
+//
+//    }
 
-
-    }
-
-    var name = ""
-    var phoneNum = ""
     val birthDay = Calendar.getInstance()
 
     // 변환 x

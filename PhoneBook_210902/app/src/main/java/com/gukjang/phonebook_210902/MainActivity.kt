@@ -4,9 +4,17 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.gukjang.phonebook_210902.adapters.PhoneNumAdapter
+import com.gukjang.phonebook_210902.datas.PhoneNumData
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.ArrayList
 
 class MainActivity : BaseActivity() {
+    val mPhoneNumList = ArrayList<PhoneNumData>()
+
+    // 1. 멤버변수로 빼는게 편하다.
+    // 2. 초기화할 때 화면정보 (Context)가 필요한가?
+    lateinit var mAdapter : PhoneNumAdapter
 
     // 1. 화면에 들어오면 -> 파일에 저장된 "이름,폰번,1997-04-14" 문장 불러내기
     // 안드로이드에서 파일 다루는법
@@ -35,6 +43,14 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setValues() {
+        mPhoneNumList.add(PhoneNumData("테스트1", "010-1111-2222"))
+        mPhoneNumList.add(PhoneNumData("테스트1", "010-1111-2222"))
+        mPhoneNumList.add(PhoneNumData("테스트1", "010-1111-2222"))
 
+        // 어댑터 초기화
+        mAdapter = PhoneNumAdapter(mContext, R.layout.phone_num_list_item, mPhoneNumList)
+
+        // ListView의 Adapter로 연결
+        phoneNumListView.adapter = mAdapter
     }
 }

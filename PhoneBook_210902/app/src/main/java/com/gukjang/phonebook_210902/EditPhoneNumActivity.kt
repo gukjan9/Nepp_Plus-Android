@@ -3,9 +3,14 @@ package com.gukjang.phonebook_210902
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
 import android.widget.DatePicker
 import com.gukjang.phonebook_210902.datas.PhoneNumData
 import kotlinx.android.synthetic.main.activity_edit_phone_num.*
+import java.io.BufferedWriter
+import java.io.File
+import java.io.FileWriter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,6 +40,9 @@ class EditPhoneNumActivity : BaseActivity() {
             val savePhoneNumData = PhoneNumData(inputName, inputPhoneNum)           // 폰번데이터의 생년월일 -> 선택한 날짜에 적힌 년월일 그대로 대입
             savePhoneNumData.birthDay.time = mSelectedDate.time
 
+            // 3. 해당 폰번을 양식대로 가공 -> 파일에 저장
+            val saveStr = savePhoneNumData.getFileFormatData()
+
         }
 
         selectBirthDayBtn.setOnClickListener {
@@ -63,5 +71,37 @@ class EditPhoneNumActivity : BaseActivity() {
 
     override fun setValues() {
 
+    }
+
+    fun savePhoneNumToFile(content : String){
+        val mainFolder = File("${Environment.getExternalStorageDirectory()}/phoneBookData")
+
+        var success = true
+
+        // 해당 폴더 없으면 새로 만들고 -> 성공 여부 저장
+        if(!mainFolder.exists()) success = mainFolder.mkdir()
+
+        // 폴더가 만들어졌다면
+        if(success){
+            val myFile = File("phoneNumData.txt")
+
+            if(!myFile.exists()) success = myFile.mkdir()
+
+            // 폴더 / 파일 전부 준비된 상태
+            if(success){
+                val realFilePath = File(mainFolder, "phoneNumData.txt")
+
+                val fw = FileWriter(realFilePath)
+                val bw = BufferedWriter(fw)
+
+                bw.append(content)
+                bw.newLine()
+
+                bw.close()
+                fw.close()
+
+                Log.d("폰번 추가 성공", content)
+            }
+        }
     }
 }

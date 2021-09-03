@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.gukjang.phonebook_210902.R
 import com.gukjang.phonebook_210902.datas.PhoneNumData
+import java.util.*
 
 class PhoneNumAdapter(val mContext : Context,
                       resId : Int,
@@ -30,6 +31,7 @@ class PhoneNumAdapter(val mContext : Context,
         val birthDayTxt = row.findViewById<TextView>(R.id.birthDayTxt)
         val phoneNumTxt = row.findViewById<TextView>(R.id.phoneNumTxt)
         val dialImg = row.findViewById<ImageView>(R.id.dialImg)
+        val birthDayImg = row.findViewById<ImageView>(R.id.birthDayImg)
 
 
         // 폰 번호 꺼내오기
@@ -39,6 +41,23 @@ class PhoneNumAdapter(val mContext : Context,
         phoneNumTxt.text = data.phoneNum
 
         birthDayTxt.text = data.getFormattedBirthday()
+
+        // 생일이 오늘로부터 10일 이내라면 생일 ImgView 표시
+
+        val tempBirthDay = Calendar.getInstance()
+        tempBirthDay.time = data.birthDay.time
+
+        // 오늘 날짜를 별도 변수에 저장
+        val today = Calendar.getInstance()
+        tempBirthDay.set(Calendar.YEAR, today.get(Calendar.YEAR))
+
+        // 두 날짜를 숫자로 변경
+        val diffInMillis = tempBirthDay.timeInMillis - today.timeInMillis
+
+        val diffInDays = diffInMillis / 1000 / 60 / 60/ 24
+
+        if(diffInDays in 0..10) birthDayImg.visibility = View.VISIBLE
+        else birthDayImg.visibility = View.GONE
 
         dialImg.setOnClickListener{
             val myUri = Uri.parse("tel:${data.phoneNum}")

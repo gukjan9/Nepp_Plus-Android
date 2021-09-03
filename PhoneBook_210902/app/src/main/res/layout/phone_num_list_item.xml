@@ -48,14 +48,16 @@
             android:id="@+id/birthDayImg"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@mipmap/ic_launcher" />
+            android:padding="5dp"
+            android:src="@drawable/cake_icon" />
 
+        <!-- imageView 에 padding 값 주면 같은 크기에서 이미지만 줄어듦 -->
         <ImageView
             android:id="@+id/dialImg"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@mipmap/ic_launcher"
-            android:layout_marginLeft="10dp"/>
+            android:src="@drawable/phone_icon"
+            android:padding="10dp" />
 
 
 </LinearLayout>

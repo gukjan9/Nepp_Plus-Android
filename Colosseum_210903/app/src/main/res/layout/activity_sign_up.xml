@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".MainActivity">
+    tools:context=".SignUpActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,47 +18,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="이메일 양식으로 입력"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"/>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:text="비밀번호" />
 
     <EditText
-        android:id="@+id/passwordEdt"
+        android:id="@+id/pwEdt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="비밀번호 입력"
-        android:inputType="textPassword" />
+        android:hint="별도 제약사항 없음"
+        android:inputType="textPassword"/>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="닉네임" />
+
+    <EditText
+        android:id="@+id/nicknameEdt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="한글 입력도 가능"
+        android:singleLine="true"/>
 
     <Button
-        android:id="@+id/signInBth"
+        android:id="@+id/signUpBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="로그인" />
+        android:text="회원가입" />
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="아직 계정이 없으신가요?" />
-
-        <Button
-            android:id="@+id/signUpBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="회원가입" />
-
-    </LinearLayout>
 
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.gukjang.colosseum_210903
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -42,8 +43,12 @@ class MainActivity : BaseActivity() {
                         }
                     }
                 }
-
             })
+        }
+
+        signUpBtn.setOnClickListener {
+            val myIntent = Intent(mContext, SignUpActivity::class.java)
+            startActivity(myIntent)
         }
     }
 

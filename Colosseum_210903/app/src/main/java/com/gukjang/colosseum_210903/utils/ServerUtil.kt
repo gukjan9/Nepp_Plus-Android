@@ -2,6 +2,7 @@ package com.gukjang.colosseum_210903.utils
 
 import android.util.Log
 import okhttp3.*
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import org.json.JSONObject
 import java.io.IOException
 
@@ -68,7 +69,7 @@ class ServerUtil {
             })
         }
 
-        // 회원가입 요청청 함수
+        // 회원가입 요청 함수
        fun putRequestSignUp(email : String, password : String, nickname : String, handler : JsonResponseHandler){
             val urlString = "${HOST_URL}/user"
             val formData = FormBody.Builder()
@@ -96,6 +97,21 @@ class ServerUtil {
                 }
 
             })
+        }
+
+        // 이메일 / 닉네임 중복 확인 함수
+        // get method 로 서버에 요청 -> URL 을 적을 때 (query) 파라미터들도 같이 적어줘야함
+        fun getRequestDuplCheck(type : String, value : String, handler: JsonResponseHandler?){
+            // 호스트주소/엔드포인트 기반으로 파라미터들을 쉽게 첨부할 수 있도록 도와주는 변수
+            val url = "${HOST_URL}/user_check".toHttpUrlOrNull()!!.newBuilder()
+
+            // URL 뒤에 파라미터 추가 value=~&type=~
+            url.addEncodedQueryParameter("type", type)
+            url.addEncodedQueryParameter("value", value)
+
+            val urlString = url.toString()
+
+            Log.d("완성된 URL", urlString)
         }
     }
 }

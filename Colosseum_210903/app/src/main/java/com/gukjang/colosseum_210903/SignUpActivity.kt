@@ -55,7 +55,15 @@ class SignUpActivity : BaseActivity() {
                     }
                 }
             })
+        }
 
+        // 이메일 중복 검사 함수
+        checkEmailBtn.setOnClickListener {
+            // 1. 입력한 이메일을 받아서
+            val inputEmail = emailEdt.text.toString()
+
+            // 2. 서버에 이메일 중복 확인 요청 -> 응답에 따라 결과 textView
+            ServerUtil.getRequestDuplCheck("EMAIL", inputEmail, null)
         }
 
     }

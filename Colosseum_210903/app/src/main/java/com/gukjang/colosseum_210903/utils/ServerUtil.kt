@@ -112,6 +112,27 @@ class ServerUtil {
             val urlString = url.toString()
 
             Log.d("완성된 URL", urlString)
+
+            val request = Request.Builder()
+                .url(urlString)
+                .get()
+                .build()
+
+            val client = OkHttpClient()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val jsonobj = JSONObject(bodyString)
+                    Log.d("서버 응답", jsonobj.toString())
+                    handler?.onResponse(jsonobj)
+                }
+
+            })
         }
     }
 }

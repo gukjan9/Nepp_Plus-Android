@@ -2,7 +2,9 @@ package com.gukjang.colosseum_210903
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import com.gukjang.colosseum_210903.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.json.JSONObject
@@ -63,10 +65,29 @@ class SignUpActivity : BaseActivity() {
             val inputEmail = emailEdt.text.toString()
 
             // 2. 서버에 이메일 중복 확인 요청 -> 응답에 따라 결과 textView
-            ServerUtil.getRequestDuplCheck("EMAIL", inputEmail, null)
+            ServerUtil.getRequestDuplCheck("EMAIL", inputEmail, object : ServerUtil.JsonResponseHandler {
+                override fun onResponse(jsonObj : JSONObject){
+                    val code = jsonObj.getInt("code")
+
+                    runOnUiThread {
+                        if(code == 200) checkEmailResult.text = ("사용해도 좋은 이메일입니다.")
+                        else checkEmailResult.text = ("중복된 이메일입니다. 다른 걸로 입력하세요")
+                    }
+                }
+            })
         }
 
+        // 이메일 입력 칸의 내용 변경 감지
+        emailEdt.addTextChangedListener {
+            // it 변수를 활용 : 입력된 내용 파악
+            Log.d("이메일 입력 변경", it.toString())
+
+            // 변경되기만 하면 검사 결과 "문구를 중복 검사 해주세요" 로 변경
+            checkEmailResult.text = "중복 검사를 해주세요"
+        }
     }
+
+
 
     override fun setValues() {
 

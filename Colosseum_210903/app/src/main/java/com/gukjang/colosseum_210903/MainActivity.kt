@@ -1,5 +1,6 @@
 package com.gukjang.colosseum_210903
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.gukjang.colosseum_210903.adapters.TopicAdapter
@@ -10,7 +11,7 @@ import org.json.JSONObject
 
 class MainActivity : BaseActivity() {
     val mTopicList = ArrayList<TopicData>()
-
+    lateinit var mTopicAdapter: TopicAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +21,13 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+        topicListView.setOnItemClickListener { adapterView, view, position, l ->
+            val clickedTopic = mTopicList[position]
 
+            val myIntent = Intent(mContext, ViewTopicDetailActivity::class.java)
+            myIntent.putExtra("topic", clickedTopic)
+            startActivity(myIntent)
+        }
     }
 
     override fun setValues() {

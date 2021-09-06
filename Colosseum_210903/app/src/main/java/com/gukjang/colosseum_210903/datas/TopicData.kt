@@ -7,6 +7,9 @@ class TopicData(
     var title : String,
     var imageURL : String) : Serializable{
 
+    // 선택진영 목록을 담아줄 ArrayList
+    val sideList = ArrayList<SideData>()
+
     // 보조 생성자 추가
     constructor() : this(0, "제목 없음", "")
 

@@ -1,6 +1,5 @@
 package com.gukjang.colosseum_210903
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast

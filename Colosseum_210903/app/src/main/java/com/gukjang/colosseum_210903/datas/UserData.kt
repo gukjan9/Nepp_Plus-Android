@@ -7,7 +7,17 @@ class UserData(
     var email : String,
     var nickname : String) {
 
+    constructor() : this(0, "", "")
+
     companion object {
-        fun getUserDataFromJson(json : JSONObject) :UserData
+        fun getUserDataFromJson(json : JSONObject) :UserData{
+            val userData = UserData()
+
+            userData.id = json.getInt("id")
+            userData.email = json.getString("email")
+            userData.nickname = json.getString("nick_name")
+
+            return userData
+        }
     }
 }

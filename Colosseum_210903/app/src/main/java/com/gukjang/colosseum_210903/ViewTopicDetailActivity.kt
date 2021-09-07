@@ -1,5 +1,6 @@
 package com.gukjang.colosseum_210903
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -25,6 +26,13 @@ class ViewTopicDetailActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+        addReplyBtn.setOnClickListener {
+            val myIntent = Intent(mContext, EditReplyActivity::class.java)
+            myIntent.putExtra("selectedSide", mTopicData.mySelectedSide)
+            startActivity(myIntent)
+        }
+
+
         // 첫번째 진영, 두번째 진영 투표버튼의 이벤트
         val ocl = object : View.OnClickListener{
             override fun onClick(view: View?) {
@@ -37,9 +45,9 @@ class ViewTopicDetailActivity : BaseActivity() {
                 ServerUtil.postRequestTopicVote(mContext, clickedSideId, object : ServerUtil.JsonResponseHandler{
                     override fun onResponse(jsonObj: JSONObject) {
                         // 투표 결과 확인
+                        getTopicDetailDataFromServer()
 
                     }
-
                 })
             }
         }
@@ -86,8 +94,6 @@ class ViewTopicDetailActivity : BaseActivity() {
                     // 위에 3줄과 똑같음
                     mReplyList.add(ReplyData.getReplyDataFromJson(repliesArr.getJSONObject(i)))
                 }
-
-
                 // 새로 받은 데이터로 UI 반영
                 refreshTopicDataToUI()
             }
@@ -101,6 +107,22 @@ class ViewTopicDetailActivity : BaseActivity() {
 
             secondSideTitleTxt.text = mTopicData.sideList[1].title
             secondSideVoteCountTxt.text = "${mTopicData.sideList[1].voteCount}표"
+
+            // 투표 여부에 따라 버튼들에 다른 문구 적용
+            if(mTopicData.mySideId == -1){
+                voteToFirstSideBtn.text = "투표하기"
+                voteToSecondSideBtn.text = "투표하기"
+            }
+            else{
+                if(mTopicData.mySideId == mTopicData.sideList[0].id){
+                    voteToFirstSideBtn.text = "취소하기"
+                    voteToSecondSideBtn.text = "선택변경"
+                }
+                else{
+                    voteToFirstSideBtn.text = "선택변경"
+                    voteToSecondSideBtn.text = "취소하기"
+                }
+            }
 
             // ListView 새로고침
             mReplyAdapter.notifyDataSetChanged()

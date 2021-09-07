@@ -40,7 +40,7 @@ class MainActivity : BaseActivity() {
 
     // 서버에서 메인화면에 보여줄 정보 받아오기
     fun getMainDataFromServer(){
-        ServerUtil.getRequestMainData(mContext, object : ServerUtil.JsonResponseHandler{
+        ServerUtil.getRequestMainData(mContext, object : ServerUtil.JsonResponseHandler {
             override fun onResponse(jsonObj: JSONObject) {
                 // 응답 - jsonObj 분석(파싱) -> 토론 주제를 서버에서 내려줌
                 val dataObj = jsonObj.getJSONObject("data")
@@ -57,7 +57,7 @@ class MainActivity : BaseActivity() {
 //                    tempTopicData.title = topicObj.getString("title")
 //                    tempTopicData.imageURL = topicObj.getString("img_url")
 
-                    val tempTopicData =
+                    val tempTopicData = TopicData.getTopicDataFromJson(topicObj)
 
                     mTopicList.add(tempTopicData)
                 }
@@ -70,7 +70,7 @@ class MainActivity : BaseActivity() {
                // 목록의 변화 -> ListView 가 인지 -> 새로고침 공지 -> 백그라운드에서 UI 변경
                 runOnUiThread {
                     mTopicAdapter.notifyDataSetChanged()
-                    Toast.makeText(mContext, "${nickname}님 환영합니다!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext, "${loginUser.nickname}님 환영합니다!", Toast.LENGTH_SHORT).show()
                 }
             }
         })

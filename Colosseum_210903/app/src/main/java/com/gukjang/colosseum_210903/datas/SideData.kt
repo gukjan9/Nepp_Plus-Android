@@ -17,9 +17,9 @@ class SideData(
              val sideData = SideData()
 
              sideData.id = json.getInt("id")
-             sideData.topicId = json.getString("topic_id")
+             sideData.topicId = json.getInt("topic_id")
              sideData.title = json.getString("title")
-             sideData.voteCount = json.getString("vote_count")
+             sideData.voteCount = json.getInt("vote_count")
 
              return sideData
          }

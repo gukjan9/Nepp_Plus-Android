@@ -29,7 +29,7 @@ class ReplyAdapter(
         val data = mList[position]
 
         val selectedSideTxt = row.findViewById<TextView>(R.id.selectSideTxt)
-        val writerNickName = row.findViewById<TextView>(R.id.writerNickName)
+        val writerNicknameTxt = row.findViewById<TextView>(R.id.writerNickNameTxt)
         val createdAtTxt = row.findViewById<TextView>(R.id.createdAtTxt)
         val contentTxt = row.findViewById<TextView>(R.id.contentTxt)
         val replyCountTxt = row.findViewById<TextView>(R.id.replyCountTxt)
@@ -43,7 +43,7 @@ class ReplyAdapter(
 
         selectedSideTxt.text = "(${data.selectedSide.title})"
 
-        writerNickNameTxt.text = data.writer.nickname
+        writerNicknameTxt.text = data.writer.nickname
 
         val sdf = SimpleDateFormat("yyyy년 M월 d일")
         createdAtTxt.text = sdf.format(data.createdAt.time)

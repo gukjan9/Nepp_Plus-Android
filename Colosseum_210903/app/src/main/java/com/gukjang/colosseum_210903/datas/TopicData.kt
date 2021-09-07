@@ -11,6 +11,12 @@ class TopicData(
     // 선택진영 목록을 담아줄 ArrayList
     val sideList = ArrayList<SideData>()
 
+    // 내가 투표한 진영의 ID 가 뭔지
+    var mySideId = 0
+
+    // 내가 투표한 진영 저장
+    var mySelectedSide : SideData? = null
+
     // json { } 을 넣으면 파싱해서 TopicData 객체로 리턴해주는 함수
     companion object {
         fun getTopicDataFromJson(json : JSONObject) : TopicData{
@@ -31,6 +37,12 @@ class TopicData(
                 val sideData = SideData.getSideDataFromJson(sideObj)
 
                 topicData.sideList.add(sideData)
+            }
+            topicData.mySideId = json.getInt("my_side_id")
+
+            if(!json.isNull("my_side")){
+                // null 이 아닐때만 파싱
+                topicData.mySelectedSide = SideData.getSideDataFromJson(json.getJSONObject("my_side"))
             }
 
             return topicData

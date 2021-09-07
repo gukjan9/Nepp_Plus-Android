@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".EditReplyActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="선택한 진영 : " />
+
+        <TextView
+            android:id="@+id/selectedSidetxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="진영 이름"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#EFEFEF" />
+
+    <EditText
+        android:id="@+id/contentEdt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:minLines="3"
+        android:gravity="top"
+        android:hint="최소 10글자 이상 입력해주세요." />
+
+    <Button
+        android:id="@+id/postReplyBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="의견 등록하기" />
+
+</LinearLayout>

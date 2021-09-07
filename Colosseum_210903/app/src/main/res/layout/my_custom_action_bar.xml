@@ -2,14 +2,32 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:background="@color/black">
+    android:background="@color/white">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="토론 앱"
         android:layout_gravity="center"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="17sp" />
+
+    <ImageView
+        android:id="@+id/backBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/back_arrow" />
+
+    <ImageView
+        android:id="@+id/notiBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/noti_icon"
+        android:visibility="gone"
+        android:padding="3dp" />
 
 </FrameLayout>

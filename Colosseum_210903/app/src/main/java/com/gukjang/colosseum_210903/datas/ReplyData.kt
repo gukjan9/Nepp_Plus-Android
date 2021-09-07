@@ -28,7 +28,7 @@ class ReplyData(
     // ~ 일 전 등으로 가공
     fun getFormattedTimeAgo() : String{
         val now = Calendar.getInstance()
-        val interval = now.timeInMillis
+        val interval = now.timeInMillis - this.createdAt.timeInMillis
 
         Log.d("두 시간의 간격", interval.toString())
 

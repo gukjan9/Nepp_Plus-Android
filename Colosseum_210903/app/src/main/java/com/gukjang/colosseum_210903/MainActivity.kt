@@ -2,12 +2,14 @@ package com.gukjang.colosseum_210903
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.gukjang.colosseum_210903.adapters.TopicAdapter
 import com.gukjang.colosseum_210903.datas.TopicData
 import com.gukjang.colosseum_210903.datas.UserData
 import com.gukjang.colosseum_210903.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.my_custom_action_bar.*
 import org.json.JSONObject
 
 class MainActivity : BaseActivity() {
@@ -37,6 +39,12 @@ class MainActivity : BaseActivity() {
 
         mTopicAdapter = TopicAdapter(mContext, R.layout.topic_list_item, mTopicList)
         topicListView.adapter = mTopicAdapter
+
+        // main 에서만 backBtn 숨김 처리
+        backBtn.visibility = View.GONE
+
+        // main 에서만 notiBtn 보임 처리
+        notiBtn.visibility = View.VISIBLE
     }
 
     // 서버에서 메인화면에 보여줄 정보 받아오기

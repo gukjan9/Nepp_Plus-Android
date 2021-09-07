@@ -3,8 +3,10 @@ package com.gukjang.colosseum_210903
 import android.app.ActionBar
 import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.my_custom_action_bar.*
 
 abstract class BaseActivity : AppCompatActivity() {
     lateinit var mContext : Context
@@ -36,5 +38,17 @@ abstract class BaseActivity : AppCompatActivity() {
         // 양 옆 여백 제거
         val myToolbar = defaultActionBar.customView.parent as Toolbar
         myToolbar.setContentInsetsAbsolute(0,0)
+
+        // 세팅이 끝나면 UI들의 이벤트도 달아주자
+        backBtn.setOnClickListener {
+            finish()
+        }
+
+        notiBtn.setOnClickListener {
+            Toast.makeText(mContext, "알림 목록을 보러 갑니다.", Toast.LENGTH_SHORT).show()
+        }
+
+        // 모든 화면은 기본적으로 노티버튼을 숨겨두자
+
     }
 }

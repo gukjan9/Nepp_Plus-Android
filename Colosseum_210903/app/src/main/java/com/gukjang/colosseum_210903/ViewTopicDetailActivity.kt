@@ -1,6 +1,7 @@
 package com.gukjang.colosseum_210903
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -54,7 +55,6 @@ class ViewTopicDetailActivity : BaseActivity() {
                     override fun onResponse(jsonObj: JSONObject) {
                         // 투표 결과 확인
                         getTopicDetailDataFromServer()
-
                     }
                 })
             }

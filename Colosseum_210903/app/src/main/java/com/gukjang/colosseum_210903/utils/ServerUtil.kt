@@ -137,8 +137,45 @@ class ServerUtil {
 
         // 메인화면 데이터 가져오기
         // 저장된 토큰값을 서버에 전송 -> 메모장을 열기 위한 재료로 Context 가 필요함
-        fun getRequestMainData(context : Context, handler: JsonResponseHandler?){
+        fun getRequestTopicDetail(context: Context, handler1: Int, handler: JsonResponseHandler?){
             val url = "${HOST_URL}/v2/main_info".toHttpUrlOrNull()!!.newBuilder()
+
+//            url.addEncodedQueryParameter("type", type)
+//            url.addEncodedQueryParameter("value", value)
+
+            val urlString = url.toString()
+
+            Log.d("완성된 URL", urlString)
+
+            val request = Request.Builder()
+                .url(urlString)
+                .get()
+                .header("X-Http-Token", ContextUtil.getToken(context))
+                .build()
+
+            val client = OkHttpClient()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val jsonobj = JSONObject(bodyString)
+                    Log.d("서버 응답", jsonobj.toString())
+                    handler?.onResponse(jsonobj)
+                }
+            })
+        }
+
+        // 토론 상세 정보 (특정 주제에 대해서만) 가져오기
+        fun getRequestTopicData(context : Context, topicId : Int, handler: JsonResponseHandler?){
+            val url = "${HOST_URL}/topic".toHttpUrlOrNull()!!.newBuilder()
+            // 주소/3 등 어떤 데이터를 보고 싶은지, /숫자 형태로 이어붙이는 주소 -> path
+            // 주소?type=Email 등 파라미터이름=값 형태로 이어붙이는 주소 -> Query
+
+            url.addPathSegment(topicId.toString())
 
 //            url.addEncodedQueryParameter("type", type)
 //            url.addEncodedQueryParameter("value", value)

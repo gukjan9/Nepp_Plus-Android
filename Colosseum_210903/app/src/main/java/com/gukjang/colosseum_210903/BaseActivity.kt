@@ -1,11 +1,12 @@
 package com.gukjang.colosseum_210903
 
-import android.app.ActionBar
 import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
-import android.widget.Toolbar
+
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import kotlinx.android.synthetic.main.my_custom_action_bar.*
 
 abstract class BaseActivity : AppCompatActivity() {

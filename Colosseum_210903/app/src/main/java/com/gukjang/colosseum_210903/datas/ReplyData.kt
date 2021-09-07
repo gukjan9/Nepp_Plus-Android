@@ -72,9 +72,9 @@ class ReplyData(
             replyData.id = json.getInt("id")
             replyData.content = json.getString("content")
             replyData.likeCount = json.getInt("like_count")
-            replyData.hateCount = json.getInt("hate_count")
+            replyData.hateCount = json.getInt("dislike_count")
             replyData.myLike = json.getBoolean("my_like")
-            replyData.myHate = json.getBoolean("my_hate")
+            replyData.myHate = json.getBoolean("my_dislike")
             replyData.replyCount = json.getInt("reply_count")
 
             // 선택 진영 파싱 -> SideData 에 만들어둔 파싱 기능 활용

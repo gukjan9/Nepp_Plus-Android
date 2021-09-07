@@ -7,10 +7,14 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.gukjang.colosseum_210903.R
+import com.gukjang.colosseum_210903.ViewTopicDetailActivity
 import com.gukjang.colosseum_210903.datas.ReplyData
 import com.gukjang.colosseum_210903.datas.TopicData
+import com.gukjang.colosseum_210903.utils.ServerUtil
+import org.json.JSONObject
 import java.text.SimpleDateFormat
 
 class ReplyAdapter(
@@ -45,6 +49,36 @@ class ReplyAdapter(
         writerNicknameTxt.text = data.writer.nickname
 
         createdAtTxt.text = data.getFormattedTimeAgo()
+
+        likeCountTxt.tag = true
+        hateCountTxt.tag = true
+
+
+        // 해당 댓글에 좋아요, 싫어요 찍었다 -> 서버에 전송
+        likeCountTxt.setOnClickListener {
+            Toast.makeText(mContext, "좋아요 클릭", Toast.LENGTH_SHORT).show()
+        }
+
+        hateCountTxt.setOnClickListener {
+            Toast.makeText(mContext, "싫어요 클릭", Toast.LENGTH_SHORT).show()
+        }
+
+        val ocl = object : View.OnClickListener{
+            override fun onClick(view: View?) {
+                val isLike = view!!.tag.toString().toBoolean()
+
+                ServerUtil.postRequestReplyLikeOrHate(mContext, data.id, isLike, object : ServerUtil.JsonResponseHandler{
+                    override fun onResponse(jsonObj: JSONObject) {
+                        // 어댑터 안에서 ViewTopicDetailActivity 의 기능 수행
+                        // 다형성 이용
+                        (mContext as ViewTopicDetailActivity).getTopicDetailDataFromServer()
+                    }
+                })
+            }
+        }
+
+        likeCountTxt.setOnClickListener(ocl)
+        hateCountTxt.setOnClickListener(ocl)
 
         return row
     }

@@ -73,8 +73,8 @@ class ViewTopicDetailActivity : BaseActivity() {
         Glide.with(mContext).load(mTopicData.imageURL).into(topicImg)
         titleTxt.text = mTopicData.title
 
-        // 나머지 데이터는 서버에서 가져오자
-        getTopicDetailDataFromServer()
+        // 나머지 데이터는 서버에서 가져오자 -> onResume 에서 가져오는 것으로 일원화
+//        getTopicDetailDataFromServer()
 
         mReplyAdapter = ReplyAdapter(mContext, R.layout.reply_list_item, mReplyList)
         replyListView.adapter = mReplyAdapter
@@ -85,7 +85,7 @@ class ViewTopicDetailActivity : BaseActivity() {
         ServerUtil.getRequestTopicDetail(mContext, mTopicData.id, object : ServerUtil.JsonResponseHandler{
             override fun onResponse(jsonObj: JSONObject) {
                 val dataObj = jsonObj.getJSONObject("data")
-                val topicObj = jsonObj.getJSONObject("topic")
+                val topicObj = dataObj.getJSONObject("topic")
 
                 // mTopicData 를 새로 파싱한 데이터로 교체
                 mTopicData = TopicData.getTopicDataFromJson(topicObj)

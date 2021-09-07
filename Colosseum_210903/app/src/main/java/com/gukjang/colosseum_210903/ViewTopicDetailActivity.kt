@@ -2,6 +2,7 @@ package com.gukjang.colosseum_210903
 
 import android.os.Bundle
 import com.bumptech.glide.Glide
+import com.gukjang.colosseum_210903.datas.ReplyData
 import com.gukjang.colosseum_210903.datas.TopicData
 import com.gukjang.colosseum_210903.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_view_topic_detail.*
@@ -9,6 +10,8 @@ import org.json.JSONObject
 
 class ViewTopicDetailActivity : BaseActivity() {
     lateinit var mTopicData : TopicData
+
+    val mReplyList = ArrayList<ReplyData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +44,22 @@ class ViewTopicDetailActivity : BaseActivity() {
                 // mTopicData 를 새로 파싱한 데이터로 교체
                 mTopicData = TopicData.getTopicDataFromJson(topicObj)
 
+                // topicObj 에 댓글도 있음
+                val repliesArr = topicObj.getJSONArray("replies")
+
+                for(i in 0 until repliesArr.length()){
+                    // 댓글 { } JSON 을 ReplyData 에 파싱 -> mReplyList 목록에 추가
+//                    val replyObj = repliesArr.getJSONObject(i)
+//                    val replyData = ReplyData.getReplyDataFromJson(replyObj)
+//                    mReplyList.add(replyData)
+
+                    // 위에 3줄과 똑같음
+                    mReplyList.add(ReplyData.getReplyDataFromJson(repliesArr.getJSONObject(i)))
+                }
+
+
                 // 새로 받은 데이터로 UI 반영
+                refreshTopicDataToUI()
             }
         })
     }

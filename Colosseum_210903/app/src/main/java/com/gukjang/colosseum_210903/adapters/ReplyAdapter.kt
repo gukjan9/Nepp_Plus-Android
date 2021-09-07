@@ -23,7 +23,7 @@ class ReplyAdapter(
         var row = convertView
         if(row == null) row = mInflater.inflate(R.layout.reply_list_item, null)
         row!!
-        
+
         return row
     }
 }

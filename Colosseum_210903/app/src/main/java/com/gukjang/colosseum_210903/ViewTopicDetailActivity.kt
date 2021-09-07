@@ -90,6 +90,9 @@ class ViewTopicDetailActivity : BaseActivity() {
                 // mTopicData 를 새로 파싱한 데이터로 교체
                 mTopicData = TopicData.getTopicDataFromJson(topicObj)
 
+                // 계속 댓글을 다시 불러옴 -> 기존의 댓글은 지워주고 다시 추가
+                mReplyList.clear()
+
                 // topicObj 에 댓글도 있음
                 val repliesArr = topicObj.getJSONArray("replies")
 
@@ -135,5 +138,12 @@ class ViewTopicDetailActivity : BaseActivity() {
             // ListView 새로고침
             mReplyAdapter.notifyDataSetChanged()
         }
+    }
+
+    // 화면에 들어올 때때마다 onResume), 토론 현황 댓글 새로 불러오기
+    override fun onResume() {
+        super.onResume()
+
+        getTopicDetailDataFromServer()
     }
 }

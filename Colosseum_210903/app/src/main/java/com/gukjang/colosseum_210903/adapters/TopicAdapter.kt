@@ -24,6 +24,7 @@ class TopicAdapter(
         row!!
 
         val data = mList[position]
+
         val topicImg = row.findViewById<ImageView>(R.id.topicImg)
         val topicTitleTxt = row.findViewById<TextView>(R.id.topicTitleTxt)
 

@@ -46,7 +46,6 @@ class MainActivity : BaseActivity() {
                 val dataObj = jsonObj.getJSONObject("data")
                 val topicsArr = dataObj.getJSONArray("topics")
 
-
                 // 서버가 내려주는 토론주제들 (JsonObject 목록) -> TopicData 로 변환해서 ArrayList 에 추가 (반복문 활용)
                 for(i in 0 until topicsArr.length()){
                     val topicObj = topicsArr.getJSONObject(i)

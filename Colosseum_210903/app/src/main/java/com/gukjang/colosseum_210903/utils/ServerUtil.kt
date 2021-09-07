@@ -72,7 +72,7 @@ class ServerUtil {
         }
 
         // 회원가입 요청 함수
-        fun putRequestSignUp(email : String, password : String, nickname : String, handler : JsonResponseHandler){
+        fun putRequestSignUp(email : String, password : String, nickname : String, handler : JsonResponseHandler?){
             val urlString = "${HOST_URL}/user"
             val formData = FormBody.Builder()
                 .add("email", email)
@@ -138,7 +138,7 @@ class ServerUtil {
 
         // 메인화면 데이터 가져오기
         // 저장된 토큰값을 서버에 전송 -> 메모장을 열기 위한 재료로 Context 가 필요함
-        fun getRequestMainData(context: Context, handler1: JsonResponseHandler, handler: JsonResponseHandler?){
+        fun getRequestMainData(context: Context, handler: JsonResponseHandler?){
             val url = "${HOST_URL}/v2/main_info".toHttpUrlOrNull()!!.newBuilder()
 
 //            url.addEncodedQueryParameter("type", type)
@@ -216,6 +216,54 @@ class ServerUtil {
             val formData = FormBody.Builder()
                 .add("side_id", sideId.toString())
 //                .add("password", pw)
+                .build()
+
+            // 3. 어떤 방식으로 접근? Request 에 모두 모아서 하나의 Request 정보로
+            val request = Request.Builder()
+                .url(urlString)
+                .post(formData)
+                .header("X-Http-Token", ContextUtil.getToken(context))
+                .build()
+
+            // 만들어진 request를 실제로 호출해야함
+            // 요청 -> 앱이 클라이언트로 동작
+            val client = OkHttpClient()
+
+            // 만들어진 요청 호출 -> 응답 왔을 때 분석
+            // 호출을 하면 -> 응답 받아서 처리 (처리할 코드 등록)
+            client.newCall(request).enqueue(object : Callback {
+                //
+                override fun onFailure(call: Call, e: IOException) {
+
+                }
+
+                // 로그인 성공, 실패 - 응답 온 경우
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val jsonObj = JSONObject(bodyString)
+
+                    Log.d("서버 응답 본문", jsonObj.toString())
+
+                    // 코드값 추출 연습
+//                    val code = jsonObj.getInt("code")
+//                    Log.d("코드값", code.toString())
+
+                    // 받아낸 jsonObj를 통째로 화면의 응답 처리 코드로
+                    handler?.onResponse(jsonObj)
+                }
+
+            })
+        }
+
+        // 토론 주제에 의견 등록하기
+        fun postRequestTopicReply(context : Context, topicId : Int, content : String, handler : JsonResponseHandler?){
+            // 1. 어느 URL 로 갈 것인가? HOST_URL + Endpoint
+            val urlString = "${HOST_URL}/topic_reply"
+
+            // 2. 어떤 데이터를 들고 갈 것인가
+            val formData = FormBody.Builder()
+                .add("topic_id", topicId.toString())
+                .add("content", content)
                 .build()
 
             // 3. 어떤 방식으로 접근? Request 에 모두 모아서 하나의 Request 정보로

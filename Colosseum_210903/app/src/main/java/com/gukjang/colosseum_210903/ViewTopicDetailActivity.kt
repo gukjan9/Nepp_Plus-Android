@@ -2,6 +2,7 @@ package com.gukjang.colosseum_210903
 
 import android.os.Bundle
 import com.bumptech.glide.Glide
+import com.gukjang.colosseum_210903.adapters.ReplyAdapter
 import com.gukjang.colosseum_210903.datas.ReplyData
 import com.gukjang.colosseum_210903.datas.TopicData
 import com.gukjang.colosseum_210903.utils.ServerUtil
@@ -12,6 +13,7 @@ class ViewTopicDetailActivity : BaseActivity() {
     lateinit var mTopicData : TopicData
 
     val mReplyList = ArrayList<ReplyData>()
+    lateinit var mReplyAdapter: ReplyAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +34,9 @@ class ViewTopicDetailActivity : BaseActivity() {
 
         // 나머지 데이터는 서버에서 가져오자
         getTopicDetailDataFromServer()
+
+        mReplyAdapter = ReplyAdapter(mContext, R.layout.reply_list_item, mReplyList)
+        replyListView.adapter = mReplyAdapter
     }
 
     // 투표현황 등, 최신 토론 상세 데이터를 다시 서버에서 불러오기
@@ -71,6 +76,9 @@ class ViewTopicDetailActivity : BaseActivity() {
 
             secondSideTitleTxt.text = mTopicData.sideList[1].title
             secondSideVoteCountTxt.text = "${mTopicData.sideList[1].voteCount}표"
+
+            // ListView 새로고침
+            mReplyAdapter.notifyDataSetChanged()
         }
     }
 }

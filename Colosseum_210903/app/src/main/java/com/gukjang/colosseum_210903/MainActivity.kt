@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.gukjang.colosseum_210903.adapters.TopicAdapter
 import com.gukjang.colosseum_210903.datas.TopicData
+import com.gukjang.colosseum_210903.datas.UserData
 import com.gukjang.colosseum_210903.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
@@ -63,7 +64,8 @@ class MainActivity : BaseActivity() {
 
                 // 로그인한 사용자 닉네임 가져오기
                 val userObj = dataObj.getJSONObject("user")
-                val nickname = userObj.getString("nick_name")
+//                val nickname = userObj.getString("nick_name")
+                val loginUser = UserData.getUserDataFromJson(userObj)
 
                // 목록의 변화 -> ListView 가 인지 -> 새로고침 공지 -> 백그라운드에서 UI 변경
                 runOnUiThread {

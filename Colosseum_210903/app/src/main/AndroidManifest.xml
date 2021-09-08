@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Colosseum_210903"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".NotificationListActivity"
+            android:exported="true" />
+        <activity
             android:name=".EditReplyActivity"
             android:exported="true" />
         <activity
@@ -36,8 +39,10 @@
             android:exported="true" />
         <activity
             android:name=".SignInActivity"
-            android:exported="true"></activity>
-        <service android:name=".fcm.MyFCMService"
+            android:exported="true" />
+
+        <service
+            android:name=".fcm.MyFCMService"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

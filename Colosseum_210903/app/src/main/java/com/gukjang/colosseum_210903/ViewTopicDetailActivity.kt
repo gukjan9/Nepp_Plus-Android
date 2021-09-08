@@ -32,7 +32,7 @@ class ViewTopicDetailActivity : BaseActivity() {
             // 투표를 해야만 댓글 작성 화면으로 이동시키자
             // 선택 진영이 없다면 myIntent 관련 코드 실행 x
             if(mTopicData.mySelectedSide == null){
-                Toast.makeText(mContext, "투표를 진행하야, 의견 등록이 가능합니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(mContext, "투표를 진행해야, 의견 등록이 가능합니다.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener       // 결과 지정 : 함수를 강제 종료
             }
 

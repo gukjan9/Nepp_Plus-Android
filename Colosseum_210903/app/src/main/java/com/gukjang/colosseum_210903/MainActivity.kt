@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import android.widget.ArrayAdapter
 import com.google.firebase.iid.FirebaseInstanceId
 import com.gukjang.colosseum_210903.adapters.TopicAdapter
 import com.gukjang.colosseum_210903.datas.TopicData
@@ -21,7 +22,6 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setCustomActionBar()
         setupEvents()
         setValues()
 

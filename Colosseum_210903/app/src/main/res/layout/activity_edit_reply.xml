@@ -19,7 +19,7 @@
             android:text="선택한 진영 : " />
 
         <TextView
-            android:id="@+id/selectedSidetxt"
+            android:id="@+id/selectedSideTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="진영 이름"/>

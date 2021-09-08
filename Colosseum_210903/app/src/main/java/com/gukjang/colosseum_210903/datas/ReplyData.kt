@@ -2,6 +2,7 @@ package com.gukjang.colosseum_210903.datas
 
 import android.util.Log
 import org.json.JSONObject
+import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -12,7 +13,7 @@ class ReplyData(
     var hateCount : Int,
     var myLike : Boolean,
     var myHate : Boolean,
-    var replyCount : Int ) {
+    var replyCount : Int ) : Serializable{
 
     lateinit var selectedSide : SideData
 

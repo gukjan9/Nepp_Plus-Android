@@ -1,6 +1,7 @@
 package com.gukjang.colosseum_210903.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.gukjang.colosseum_210903.R
+import com.gukjang.colosseum_210903.ViewReplyDetailActivity
 import com.gukjang.colosseum_210903.ViewTopicDetailActivity
 import com.gukjang.colosseum_210903.datas.ReplyData
 import com.gukjang.colosseum_210903.datas.TopicData
@@ -99,7 +101,9 @@ class ReplyAdapter(
         hateCountTxt.setOnClickListener(ocl)
 
         replyCountTxt.setOnClickListener {
-
+            val myIntent = Intent(mContext, ViewReplyDetailActivity::class.java)
+            myIntent.putExtra("replyData", data)                // data 들 Serializable 해줘야 안 팅김
+            mContext.startActivity(myIntent)
         }
 
         return row

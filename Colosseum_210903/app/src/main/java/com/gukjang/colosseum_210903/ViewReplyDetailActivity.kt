@@ -2,8 +2,13 @@ package com.gukjang.colosseum_210903
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.gukjang.colosseum_210903.datas.ReplyData
+import kotlinx.android.synthetic.main.activity_view_reply_detail.*
+import kotlinx.android.synthetic.main.reply_list_item.*
 
 class ViewReplyDetailActivity : BaseActivity() {
+    lateinit var  mReplyData : ReplyData
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_reply_detail)
@@ -15,7 +20,12 @@ class ViewReplyDetailActivity : BaseActivity() {
 
     }
 
+    // 댓글 상세보기 화면에 댓글 갖고오기
     override fun setValues() {
+        mReplyData = intent.getSerializableExtra("replyData") as ReplyData
 
+        sideAndNicknameTxt.text = "(${mReplyData.selectedSide.title}) ${mReplyData.writer.nickname}"
+
+        replyContentTxt.text = mReplyData.content
     }
 }

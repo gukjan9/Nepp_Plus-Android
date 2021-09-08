@@ -48,7 +48,10 @@ class MainActivity : BaseActivity() {
         backBtn.visibility = View.GONE
 
         // main 에서만 notiBtn 보임 처리
-        notiBtn.visibility = View.VISIBLE
+//        notiBtn.visibility = View.VISIBLE
+
+        notiLayout.visibility = View.VISIBLE
+
     }
 
     // 서버에서 메인화면에 보여줄 정보 받아오기
@@ -83,6 +86,30 @@ class MainActivity : BaseActivity() {
                 runOnUiThread {
                     mTopicAdapter.notifyDataSetChanged()
                     Toast.makeText(mContext, "${loginUser.nickname}님 환영합니다!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+    // 서버에서 안 읽은 알림이 몇개인지 받아오자 -> 화면에 들어올 때마다 재확인
+    override fun onResume() {
+        super.onResume()
+
+        ServerUtil.getRequestNotificationCountOrList(mContext, false, object : ServerUtil.JsonResponseHandler{
+            override fun onResponse(jsonObj: JSONObject) {
+                val dataObj = jsonObj.getJSONObject("data")
+                val unreadCount = dataObj.getInt("unread_noty_count")
+
+                // 알림 갯수 0개 -> 빨간 동그라미 없음
+                // 1개 이상 -> 동그라미 보여주기 + 몇 개인지
+                runOnUiThread{
+                    if(unreadCount == 0){
+                        notiCountTxt.visibility = View.GONE
+                    }
+                    else{
+                        notiCountTxt.text = unreadCount.toString()
+                        notiCountTxt.visibility = View.VISIBLE
+                    }
                 }
             }
         })

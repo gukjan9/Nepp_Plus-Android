@@ -50,8 +50,26 @@ class ReplyAdapter(
 
         createdAtTxt.text = data.getFormattedTimeAgo()
 
+        if(data.myLike){
+            likeCountTxt.setBackgroundResource(R.drawable.red_border_rect)
+            likeCountTxt.setTextColor(mContext.resources.getColor(R.color.like_red))
+        }
+        else{
+            likeCountTxt.setBackgroundResource(R.drawable.black_border_rect)
+            likeCountTxt.setTextColor(mContext.resources.getColor(R.color.black))
+        }
+
+        if(data.myHate){
+            hateCountTxt.setBackgroundResource(R.drawable.blue_border_rect)
+            hateCountTxt.setTextColor(mContext.resources.getColor(R.color.hate_blue))
+        }
+        else{
+            hateCountTxt.setBackgroundResource(R.drawable.black_border_rect)
+            hateCountTxt.setTextColor(mContext.resources.getColor(R.color.black))
+        }
+
         likeCountTxt.tag = true
-        hateCountTxt.tag = true
+        hateCountTxt.tag = false
 
 
         // 해당 댓글에 좋아요, 싫어요 찍었다 -> 서버에 전송
@@ -79,6 +97,10 @@ class ReplyAdapter(
 
         likeCountTxt.setOnClickListener(ocl)
         hateCountTxt.setOnClickListener(ocl)
+
+        replyCountTxt.setOnClickListener {
+
+        }
 
         return row
     }

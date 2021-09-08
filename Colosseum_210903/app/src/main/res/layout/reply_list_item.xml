@@ -86,6 +86,8 @@
                 android:id="@+id/likeCountTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/red_border_rect"
+                android:padding="10dp"
                 android:text="좋아요 ?개" />
 
             <TextView
@@ -93,6 +95,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/blue_border_rect"
+                android:padding="10dp"
                 android:text="싫어요 ?개" />
 
         </LinearLayout>

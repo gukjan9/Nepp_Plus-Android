@@ -1,7 +1,9 @@
 package com.gukjang.colosseum_210903
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.gukjang.colosseum_210903.datas.ReplyData
 import com.gukjang.colosseum_210903.utils.ServerUtil
@@ -43,6 +45,10 @@ class ViewReplyDetailActivity : BaseActivity() {
                 override fun onResponse(jsonObj: JSONObject) {
                     runOnUiThread{
                         contentEdt.setText("")
+
+                        // 답글 입력 후 키보드 숨김처리 (구글링)
+                        val imm = mContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
                     }
                 }
 

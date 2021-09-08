@@ -381,5 +381,52 @@ class ServerUtil {
                 }
             })
         }
+
+        // 어디까지 읽은 알림인지 서버에 알려주기
+        fun postRequestNotificationRead(context : Context, notiId : Int, handler : JsonResponseHandler?){
+            // 1. 어느 URL 로 갈 것인가? HOST_URL + Endpoint
+            val urlString = "${HOST_URL}/notification"
+
+            // 2. 어떤 데이터를 들고 갈 것인가
+            val formData = FormBody.Builder()
+                .add("noti_id", notiId.toString())
+                .build()
+
+            // 3. 어떤 방식으로 접근? Request 에 모두 모아서 하나의 Request 정보로
+            val request = Request.Builder()
+                .url(urlString)
+                .post(formData)
+                .header("X-Http-Token", ContextUtil.getToken(context))
+                .build()
+
+            // 만들어진 request를 실제로 호출해야함
+            // 요청 -> 앱이 클라이언트로 동작
+            val client = OkHttpClient()
+
+            // 만들어진 요청 호출 -> 응답 왔을 때 분석
+            // 호출을 하면 -> 응답 받아서 처리 (처리할 코드 등록)
+            client.newCall(request).enqueue(object : Callback {
+                //
+                override fun onFailure(call: Call, e: IOException) {
+
+                }
+
+                // 로그인 성공, 실패 - 응답 온 경우
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val jsonObj = JSONObject(bodyString)
+
+                    Log.d("서버 응답 본문", jsonObj.toString())
+
+                    // 코드값 추출 연습
+//                    val code = jsonObj.getInt("code")
+//                    Log.d("코드값", code.toString())
+
+                    // 받아낸 jsonObj를 통째로 화면의 응답 처리 코드로
+                    handler?.onResponse(jsonObj)
+                }
+
+            })
+        }
     }
 }

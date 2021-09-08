@@ -2,8 +2,10 @@ package com.gukjang.colosseum_210903
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.google.firebase.iid.FirebaseInstanceId
 import com.gukjang.colosseum_210903.adapters.TopicAdapter
 import com.gukjang.colosseum_210903.datas.TopicData
 import com.gukjang.colosseum_210903.datas.UserData
@@ -22,6 +24,8 @@ class MainActivity : BaseActivity() {
         setCustomActionBar()
         setupEvents()
         setValues()
+
+        Log.d("푸시알림-디바이스토큰", FirebaseInstanceId.getInstance().token!!)
     }
 
     override fun setupEvents() {

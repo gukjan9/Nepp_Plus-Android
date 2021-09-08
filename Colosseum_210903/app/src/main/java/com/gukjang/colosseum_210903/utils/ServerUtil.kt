@@ -24,7 +24,6 @@ class ServerUtil {
 
         // 로그인 기능 실행 함수
         // ID/ PW 전달 -> 서버에 다녀오면 어떤 일을 할건지 : 인터페이스 객체 같이 전달
-
         fun postRequestSignIn(id: String, pw: String, handler : JsonResponseHandler?){
             // 1. 어느 URL 로 갈 것인가? HOST_URL + Endpoint
             val urlString = "${HOST_URL}/user"

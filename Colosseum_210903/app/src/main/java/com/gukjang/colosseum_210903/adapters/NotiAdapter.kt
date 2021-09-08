@@ -33,8 +33,12 @@ class NotiAdapter(
         val data = mList[position]
 
         val notiTitleTxt = row.findViewById<TextView>(R.id.notiTitleTxt)
+        val createdAtTxt = row.findViewById<TextView>(R.id.createdAtTxt)
 
         notiTitleTxt.text = data.title
+
+        val sdf = SimpleDateFormat("yyyy년 M월 d일 a h:mm")
+        createdAtTxt.text = sdf.format(data.createdAt.time)
 
         return row
     }

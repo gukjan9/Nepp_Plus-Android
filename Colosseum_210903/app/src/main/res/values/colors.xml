@@ -10,4 +10,6 @@
     <color name="like_red">#DC6757</color>
     <color name="hate_blue">#0B7DFD</color>
     <color name="gray">#DFDFDF</color>
+    <color name="red">#FF0000</color>
+    <color name="blue">#0000FF</color>
 </resources>

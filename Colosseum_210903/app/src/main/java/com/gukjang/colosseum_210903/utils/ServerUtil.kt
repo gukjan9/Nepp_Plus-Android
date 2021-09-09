@@ -479,13 +479,13 @@ class ServerUtil {
 
         // 댓글 상세 정보 (답글 목록 ) 가져오기
         fun getRequestReplyDetail(context : Context, replyId : Int, handler: JsonResponseHandler?){
-            val url = "${HOST_URL}/topic".toHttpUrlOrNull()!!.newBuilder()
+            val url = "${HOST_URL}/topic_reply".toHttpUrlOrNull()!!.newBuilder()
             // 주소/3 등 어떤 데이터를 보고 싶은지, /숫자 형태로 이어붙이는 주소 -> path
             // 주소?type=Email 등 파라미터이름=값 형태로 이어붙이는 주소 -> Query
 
             url.addPathSegment(replyId.toString())
 
-            url.addEncodedQueryParameter("order_type", "NEW")
+//            url.addEncodedQueryParameter("order_type", "NEW")
 //            url.addEncodedQueryParameter("value", value)
 
             val urlString = url.toString()

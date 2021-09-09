@@ -36,8 +36,51 @@ class ChildReplyAdapter(
         val sideAndNicknameTxt = row.findViewById<TextView>(R.id.sideAndNicknameTxt)
         val contentTxt = row.findViewById<TextView>(R.id.contentTxt)
 
+        // 댓글에 답글 좋아요 싫어요
+        val likeCountTxt = row.findViewById<TextView>(R.id.likeCountTxt)
+        val hateCountTxt = row.findViewById<TextView>(R.id.hateCountTxt)
+
         sideAndNicknameTxt.text = "(${data.selectedSide.title}) ${data.writer.nickname}"
+
         contentTxt.text = data.content
+
+        likeCountTxt.text = "좋아요 ${data.likeCount}개"
+        hateCountTxt.text = "싫어요 ${data.hateCount}개"
+
+        if(data.myLike){
+            likeCountTxt.setBackgroundResource(R.drawable.red_border_box)
+            likeCountTxt.setTextColor(mContext.resources.getColor(R.color.red))
+        }
+        else{
+            likeCountTxt.setBackgroundResource(R.drawable.black_border_rect)
+            likeCountTxt.setTextColor(mContext.resources.getColor(R.color.black))
+        }
+
+        if(data.myHate){
+            hateCountTxt.setBackgroundResource(R.drawable.blue_border_box)
+            hateCountTxt.setTextColor(mContext.resources.getColor(R.color.blue))
+        }
+        else{
+            hateCountTxt.setBackgroundResource(R.drawable.black_border_rect)
+            hateCountTxt.setTextColor(mContext.resources.getColor(R.color.black))
+        }
+
+        likeCountTxt.tag = true
+        hateCountTxt.tag = false
+
+        val ocl = object : View.OnClickListener {
+            override fun onClick(view: View?) {
+                val isLike = view!!.tag.toString().toBoolean()
+                ServerUtil.postRequestReplyLikeOrHate(mContext, data.id, isLike, object : ServerUtil.JsonResponseHandler{
+                    override fun onResponse(jsonObj: JSONObject) {
+                        (mContext as ViewReplyDetailActivity).getChildRepliesFromServer()
+                    }
+                })
+            }
+        }
+
+        likeCountTxt.setOnClickListener(ocl)
+        hateCountTxt.setOnClickListener(ocl)
 
         return row
     }

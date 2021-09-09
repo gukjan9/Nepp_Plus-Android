@@ -48,6 +48,8 @@ class ViewReplyDetailActivity : BaseActivity() {
 
             ServerUtil.postRequestChildReply(mContext, inputContent, mReplyData.id, object : ServerUtil.JsonResponseHandler{
                 override fun onResponse(jsonObj: JSONObject) {
+                    getChildRepliesFromServer()                 // 답글 달자마자 새로고침
+
                     runOnUiThread{
                         contentEdt.setText("")
 
@@ -63,6 +65,7 @@ class ViewReplyDetailActivity : BaseActivity() {
         getChildRepliesFromServer()
 
         mChildReplyAdapter = ChildReplyAdapter(mContext, R.layout.child_reply_list_item, mChildReplyList)
+        childReplyListView.adapter = mChildReplyAdapter
 
     }
 
@@ -74,12 +77,18 @@ class ViewReplyDetailActivity : BaseActivity() {
 
                 val repliesArr = replyObj.getJSONArray("replies")
 
+                // 똑같은 댓글이 여러번 쌓이는 걸 방지
+                mChildReplyList.clear()
+
                 for(i in 0 until repliesArr.length() ) {
                     mChildReplyList.add(ReplyData.getReplyDataFromJson(repliesArr.getJSONObject(i)))
                 }
 
                 runOnUiThread{
                     mChildReplyAdapter.notifyDataSetChanged()
+
+                    // listView 의 최하단 (마지막으로) 이동
+                    childReplyListView.smoothScrollToPosition(mChildReplyList.size - 1)         // .lastIndex
                 }
             }
 

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.gukjang.colosseum_210903.adapters.ChildReplyAdapter
 import com.gukjang.colosseum_210903.datas.ReplyData
 import com.gukjang.colosseum_210903.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_view_reply_detail.*
@@ -13,6 +14,10 @@ import org.json.JSONObject
 
 class ViewReplyDetailActivity : BaseActivity() {
     lateinit var  mReplyData : ReplyData
+
+    val mChildReplyList = ArrayList<ReplyData>()
+
+    lateinit var mChildReplyAdapter : ChildReplyAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,5 +59,30 @@ class ViewReplyDetailActivity : BaseActivity() {
 
             })
         }
+
+        getChildRepliesFromServer()
+
+        mChildReplyAdapter = ChildReplyAdapter(mContext, R.layout.child_reply_list_item, mChildReplyList)
+
+    }
+
+    fun getChildRepliesFromServer(){
+        ServerUtil.getRequestReplyDetail(mContext, mReplyData.id, object : ServerUtil.JsonResponseHandler{
+            override fun onResponse(jsonObj: JSONObject) {
+                val dataObj = jsonObj.getJSONObject("data")
+                val replyObj = dataObj.getJSONObject("reply")
+
+                val repliesArr = replyObj.getJSONArray("replies")
+
+                for(i in 0 until repliesArr.length() ) {
+                    mChildReplyList.add(ReplyData.getReplyDataFromJson(repliesArr.getJSONObject(i)))
+                }
+
+                runOnUiThread{
+                    mChildReplyAdapter.notifyDataSetChanged()
+                }
+            }
+
+        })
     }
 }

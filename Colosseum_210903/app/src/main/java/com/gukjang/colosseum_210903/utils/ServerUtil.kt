@@ -36,8 +36,8 @@ class ServerUtil {
 
             // 3. 어떤 방식으로 접근? Request 에 모두 모아서 하나의 Request 정보로
             val request = Request.Builder()
-                .url(urlString)
-                .post(formData)
+                .url(urlString)                     // 어디로
+                .post(formData)                     // 어떤 방식으로, 뭘 들고
                 .build()
 
             // 만들어진 request를 실제로 호출해야함
@@ -47,7 +47,6 @@ class ServerUtil {
             // 만들어진 요청 호출 -> 응답 왔을 때 분석
             // 호출을 하면 -> 응답 받아서 처리 (처리할 코드 등록)
             client.newCall(request).enqueue(object : Callback {
-                //
                 override fun onFailure(call: Call, e: IOException) {
 
                 }
@@ -55,6 +54,8 @@ class ServerUtil {
                 // 로그인 성공, 실패 - 응답 온 경우
                 override fun onResponse(call: Call, response: Response) {
                     val bodyString = response.body!!.string()
+                    // 본문을 그냥 String 으로 찍으면 한글이 깨져보임
+                    // JSONObject 형태로 변환해서 다시 String 으로 바꿔서 봐야 잘 보임
                     val jsonObj = JSONObject(bodyString)
 
                     Log.d("서버 응답 본문", jsonObj.toString())
@@ -473,6 +474,43 @@ class ServerUtil {
                     handler?.onResponse(jsonObj)
                 }
 
+            })
+        }
+
+        // 댓글 상세 정보 (답글 목록 ) 가져오기
+        fun getRequestReplyDetail(context : Context, replyId : Int, handler: JsonResponseHandler?){
+            val url = "${HOST_URL}/topic".toHttpUrlOrNull()!!.newBuilder()
+            // 주소/3 등 어떤 데이터를 보고 싶은지, /숫자 형태로 이어붙이는 주소 -> path
+            // 주소?type=Email 등 파라미터이름=값 형태로 이어붙이는 주소 -> Query
+
+            url.addPathSegment(replyId.toString())
+
+            url.addEncodedQueryParameter("order_type", "NEW")
+//            url.addEncodedQueryParameter("value", value)
+
+            val urlString = url.toString()
+
+            Log.d("완성된 URL", urlString)
+
+            val request = Request.Builder()
+                .url(urlString)
+                .get()
+                .header("X-Http-Token", ContextUtil.getToken(context))
+                .build()
+
+            val client = OkHttpClient()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val jsonObj = JSONObject(bodyString)
+                    Log.d("서버 응답", jsonObj.toString())
+                    handler?.onResponse(jsonObj)
+                }
             })
         }
     }

@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.gukjang.colosseum_210903.adapters.ChildReplyAdapter
 import com.gukjang.colosseum_210903.datas.ReplyData
+import com.gukjang.colosseum_210903.utils.GlobalData
 import com.gukjang.colosseum_210903.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_view_reply_detail.*
 import kotlinx.android.synthetic.main.reply_list_item.*
@@ -55,9 +57,15 @@ class ViewReplyDetailActivity : BaseActivity() {
             // 답글 삭제 테스트
             childReplyListView.setOnItemClickListener { adapterView, view, position, l ->
                 // 내가 적은 답글이 아니라면, 함수 강제 종료
-//                if(){
-//                    return@setOnItemClickListener
-//                }
+
+                Log.d("댓글 상세 - 로그인한 사람?", GlobalData.loginUser!!.nickname)
+
+                val clickedReply = mChildReplyList[position]
+
+                if(GlobalData.loginUser!!.id == clickedReply.writer.id){
+                    Toast.makeText(mContext, "자신이 적은 답글만 삭제할 수 있습니다.", Toast.LENGTH_SHORT).show()
+                    return@setOnItemClickListener
+                }
 
                 val alert = AlertDialog.Builder(mContext)
                 alert.setMessage("정말 해당 답글을 삭제하시겠습니다?")

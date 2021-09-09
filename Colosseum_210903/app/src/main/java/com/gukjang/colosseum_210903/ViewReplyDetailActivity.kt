@@ -1,10 +1,12 @@
 package com.gukjang.colosseum_210903
 
 import android.content.Context
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.gukjang.colosseum_210903.adapters.ChildReplyAdapter
 import com.gukjang.colosseum_210903.datas.ReplyData
 import com.gukjang.colosseum_210903.utils.ServerUtil
@@ -27,17 +29,6 @@ class ViewReplyDetailActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
-
-    }
-
-    // 댓글 상세보기 화면에 댓글 갖고오기
-    override fun setValues() {
-        mReplyData = intent.getSerializableExtra("replyData") as ReplyData
-
-        sideAndNicknameTxt.text = "(${mReplyData.selectedSide.title}) ${mReplyData.writer.nickname}"
-
-        replyContentTxt.text = mReplyData.content
-
         okBtn.setOnClickListener {
             val inputContent = contentEdt.text.toString()
 
@@ -58,9 +49,35 @@ class ViewReplyDetailActivity : BaseActivity() {
                         imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
                     }
                 }
-
             })
         }
+
+            // 답글 삭제 테스트
+            childReplyListView.setOnItemClickListener { adapterView, view, position, l ->
+                // 내가 적은 답글이 아니라면, 함수 강제 종료
+//                if(){
+//                    return@setOnItemClickListener
+//                }
+
+                val alert = AlertDialog.Builder(mContext)
+                alert.setMessage("정말 해당 답글을 삭제하시겠습니다?")
+                alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialogInterface, i ->
+
+                })
+                alert.setNegativeButton("취소", null)
+                alert.show()
+
+                return@setOnItemClickListener
+            }
+        }
+
+    // 댓글 상세보기 화면에 댓글 갖고오기
+    override fun setValues() {
+        mReplyData = intent.getSerializableExtra("replyData") as ReplyData
+
+        sideAndNicknameTxt.text = "(${mReplyData.selectedSide.title}) ${mReplyData.writer.nickname}"
+
+        replyContentTxt.text = mReplyData.content
 
         getChildRepliesFromServer()
 

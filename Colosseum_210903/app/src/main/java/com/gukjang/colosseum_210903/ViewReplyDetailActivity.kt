@@ -70,7 +70,15 @@ class ViewReplyDetailActivity : BaseActivity() {
                 val alert = AlertDialog.Builder(mContext)
                 alert.setMessage("정말 해당 답글을 삭제하시겠습니다?")
                 alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialogInterface, i ->
-
+                    // 해당 답글 삭제 -> API 요청 + 새로고침
+                    ServerUtil.deleteRequestReply(mContext, clickedReply.id, object : ServerUtil.JsonResponseHandler{
+                        override fun onResponse(jsonObj: JSONObject) {
+                            runOnUiThread{
+                                Toast.makeText(mContext, "답글을 삭제했습니다.", Toast.LENGTH_SHORT).show()
+                            }
+                            getChildRepliesFromServer()
+                        }
+                    })
                 })
                 alert.setNegativeButton("취소", null)
                 alert.show()

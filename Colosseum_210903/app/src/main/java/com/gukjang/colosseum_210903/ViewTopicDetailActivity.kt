@@ -1,15 +1,18 @@
 package com.gukjang.colosseum_210903
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.gukjang.colosseum_210903.adapters.ReplyAdapter
 import com.gukjang.colosseum_210903.datas.ReplyData
 import com.gukjang.colosseum_210903.datas.TopicData
+import com.gukjang.colosseum_210903.utils.GlobalData
 import com.gukjang.colosseum_210903.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_view_topic_detail.*
 import org.json.JSONObject
@@ -61,6 +64,33 @@ class ViewTopicDetailActivity : BaseActivity() {
         }
         voteToFirstSideBtn.setOnClickListener(ocl)
         voteToSecondSideBtn.setOnClickListener(ocl)
+
+        replyListView.setOnItemClickListener { adapterView, view, position, l ->
+
+            val clickedReply = mReplyList[position]
+
+            if(GlobalData.loginUser!!.id != clickedReply.writer.id){
+                Toast.makeText(mContext, "자신이 적은 답글만 삭제할 수 있습니다.", Toast.LENGTH_SHORT).show()
+                return@setOnItemClickListener
+            }
+
+            val alert = AlertDialog.Builder(mContext)
+            alert.setMessage("정말 해당 답글을 삭제하시겠습니다?")
+            alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialogInterface, i ->
+                // 해당 답글 삭제 -> API 요청 + 새로고침
+                ServerUtil.deleteRequestReply(mContext, clickedReply.id, object : ServerUtil.JsonResponseHandler{
+                    override fun onResponse(jsonObj: JSONObject) {
+                        runOnUiThread{
+                            Toast.makeText(mContext, "답글을 삭제했습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                        getTopicDetailDataFromServer()
+                    }
+                })
+            })
+            alert.setNegativeButton("취소", null)
+            alert.show()
+            return@setOnItemClickListener
+        }
     }
 
     override fun setValues() {

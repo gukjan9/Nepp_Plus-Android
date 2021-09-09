@@ -62,7 +62,7 @@ class ViewReplyDetailActivity : BaseActivity() {
 
                 val clickedReply = mChildReplyList[position]
 
-                if(GlobalData.loginUser!!.id == clickedReply.writer.id){
+                if(GlobalData.loginUser!!.id != clickedReply.writer.id){
                     Toast.makeText(mContext, "자신이 적은 답글만 삭제할 수 있습니다.", Toast.LENGTH_SHORT).show()
                     return@setOnItemClickListener
                 }

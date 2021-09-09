@@ -3,7 +3,9 @@ package com.gukjang.colosseum_210903
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import com.gukjang.colosseum_210903.datas.UserData
 import com.gukjang.colosseum_210903.utils.ContextUtil
+import com.gukjang.colosseum_210903.utils.GlobalData
 import com.gukjang.colosseum_210903.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import org.json.JSONObject
@@ -38,6 +40,13 @@ class SignInActivity : BaseActivity() {
                         val token = dataObj.getString("token")
 
                         ContextUtil.setToken(mContext, token)
+
+                        // data -> user { } 를 UserData 로 변환
+                        val userObj = dataObj.getJSONObject("user")
+                        val loginUserData = UserData.getUserDataFromJson(userObj)
+
+                        // GlobalData 의 변수에 대입
+                        GlobalData.loginUser = loginUserData
 
                         // 메인화면으로 이동 + 로그인화면 종료
                         val myIntent = Intent(mContext, MainActivity::class.java)

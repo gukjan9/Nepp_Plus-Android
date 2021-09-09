@@ -36,6 +36,11 @@ class MainActivity : BaseActivity() {
             myIntent.putExtra("topic", clickedTopic)
             startActivity(myIntent)
         }
+
+        profileImg.setOnClickListener {
+            val myIntent = Intent(mContext, MyProfileActivity::class.java)
+            startActivity(myIntent)
+        }
     }
 
     override fun setValues() {
@@ -51,6 +56,9 @@ class MainActivity : BaseActivity() {
 //        notiBtn.visibility = View.VISIBLE
 
         notiLayout.visibility = View.VISIBLE
+
+        // 내 프로필 화면 버튼 보여주기
+        profileImg.visibility = View.VISIBLE
 
     }
 

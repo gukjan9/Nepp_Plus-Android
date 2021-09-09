@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Colosseum_210903"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MyProfileActivity"
+            android:exported="true" />
+        <activity
             android:name=".ViewReplyDetailActivity"
             android:exported="true" />
         <activity

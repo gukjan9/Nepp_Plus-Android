@@ -5,22 +5,19 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import androidx.databinding.DataBindingUtil
-import com.facebook.CallbackManager
 import java.security.MessageDigest
-import com.facebook.FacebookException
 
 import com.facebook.login.LoginResult
-
-import com.facebook.FacebookCallback
 
 import android.R
 import android.content.Intent
 import android.view.View
-import com.facebook.AccessToken
+import com.facebook.*
 import com.facebook.login.LoginManager
 
 import com.facebook.login.widget.LoginButton
 import com.gukjang.myfinalproject_210910.databinding.ActivityLoginBinding
+import org.json.JSONObject
 import java.util.*
 
 
@@ -40,7 +37,29 @@ class LoginActivity : BaseActivity() {
         binding.loginButton.setReadPermissions("email")
         binding.facebookLoginBtn.setOnClickListener {
 
-            // 
+            // 커스텀 버튼에 로그인 하고 돌아온 callback 따로 설정
+            LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult>{
+                override fun onSuccess(result: LoginResult?) {
+                    Log.d("로그인 성공", "우리가 만든 버튼으로 성공")
+
+                    // 나의 (로그인한 사람) 정보 (GraphRequest) 를 받아오는데 토큰 활용
+                    val graphRequest = GraphRequest.newMeRequest(result?.accessToken, object : GraphRequest.GraphJSONObjectCallback{
+                        override fun onCompleted(jsonObj: JSONObject?, response: GraphResponse?) {
+                            Log.d("내 정보 내용", jsonObj.toString())
+                        }
+                    })
+                    graphRequest.executeAsync()
+                }
+
+                override fun onCancel() {
+
+                }
+
+                override fun onError(error: FacebookException?) {
+
+                }
+
+            })
 
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"))
         }

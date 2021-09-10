@@ -46,6 +46,14 @@ class LoginActivity : BaseActivity() {
                     val graphRequest = GraphRequest.newMeRequest(result?.accessToken, object : GraphRequest.GraphJSONObjectCallback{
                         override fun onCompleted(jsonObj: JSONObject?, response: GraphResponse?) {
                             Log.d("내 정보 내용", jsonObj.toString())
+
+                            val name = jsonObj!!.getString("name")
+                            val id = jsonObj.getString("id")
+
+                            Log.d("이름", name)
+                            Log.d("id값", id)
+
+                            // 페북이 알려준 이름 / id값을 API 서버에 전달달
                         }
                     })
                     graphRequest.executeAsync()

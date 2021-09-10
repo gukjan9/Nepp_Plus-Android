@@ -5,20 +5,24 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import androidx.databinding.DataBindingUtil
+import com.gukjang.myfinalproject_210910.databinding.ActivityLoginBinding
 import java.security.MessageDigest
 
 import com.facebook.login.LoginResult
 
-import android.R
 import android.content.Intent
 import android.view.View
+import android.widget.Toast
 import com.facebook.*
 import com.facebook.login.LoginManager
 
 import com.facebook.login.widget.LoginButton
-import com.gukjang.myfinalproject_210910.databinding.ActivityLoginBinding
+import com.gukjang.myfinalproject_210910.datas.BasicResponse
 import com.kakao.sdk.user.UserApiClient
 import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
 
@@ -27,7 +31,7 @@ class LoginActivity : BaseActivity() {
     lateinit var  callbackManager : CallbackManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, com.gukjang.myfinalproject_210910.R.layout.activity_login)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         setupEvents()
         setValues()
     }
@@ -53,6 +57,22 @@ class LoginActivity : BaseActivity() {
 
                             Log.d("이름", name)
                             Log.d("id값", id)
+
+                            apiService.postRequestSocialLogin("facebook", id, name).enqueue(object : Callback<BasicResponse>{
+                                override fun onResponse(
+                                    call: Call<BasicResponse>,
+                                    response: Response<BasicResponse>
+                                ) {
+                                    val basicResponse = response.body()!!
+
+                                    Toast.makeText(mContext, basicResponse.message, Toast.LENGTH_SHORT).show()
+                                }
+
+                                override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+                                }
+
+                            })
 
                             // 페북이 알려준 이름 / id값을 API 서버에 전달달
                         }
@@ -116,6 +136,38 @@ class LoginActivity : BaseActivity() {
 
                 }
             }
+        }
+
+        binding.goSignUpBtn.setOnClickListener{
+            val myIntent = Intent(mContext, SignUpActivity::class.java)
+            startActivity(myIntent)
+        }
+
+        binding.loginBtn.setOnClickListener {
+            val inputId = binding.emailEdt.text.toString()
+            val inputPw = binding.pwEdt.text.toString()
+
+            apiService.postRequestLogin(inputId, inputPw).enqueue(object : Callback<BasicResponse>{
+                override fun onResponse(
+                    call: Call<BasicResponse>,
+                    response: Response<BasicResponse>
+                ) {
+                    if(response.isSuccessful){
+                        val basicResponse = response.body()!!
+                        Toast.makeText(mContext, basicResponse.message, Toast.LENGTH_SHORT).show()
+                    }
+                    else{
+                        val errorBodyStr = response.errorBody()!!.string()
+                        val jsonObj = JSONObject(errorBodyStr)
+                        Log.d("응답 본문", jsonObj.toString())
+                    }
+                }
+
+                override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+                }
+
+            })
         }
     }
 

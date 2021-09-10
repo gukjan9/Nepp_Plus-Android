@@ -40,6 +40,7 @@ class LoginActivity : BaseActivity() {
         callbackManager = CallbackManager.Factory.create();
 
         binding.loginButton.setReadPermissions("email")
+
         binding.facebookLoginBtn.setOnClickListener {
 
             // 커스텀 버튼에 로그인 하고 돌아온 callback 따로 설정
@@ -75,7 +76,7 @@ class LoginActivity : BaseActivity() {
 
                             })
 
-                            // 페북이 알려준 이름 / id값을 API 서버에 전달달
+                            // 페북이 알려준 이름 / id값을 API 서버에 전달
                         }
                     })
                     graphRequest.executeAsync()
@@ -134,16 +135,17 @@ class LoginActivity : BaseActivity() {
                             )
                         }
                     }
-
                 }
             }
         }
 
+        // 로그인창에서 회원가입 버튼
         binding.goSignUpBtn.setOnClickListener{
             val myIntent = Intent(mContext, SignUpActivity::class.java)
             startActivity(myIntent)
         }
 
+        // 회원가입 창에서 회원가입 버튼
         binding.loginBtn.setOnClickListener {
             val inputId = binding.emailEdt.text.toString()
             val inputPw = binding.pwEdt.text.toString()

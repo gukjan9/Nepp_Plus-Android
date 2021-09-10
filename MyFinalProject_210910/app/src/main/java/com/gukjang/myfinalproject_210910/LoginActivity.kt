@@ -66,6 +66,7 @@ class LoginActivity : BaseActivity() {
                                     val basicResponse = response.body()!!
 
                                     Toast.makeText(mContext, basicResponse.message, Toast.LENGTH_SHORT).show()
+                                    Log.d("API 서버가 준 토큰 값", basicResponse.data.token)
                                 }
 
                                 override fun onFailure(call: Call<BasicResponse>, t: Throwable) {

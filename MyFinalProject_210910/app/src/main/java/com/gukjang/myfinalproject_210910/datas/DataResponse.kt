@@ -1,4 +1,4 @@
 package com.gukjang.myfinalproject_210910.datas
 
-class DataResponse(var token : String) {
+class DataResponse(var user : UserData, var token : String) {
 }

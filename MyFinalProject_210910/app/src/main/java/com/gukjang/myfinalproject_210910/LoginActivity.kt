@@ -19,6 +19,7 @@ import com.facebook.login.LoginManager
 import com.facebook.login.widget.LoginButton
 import com.gukjang.myfinalproject_210910.datas.BasicResponse
 import com.gukjang.myfinalproject_210910.utils.ContextUtil
+import com.gukjang.myfinalproject_210910.utils.GlobalData
 import com.kakao.sdk.user.UserApiClient
 import org.json.JSONObject
 import retrofit2.Call
@@ -65,12 +66,18 @@ class LoginActivity : BaseActivity() {
                                     call: Call<BasicResponse>,
                                     response: Response<BasicResponse>
                                 ) {
-                                        val basicResponse = response.body()!!
+                                    val basicResponse = response.body()!!
 
-                                        Toast.makeText(mContext, basicResponse.message, Toast.LENGTH_SHORT).show()
-                                        Log.d("API 서버가 준 토큰 값", basicResponse.data.token)
+                                    Toast.makeText(mContext, basicResponse.message, Toast.LENGTH_SHORT).show()
+                                    Log.d("API 서버가 준 토큰 값", basicResponse.data.token)
 
-                                        ContextUtil.setToken(mContext, basicResponse.data.token)
+                                    ContextUtil.setToken(mContext, basicResponse.data.token)
+                                    GlobalData.loginUser = basicResponse.data.user
+
+                                    // 메인화면으로 이동
+                                    val myIntent = Intent(mContext, MainActivity::class.java)
+                                    startActivity(myIntent)
+                                    finish()
                                 }
 
                                 override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
@@ -146,6 +153,7 @@ class LoginActivity : BaseActivity() {
                                 ) {
                                     val basicResponse = response.body()!!
                                     ContextUtil.setToken(mContext, basicResponse.data.token)
+                                    GlobalData.loginUser = basicResponse.data.user
                                 }
 
                                 override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
@@ -181,6 +189,9 @@ class LoginActivity : BaseActivity() {
                         Log.d("API 서버가 준 토큰 값", basicResponse.data.token)
 
                         ContextUtil.setToken(mContext, basicResponse.data.token)
+
+                        // Toast.makeText(mContext, basicResponse.data.user.email, Toast.LENGTH_SHORT).show()
+                        GlobalData.loginUser = basicResponse.data.user
                     }
                     else{
                         val errorBodyStr = response.errorBody()!!.string()

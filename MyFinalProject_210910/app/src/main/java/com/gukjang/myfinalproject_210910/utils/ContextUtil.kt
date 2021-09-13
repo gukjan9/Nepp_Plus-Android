@@ -17,5 +17,10 @@ class ContextUtil {
             val pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
             pref.edit().putString(TOKEN, token).apply()
         }
+
+        fun getToken(context: Context) : String{
+            val pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
+            return pref.getString(TOKEN, "")!!
+        }
     }
 }

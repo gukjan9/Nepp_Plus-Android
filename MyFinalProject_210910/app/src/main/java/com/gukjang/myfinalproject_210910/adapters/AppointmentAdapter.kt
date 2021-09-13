@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import com.gukjang.myfinalproject_210910.R
 import com.gukjang.myfinalproject_210910.datas.AppointmentData
 
@@ -19,6 +20,15 @@ class AppointmentAdapter(
         var row = convertView
         if(row == null) row = mInflater.inflate(R.layout.appointment_list_item, null)
         row!!
+
+        val data = mList[position]
+
+        val titleTxt = row.findViewById<TextView>(R.id.titleTxt)
+        val dateTimeTxt = row.findViewById<TextView>(R.id.dateTimeTxt)
+        val placeNameTxt = row.findViewById<TextView>(R.id.placeNameTxt)
+
+
+
 
         return row
     }

@@ -18,6 +18,7 @@ import com.facebook.login.LoginManager
 
 import com.facebook.login.widget.LoginButton
 import com.gukjang.myfinalproject_210910.datas.BasicResponse
+import com.gukjang.myfinalproject_210910.utils.ContextUtil
 import com.kakao.sdk.user.UserApiClient
 import org.json.JSONObject
 import retrofit2.Call
@@ -64,10 +65,12 @@ class LoginActivity : BaseActivity() {
                                     call: Call<BasicResponse>,
                                     response: Response<BasicResponse>
                                 ) {
-                                    val basicResponse = response.body()!!
+                                        val basicResponse = response.body()!!
 
-                                    Toast.makeText(mContext, basicResponse.message, Toast.LENGTH_SHORT).show()
-                                    Log.d("API 서버가 준 토큰 값", basicResponse.data.token)
+                                        Toast.makeText(mContext, basicResponse.message, Toast.LENGTH_SHORT).show()
+                                        Log.d("API 서버가 준 토큰 값", basicResponse.data.token)
+
+                                        ContextUtil.setToken(mContext, basicResponse.data.token)
                                 }
 
                                 override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
@@ -133,6 +136,22 @@ class LoginActivity : BaseActivity() {
                                         "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
                                         "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}"
                             )
+
+                            // 토큰 저장
+                            apiService.postRequestSocialLogin(
+                                "kakao", user.id.toString(), user.kakaoAccount?.profile?.nickname!!).enqueue(object : Callback<BasicResponse>{
+                                override fun onResponse(
+                                    call: Call<BasicResponse>,
+                                    response: Response<BasicResponse>
+                                ) {
+                                    val basicResponse = response.body()!!
+                                    ContextUtil.setToken(mContext, basicResponse.data.token)
+                                }
+
+                                override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+                                }
+                            })
                         }
                     }
                 }
@@ -150,6 +169,7 @@ class LoginActivity : BaseActivity() {
             val inputId = binding.emailEdt.text.toString()
             val inputPw = binding.pwEdt.text.toString()
 
+            // 토큰 저장
             apiService.postRequestLogin(inputId, inputPw).enqueue(object : Callback<BasicResponse>{
                 override fun onResponse(
                     call: Call<BasicResponse>,
@@ -158,6 +178,9 @@ class LoginActivity : BaseActivity() {
                     if(response.isSuccessful){
                         val basicResponse = response.body()!!
                         Toast.makeText(mContext, basicResponse.message, Toast.LENGTH_SHORT).show()
+                        Log.d("API 서버가 준 토큰 값", basicResponse.data.token)
+
+                        ContextUtil.setToken(mContext, basicResponse.data.token)
                     }
                     else{
                         val errorBodyStr = response.errorBody()!!.string()

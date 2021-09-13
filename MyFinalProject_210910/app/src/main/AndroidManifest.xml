@@ -4,6 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
+
+    </uses-permission>
+
     <application
         android:name=".GlobalApplication"
         android:allowBackup="true"
@@ -31,6 +35,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data android:name="com.kakao.sdk.AppKey" android:value="93c06c309e92fc6259e148ae8fc11b43"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

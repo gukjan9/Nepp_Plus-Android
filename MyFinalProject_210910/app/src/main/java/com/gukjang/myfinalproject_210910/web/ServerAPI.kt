@@ -1,5 +1,9 @@
 package com.gukjang.myfinalproject_210910.web
 
+import android.content.Context
+import com.gukjang.myfinalproject_210910.utils.ContextUtil
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -13,10 +17,26 @@ class ServerAPI {
         // SingleTon 패턴 사용 - 객체를 하나로 유지하자
         private var retrofit : Retrofit? = null
 
-        fun getRetrofit() : Retrofit {
+        fun getRetrofit(context : Context) : Retrofit {
             if(retrofit == null) {
+                // API 요청이 발생하면 -> 가로채서 -> 헤더를 추가한다 -> API 요청을 이어간다
+                    // 모든 통신을 헤더에 토큰을 달아서 진행
+                val interceptor = Interceptor{
+                    with(it){
+                        val newRequest = request().newBuilder()
+                            .addHeader("X-Http-Token", ContextUtil.getToken(context))
+                            .build()
+
+                        proceed(newRequest)
+                    }
+                }
+                // 클라이언트한테 인터셉터 달아주기
+                val myClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
+
+                // 기본 클라이언트 -> 직접 만든 client를 이용해서 통신
                 retrofit = Retrofit.Builder()
                     .baseUrl(hostURL)
+                    .client(myClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
             }

@@ -36,6 +36,7 @@ android {
 }
 
 dependencies {
+    implementation files('libs/libDaumMapAndroid.jar')
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.kakao.sdk:v2-user:2.7.0'
     implementation 'com.facebook.android:facebook-login:8.0.0'

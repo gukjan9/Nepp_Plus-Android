@@ -4,10 +4,18 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.DatePicker
 import android.widget.TimePicker
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.gukjang.myfinalproject_210910.databinding.ActivityEditAppointmentBinding
+import com.gukjang.myfinalproject_210910.datas.BasicResponse
+import com.gukjang.myfinalproject_210910.utils.ContextUtil
+import net.daum.mf.map.api.MapView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,13 +41,49 @@ class EditAppointmentActivity : BaseActivity() {
 
             // 2. 약속 일시
             // 날짜 / 시간 설정 안했으면 하라고 Toast 날리기
+            if(binding.dateTxt.text == "일자 설정"){
+                Toast.makeText(mContext, "일자를 선택하지 않았습니다.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if(binding.timeTxt.text == "시간 설정"){
+                Toast.makeText(mContext, "시간을 설정하지 않았습니다", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
+            val finalDatetime = sdf.format(mSelectedDateTime.time)
+
+            Log.d("서버에 보낼 약속 일시", finalDatetime)
 
 
             // 3. 약속 장소
             // 장소 이름
             val inputPlaceName = binding.placeSearchEdt.text.toString()
 
-            // 장소 위도/경도도
+            // 장소 위도/경도
+            val lat = 37.724520
+            val lng = 126.752466
+
+            // 서버에 API 호출
+            apiService.postRequestAppointment(
+                // ContextUtil.getToken(mContext),
+                inputTitle,
+                finalDatetime,
+                inputPlaceName,
+                lat, lng).enqueue(object : Callback<BasicResponse>{
+                override fun onResponse(
+                    call: Call<BasicResponse>,
+                    response: Response<BasicResponse>
+                ) {
+
+                }
+
+                override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+                }
+
+            })
         }
 
         // 날짜 선택
@@ -85,6 +129,9 @@ class EditAppointmentActivity : BaseActivity() {
     }
 
     override fun setValues() {
+        // 카카오 지도 띄워보기
+        val mapView = MapView(mContext)
 
+        binding.mapView.addView(mapView)
     }
 }

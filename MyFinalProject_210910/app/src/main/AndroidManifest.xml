@@ -3,7 +3,7 @@
     package="com.gukjang.myfinalproject_210910">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".GlobalApplication"
@@ -16,7 +16,13 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".SplashActivity"
-            android:exported="true" />
+            android:exported="true" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity
             android:name=".EditAppointmentActivity"
             android:exported="true" />
@@ -26,11 +32,6 @@
         <activity
             android:name=".SignUpActivity"
             android:exported="true" />
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -42,8 +43,9 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+
         <meta-data
-            android:name="com.naver.maps.map.ubl5xakafs"
+            android:name="com.naver.maps.map.CLIENT_ID"
             android:value="ubl5xakafs" />
 
         <activity

@@ -38,4 +38,7 @@ interface ServerAPIService {
     // GET - 약속 목록 가져오기
     @GET("/appointment")
     fun getRequestAppointmentList() : Call<BasicResponse>
+
+    @GET("/user")
+    fun getRequestMyInfo
 }

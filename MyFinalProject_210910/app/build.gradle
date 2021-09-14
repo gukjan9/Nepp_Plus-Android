@@ -36,6 +36,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.airbnb.android:lottie:4.1.0'
     implementation("com.naver.maps:map-sdk:3.12.0")
     implementation files('libs/libDaumMapAndroid.jar')
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

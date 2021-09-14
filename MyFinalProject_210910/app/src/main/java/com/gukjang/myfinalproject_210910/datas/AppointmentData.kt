@@ -13,6 +13,7 @@ class AppointmentData(
     var latitude : Double,
     var longitude : Double,
     @SerializedName("created_at")
-    var createdAt : String
+    var createdAt : String,
+    var user: UserData
 ) {
 }

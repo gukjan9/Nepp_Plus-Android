@@ -34,9 +34,9 @@ class ViewMapActivity : BaseActivity() {
     override fun setValues() {
         mAppointmentData = intent.getSerializableExtra("appointment") as AppointmentData        // 위에서 AppointmentData 로 받기로 했음
 
-        titleTxt.text = "약속 장소 확인"
+        titleTxt.text = "약속 장소 확인인"
 
-        val fm = supportFragmentManager
+       val fm = supportFragmentManager
         val mapFragment = fm.findFragmentById(R.id.naverMapFrag) as MapFragment?
             ?: MapFragment.newInstance().also {
                 fm.beginTransaction().add(R.id.naverMapFrag, it).commit()

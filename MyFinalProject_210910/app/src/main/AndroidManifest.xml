@@ -15,12 +15,15 @@
         android:theme="@style/Theme.MyFinalProject_210910"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MySettingActivity"
+            android:exported="true" />
+        <activity
             android:name=".ViewMapActivity"
             android:exported="true" />
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,7 +41,7 @@
             android:exported="true" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

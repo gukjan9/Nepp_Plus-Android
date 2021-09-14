@@ -191,8 +191,8 @@ class EditAppointmentActivity : BaseActivity() {
             it.setOnMapClickListener { pointF, latLng ->
                 Toast.makeText(mContext, "위도 : ${latLng.latitude}, 경도 : ${latLng.longitude}", Toast.LENGTH_SHORT).show()
 
-                // mSelectedLat = latLng.latitude
-                // mSelectedLng = latLng.longitude
+                mSelectedLat = latLng.latitude
+                mSelectedLng = latLng.longitude
 
                 // 좌표를 받아서 마커 생성 후 맵에 띄우기
 //                val marker = Marker(LatLng(mSelectedLat, mSelectedLng))

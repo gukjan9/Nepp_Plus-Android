@@ -25,40 +25,33 @@ class SplashActivity : BaseActivity() {
     }
 
     override fun setValues() {
-        val myhandler = Handler(Looper.getMainLooper())
-        myhandler.postDelayed({
+        apiService.getRequestMyInfo().enqueue(object : Callback<BasicResponse>{
+            override fun onResponse(
+                call: Call<BasicResponse>,
+                response: Response<BasicResponse>
+            ) {
+                if(response.isSuccessful){
+                    val basicResponse = response.body()!!
+                    GlobalData.loginUser = basicResponse.data.user
+                }
+            }
+
+            override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+            }
+        })
+
+        val myHandler = Handler(Looper.getMainLooper())
+        myHandler.postDelayed({
             val myIntent : Intent
 
-            if(ContextUtil.getToken(mContext) != ""){
-
-                apiService.getRequestMyInfo().enqueue(object : Callback<BasicResponse>{
-                    override fun onResponse(
-                        call: Call<BasicResponse>,
-                        response: Response<BasicResponse>
-                    ) {
-                        if(response.isSuccessful){
-                            val basicResponse = response.body()!!
-                            GlobalData.loginUser = basicResponse.data.user
-                        }
+            if(GlobalData.loginUser != null){
+                myIntent = Intent(mContext, MainActivity::class.java)
                     }
-
-                    override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
-
-                    }
-
-                })
-                val myHandler = Handler(Looper.getMainLooper())
-                myHandler.postDelayed({
-                    val myIntent : Intent
-
-                    if(GlobalData.loginUser != null){
-                        myIntent = Intent(mContext, MainActivity::class.java)
-                    }
-                    else{
-                        myIntent = Intent(mContext, LoginActivity::class.java)
-                    }
-                })
+            else{
+                myIntent = Intent(mContext, LoginActivity::class.java)
             }
+            startActivity(myIntent)
         }, 2500)
     }
 }

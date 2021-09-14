@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.gukjang.myfinalproject_210910.adapters.AppointmentAdapter
@@ -28,6 +29,11 @@ class MainActivity : BaseActivity() {
         setValues()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getAppointmentListFromServer()
+    }
+
     override fun setupEvents() {
 
         binding.addAppointmentBtn.setOnClickListener{
@@ -35,16 +41,20 @@ class MainActivity : BaseActivity() {
             startActivity(myIntent)
             finish()
         }
-
     }
 
     override fun setValues() {
         Toast.makeText(mContext, "${GlobalData.loginUser!!.nickName}님 환영합니다!", Toast.LENGTH_SHORT).show()
 
-        getAppointmentListFromServer()
+        // getAppointmentListFromServer()
 
         mAdapter = AppointmentAdapter(mContext, R.layout.appointment_list_item, mAppointmentList)
         binding.appointmentListView.adapter = mAdapter
+
+        // 상속받은 액션바에 있는 프로필버튼 보여주기
+        profileImg.visibility = View.VISIBLE
+
+        titleTxt.text = "메인 화면"
     }
 
     fun getAppointmentListFromServer(){

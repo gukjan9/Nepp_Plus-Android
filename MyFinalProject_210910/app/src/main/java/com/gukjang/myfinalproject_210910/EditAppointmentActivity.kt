@@ -93,6 +93,10 @@ class EditAppointmentActivity : BaseActivity() {
                     call: Call<BasicResponse>,
                     response: Response<BasicResponse>
                 ) {
+                    if(response.isSuccessful){
+                        Toast.makeText(mContext, "약속을 등록했습니다.", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
 
                 }
 
@@ -146,6 +150,8 @@ class EditAppointmentActivity : BaseActivity() {
     }
 
     override fun setValues() {
+        titleTxt.text = "약속 잡기"
+
         // 카카오 지도 띄워보기
 //        val mapView = MapView(mContext)
 //
@@ -160,7 +166,7 @@ class EditAppointmentActivity : BaseActivity() {
             }
 
         // 람다
-        mapFragment.getMapAsync {                               // it == naverMap
+        mapFragment.getMapAsync {                              // it == naverMap
             Log.d("지도 객체 - 바로 할일", it.toString())
 
             // 학원 좌표를 지도 시작점으로
@@ -185,8 +191,8 @@ class EditAppointmentActivity : BaseActivity() {
             it.setOnMapClickListener { pointF, latLng ->
                 Toast.makeText(mContext, "위도 : ${latLng.latitude}, 경도 : ${latLng.longitude}", Toast.LENGTH_SHORT).show()
 
-                mSelectedLat = latLng.latitude
-                mSelectedLng = latLng.longitude
+                // mSelectedLat = latLng.latitude
+                // mSelectedLng = latLng.longitude
 
                 // 좌표를 받아서 마커 생성 후 맵에 띄우기
 //                val marker = Marker(LatLng(mSelectedLat, mSelectedLng))

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/titleTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="앱 제목"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_gravity="center" />
+
+    <ImageView
+        android:id="@+id/profileImg"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/profile_icon"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="10dp" />
+
+</FrameLayout>

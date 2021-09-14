@@ -88,7 +88,8 @@
         <fragment
             android:id="@+id/naverMapView"
             android:layout_width="match_parent"
-            android:layout_height="250dp" />
+            android:layout_height="250dp"
+            class="com.naver.maps.map.MapFragment"/>
 
         <Button
             android:id="@+id/okBtn"

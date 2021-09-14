@@ -34,7 +34,7 @@ class ViewMapActivity : BaseActivity() {
     override fun setValues() {
         mAppointmentData = intent.getSerializableExtra("appointment") as AppointmentData        // 위에서 AppointmentData 로 받기로 했음
 
-        titleTxt.text = "약속 장소 확인인"
+        titleTxt.text = "약속 장소 확인"
 
        val fm = supportFragmentManager
         val mapFragment = fm.findFragmentById(R.id.naverMapFrag) as MapFragment?
@@ -63,8 +63,8 @@ class ViewMapActivity : BaseActivity() {
             val myODsayService = ODsayService.init(mContext, "uAM+of2PdQ84i6tahlikW4YObpDlEiko5y83eKYeOkM")
 
             myODsayService.requestSearchPubTransPath(
-                37.6130.toString(),
                 126.9297.toString(),
+                37.6130.toString(),
                 mAppointmentData.longitude.toString(),
                 mAppointmentData.latitude.toString(),
                 null,
@@ -97,15 +97,14 @@ class ViewMapActivity : BaseActivity() {
                                     .inflate(R.layout.my_custom_info_window, null)
 
                                 val placeNameTxt = myView.findViewById<TextView>(R.id.placeNameTxt)
-                                val arrivalTimeTxt =
-                                    myView.findViewById<TextView>(R.id.arrivalTimeTxt)
+                                val arrivalTimeTxt = myView.findViewById<TextView>(R.id.arrivalTimeTxt)
 
                                 placeNameTxt.text = mAppointmentData.placeName
 
                                 if (hour == 0) {
                                     arrivalTimeTxt.text = "${minute}분 소요 예정"
                                 } else {
-                                    arrivalTimeTxt.text = "${hour}시간 ${minute}분 소요 예정정"
+                                    arrivalTimeTxt.text = "${hour}시간 ${minute}분 소요 예정"
                                 }
 
                                 return myView
@@ -118,8 +117,21 @@ class ViewMapActivity : BaseActivity() {
                     }
                 })
 
+            infoWindow.adapter = object : InfoWindow.DefaultViewAdapter(mContext) {
+                override fun getContentView(p0: InfoWindow): View {
 
+                    val myView = LayoutInflater.from(mContext).inflate(R.layout.my_custom_info_window, null)
 
+                    val placeNameTxt = myView.findViewById<TextView>(R.id.placeNameTxt)
+                    val arrivalTimeTxt = myView.findViewById<TextView>(R.id.arrivalTimeTxt)
+
+                    placeNameTxt.text = mAppointmentData.placeName
+//                    arrivalTimeTxt.text = "??시간 ?분 소요예상"
+
+                    return  myView
+                }
+
+            }
             infoWindow.open(marker)
 
             // 지도의 아무데나 찍으면 열려있는 마커 닫아주기

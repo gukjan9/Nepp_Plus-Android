@@ -32,8 +32,8 @@ class EditAppointmentActivity : BaseActivity() {
     // 선택한 약속 일시를 저장할 변수
     val mSelectedDateTime = Calendar.getInstance()
 
-    val mSelectedLat = 0.0
-    val mSelectedLng = 0.0
+    var mSelectedLat = 0.0
+    var mSelectedLng = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -85,12 +85,10 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/mapView"
+        <fragment
+            android:id="@+id/naverMapView"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:gravity="center"
-            android:text="여기에 지도 배치. 검색 결과를 지도로 표현" />
+            android:layout_height="250dp" />
 
         <Button
             android:id="@+id/okBtn"

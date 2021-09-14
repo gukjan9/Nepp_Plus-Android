@@ -17,6 +17,8 @@ import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import net.daum.mf.map.api.MapView
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,6 +31,9 @@ class EditAppointmentActivity : BaseActivity() {
 
     // 선택한 약속 일시를 저장할 변수
     val mSelectedDateTime = Calendar.getInstance()
+
+    val mSelectedLat = 0.0
+    val mSelectedLng = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,8 +72,15 @@ class EditAppointmentActivity : BaseActivity() {
             val inputPlaceName = binding.placeSearchEdt.text.toString()
 
             // 장소 위도/경도
-            val lat = 37.724520
-            val lng = 126.752466
+//            val lat = 37.724520
+//            val lng = 126.752466
+
+            // 지도에서 클릭한 좌표로 위경도 첨부
+
+            if(mSelectedLat == 0.0 && mSelectedLng == 0.0){
+                Toast.makeText(mContext, "약속 장소를 지도를 클릭해 선택해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             // 서버에 API 호출
             apiService.postRequestAppointment(
@@ -76,7 +88,7 @@ class EditAppointmentActivity : BaseActivity() {
                 inputTitle,
                 finalDatetime,
                 inputPlaceName,
-                lat, lng).enqueue(object : Callback<BasicResponse>{
+                mSelectedLat, mSelectedLng).enqueue(object : Callback<BasicResponse>{
                 override fun onResponse(
                     call: Call<BasicResponse>,
                     response: Response<BasicResponse>
@@ -135,9 +147,9 @@ class EditAppointmentActivity : BaseActivity() {
 
     override fun setValues() {
         // 카카오 지도 띄워보기
-        val mapView = MapView(mContext)
-
-        binding.mapView.addView(mapView)
+//        val mapView = MapView(mContext)
+//
+//        binding.mapView.addView(mapView)
 
 
         // 네이버 지도 Fragment 다루기
@@ -146,17 +158,44 @@ class EditAppointmentActivity : BaseActivity() {
             ?: MapFragment.newInstance().also {
                 fm.beginTransaction().add(R.id.naverMapView, it).commit()
             }
-        mapFragment.getMapAsync {
+
+        // 람다
+        mapFragment.getMapAsync {                               // it == naverMap
             Log.d("지도 객체 - 바로 할일", it.toString())
 
             // 학원 좌표를 지도 시작점으로
 //            it.mapType = NaverMap.MapType.Hybrid
+
+            it.minZoom = 4.0
 
             // 좌표를 다루는 변수 - LatLng 클래스 활용
             val neppplusCoord = LatLng(33.5779, 127.0335)
 
             val cameraUpdate = CameraUpdate.scrollTo(neppplusCoord)
             it.moveCamera(cameraUpdate)
+
+            val uiSettings = it.uiSettings
+            uiSettings.isCompassEnabled = true
+            uiSettings.isScaleBarEnabled = false            // 축척바
+
+            // 선택된 위치를 보여줄 마커 하나만 생성
+            val selectedPointMarker = Marker()
+            selectedPointMarker.icon = OverlayImage.fromResource(R.drawable.map_marker_icon)
+
+            it.setOnMapClickListener { pointF, latLng ->
+                Toast.makeText(mContext, "위도 : ${latLng.latitude}, 경도 : ${latLng.longitude}", Toast.LENGTH_SHORT).show()
+
+                mSelectedLat = latLng.latitude
+                mSelectedLng = latLng.longitude
+
+                // 좌표를 받아서 마커 생성 후 맵에 띄우기
+//                val marker = Marker(LatLng(mSelectedLat, mSelectedLng))
+//                marker.map = it
+
+                // 좌표를 받아서 미리 만들어둔 마커의 좌표로 연결
+                selectedPointMarker.position = LatLng(mSelectedLat, mSelectedLng)
+                selectedPointMarker.map = it
+            }
         }
     }
 }

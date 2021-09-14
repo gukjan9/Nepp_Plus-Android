@@ -6,6 +6,7 @@ import com.gukjang.myfinalproject_210910.datas.AppointmentData
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
+import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
 
 class ViewMapActivity : BaseActivity() {
@@ -41,6 +42,14 @@ class ViewMapActivity : BaseActivity() {
             val marker = Marker()
             marker.position = appointmentLatLng
             marker.map = it
+
+            val infoWindow = InfoWindow()
+            infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(mContext){
+                override fun getText(p0: InfoWindow): CharSequence {        // ( = String)
+                    return mAppointmentData.placeName
+                }
+            }
+            infoWindow.open(marker)
         }
    }
 }

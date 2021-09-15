@@ -7,7 +7,9 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.gukjang.myfinalproject_210910.adapters.AppointmentAdapter
+import com.gukjang.myfinalproject_210910.adapters.AppointmentRecyclerAdapter
 import com.gukjang.myfinalproject_210910.databinding.ActivityMainBinding
 import com.gukjang.myfinalproject_210910.datas.AppointmentData
 import com.gukjang.myfinalproject_210910.datas.BasicResponse
@@ -21,6 +23,8 @@ class MainActivity : BaseActivity() {
 
     val mAppointmentList = ArrayList<AppointmentData>()
     lateinit var mAdapter : AppointmentAdapter
+
+    lateinit var mRecyclerAdapter : AppointmentRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +57,13 @@ class MainActivity : BaseActivity() {
 
         // getAppointmentListFromServer()
 
-        mAdapter = AppointmentAdapter(mContext, R.layout.appointment_list_item, mAppointmentList)
-        binding.appointmentListView.adapter = mAdapter
+//        mAdapter = AppointmentAdapter(mContext, R.layout.appointment_list_item, mAppointmentList)
+//        binding.appointmentListView.adapter = mAdapter
+
+        mRecyclerAdapter = AppointmentRecyclerAdapter(mContext, mAppointmentList)
+        binding.appointmentRecyclerView.adapter = mRecyclerAdapter
+
+        binding.appointmentRecyclerView.layoutManager = LinearLayoutManager(mContext)
 
         // 상속받은 액션바에 있는 프로필버튼 보여주기
         profileImg.visibility = View.VISIBLE
@@ -77,7 +86,7 @@ class MainActivity : BaseActivity() {
                 mAppointmentList.addAll(basicResponse.data.appointments)
 
                 // 어댑터 새로고침
-                mAdapter.notifyDataSetChanged()
+                mRecyclerAdapter.notifyDataSetChanged()
             }
 
             override fun onFailure(call: Call<BasicResponse>, t: Throwable) {

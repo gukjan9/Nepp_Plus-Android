@@ -4,6 +4,7 @@
     android:orientation="horizontal"
     android:padding="15dp"
     android:gravity="center_vertical"
+    android:id="@+id/backgroundLayout"
     android:layout_height="wrap_content">
 
     <TextView

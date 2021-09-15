@@ -32,7 +32,7 @@ class AppointmentAdapter(
         val viewPlaceMapBtn = row.findViewById<ImageView>(R.id.viewPlaceMapBtn)
 
         titleTxt.text = data.title
-        dateTimeTxt.text = data.datetime
+        // dateTimeTxt.text = data.datetime
         placeNameTxt.text = data.placeName
 
         viewPlaceMapBtn.setOnClickListener {

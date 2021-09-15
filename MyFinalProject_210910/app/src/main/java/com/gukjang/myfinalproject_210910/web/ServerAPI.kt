@@ -1,6 +1,7 @@
 package com.gukjang.myfinalproject_210910.web
 
 import android.content.Context
+import com.google.gson.GsonBuilder
 import com.gukjang.myfinalproject_210910.utils.ContextUtil
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -33,11 +34,13 @@ class ServerAPI {
                 // 클라이언트한테 인터셉터 달아주기
                 val myClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
+                val gson = GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create()
+
                 // 기본 클라이언트 -> 직접 만든 client를 이용해서 통신
                 retrofit = Retrofit.Builder()
                     .baseUrl(hostURL)
                     .client(myClient)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()
             }
             return retrofit!!

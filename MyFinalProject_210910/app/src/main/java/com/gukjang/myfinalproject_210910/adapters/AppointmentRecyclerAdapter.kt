@@ -13,20 +13,22 @@ import com.gukjang.myfinalproject_210910.ViewMapActivity
 import com.gukjang.myfinalproject_210910.datas.AppointmentData
 import java.text.SimpleDateFormat
 
-class AppointmentRecyclerAdapter(val mContext : Context, val mList : List<AppointmentData>) : RecyclerView.Adapter<AppointmentRecyclerAdapter.AppointmentViewHoler>() {
+class AppointmentRecyclerAdapter(
+    val mContext : Context,
+    val mList : List<AppointmentData>) : RecyclerView.Adapter<AppointmentRecyclerAdapter.AppointmentViewHoler>() {
     class AppointmentViewHoler(view : View) : RecyclerView.ViewHolder(view){
         val titleTxt = view.findViewById<TextView>(R.id.titleTxt)
         val dateTimeTxt = view.findViewById<TextView>(R.id.dateTimeTxt)
         val placeNameTxt = view.findViewById<TextView>(R.id.placeNameTxt)
         val viewPlaceMapBtn = view.findViewById<ImageView>(R.id.viewPlaceMapBtn)
 
-        val dateTimeSDF = SimpleDateFormat("M/d h:mm")
+        // val dateTimeSDF = SimpleDateFormat("M/d h:mm")
 
         fun bind(data : AppointmentData){
             titleTxt.text = data.title
 
             // Date 형태로 파싱 -> String 으로 가공
-            dateTimeTxt.text = dateTimeSDF.format(data.datetime)
+            dateTimeTxt.text = data.getFormattedDateTime()
             placeNameTxt.text = data.placeName
         }
     }

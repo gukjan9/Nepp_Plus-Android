@@ -61,8 +61,13 @@ class MySettingActivity : BaseActivity() {
             alert.show()
         }
 
+        binding.myPlacesLayout.setOnClickListener {
+            val myIntent = Intent(mContext, ViewMyPlaceListActivity::class.java)
+            startActivity(myIntent)
+        }
+
         binding.editNicknameLayout.setOnClickListener {
-            val customView = LayoutInflater.from(mContext).inflate(R.layout.my_custom_edit_nickname, null)
+            val customView = LayoutInflater.from(mContext).inflate(R.layout.my_custom_alert_nickname, null)
             val alert = AlertDialog.Builder(mContext)
             alert.setTitle("닉네임 변경")
             alert.setView(customView)

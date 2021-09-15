@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gukjang.myfinalproject_210910.R
 import com.gukjang.myfinalproject_210910.datas.PlaceData
 
-class MyPlaceRecyclerAdapter(val mContext : Context, val mList : List<PlaceData>): RecyclerView.Adapter<MyPlaceRecyclerAdapter.MyViewHolder>(){
+class MyPlaceRecyclerAdapter(
+    val mContext : Context,
+    val mList : List<PlaceData>): RecyclerView.Adapter<MyPlaceRecyclerAdapter.MyViewHolder>(){
     class MyViewHolder(view : View) : RecyclerView.ViewHolder(view){
         val placeNameTxt = view.findViewById<TextView>(R.id.placeNameTxt)
         val isPrimaryTxt = view.findViewById<TextView>(R.id.isPrimaryTxt)

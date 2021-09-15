@@ -39,7 +39,7 @@ class LoginActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
-        callbackManager = CallbackManager.Factory.create();
+        callbackManager = CallbackManager.Factory.create()
 
         binding.loginButton.setReadPermissions("email")
 

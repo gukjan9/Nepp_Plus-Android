@@ -8,5 +8,10 @@
         android:orientation="vertical"
         tools:context=".ViewMyPlaceListActivity">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/myPlaceRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </LinearLayout>
 </layout>

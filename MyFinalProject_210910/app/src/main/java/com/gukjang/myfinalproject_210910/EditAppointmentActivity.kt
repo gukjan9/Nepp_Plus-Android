@@ -368,8 +368,6 @@ class EditAppointmentActivity : BaseActivity() {
                             }
                         }
                     }
-
-
                         // 최종 목적지 추가
                         points.add(LatLng(mSelectedLat, mSelectedLng))
 

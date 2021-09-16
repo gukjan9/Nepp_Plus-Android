@@ -75,4 +75,8 @@ interface ServerAPIService {
     // 닉네임으로 사용자 검색하기
     @GET("/search/user")
     fun getRequestSearchUser(@Query("nickname") keyword : String) : Call<BasicResponse>
+
+    @FormUrlEncoded
+    @POST("/user/friend")
+    fun postRequestAddFriend(@Field("user_id") userId : Int) : Call<BasicResponse>
 }

@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/GukJang/Git/Nepp_Plus-Android/MyFinalProject_210910/app/src/main/res/layout/activity_add_friend.xml" value="0.26979166666666665" />
         <entry key="..\:/GukJang/Git/Nepp_Plus-Android/MyFinalProject_210910/app/src/main/res/layout/activity_edit_appointment.xml" value="0.23333333333333334" />
         <entry key="..\:/GukJang/Git/Nepp_Plus-Android/MyFinalProject_210910/app/src/main/res/layout/activity_edit_my_place.xml" value="0.26197916666666665" />
         <entry key="..\:/GukJang/Git/Nepp_Plus-Android/MyFinalProject_210910/app/src/main/res/layout/activity_login.xml" value="0.2640625" />
@@ -23,6 +24,7 @@
         <entry key="..\:/GukJang/Git/Nepp_Plus-Android/MyFinalProject_210910/app/src/main/res/layout/my_custom_info_window.xml" value="0.2765625" />
         <entry key="..\:/GukJang/Git/Nepp_Plus-Android/MyFinalProject_210910/app/src/main/res/layout/my_place_list_item.xml" value="0.27447916666666666" />
         <entry key="..\:/GukJang/Git/Nepp_Plus-Android/MyFinalProject_210910/app/src/main/res/layout/requested_user_list_fragment.xml" value="0.26979166666666665" />
+        <entry key="..\:/GukJang/Git/Nepp_Plus-Android/MyFinalProject_210910/app/src/main/res/layout/search_user_list_item.xml" value="0.26979166666666665" />
       </map>
     </option>
   </component>

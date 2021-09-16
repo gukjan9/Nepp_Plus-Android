@@ -1,13 +1,18 @@
 package com.gukjang.myfinalproject_210910
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.gukjang.myfinalproject_210910.databinding.ActivityViewMyFriendsListBinding
+import com.gukjang.myfinalproject_210910.fragment.FriendPagerAdapter
 
 class ViewMyFriendsListActivity : BaseActivity() {
 
     lateinit var binding : ActivityViewMyFriendsListBinding
+
+    lateinit var mFPA : FriendPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,10 +22,19 @@ class ViewMyFriendsListActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
-
+        addBtn.setOnClickListener {
+            val myIntent = Intent(mContext, AddFriendActivity::class.java)
+            startActivity(myIntent)
+        }
     }
 
     override fun setValues() {
+        titleTxt.text = "친구 관리"
+        addBtn.visibility = View.VISIBLE
 
+        mFPA = FriendPagerAdapter(supportFragmentManager)
+        binding.friendsViewPager.adapter = mFPA
+
+        binding.friendsTabLayout.setupWithViewPager(binding.friendsViewPager)
     }
 }

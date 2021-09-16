@@ -11,28 +11,28 @@ import com.bumptech.glide.Glide
 import com.gukjang.myfinalproject_210910.R
 import com.gukjang.myfinalproject_210910.datas.UserData
 
-class MyFriendsRecyclerAdapter(
+class SearchUserRecyclerAdapter(
     val mContext : Context,
-    val mList : List<UserData>
-) : RecyclerView.Adapter<MyFriendsRecyclerAdapter.FriendViewHolder>() {
+    val mList : List<UserData>) : RecyclerView.Adapter<SearchUserRecyclerAdapter.UserViewHolder>() {
 
-    class FriendViewHolder(view : View) : RecyclerView.ViewHolder(view){
-        val friendProfileImg = view.findViewById<ImageView>(R.id.friendsProfileImg)
+
+
+    class UserViewHolder(view: View) : RecyclerView.ViewHolder(view){
+        val profileImg = view.findViewById<ImageView>(R.id.profileImg)
         val nicknameTxt = view.findViewById<TextView>(R.id.nicknameTxt)
         val socialLoginImg = view.findViewById<ImageView>(R.id.socialLoginImg)
 
         fun bind(context: Context, data : UserData){
+            Glide.with(context).load(data.profileImgURL).into(profileImg)
             nicknameTxt.text = data.nickName
-            Glide.with(context).load(data.profileImgURL).into(friendProfileImg)
-
             when(data.provider){
                 "facebook" -> {
-                    socialLoginImg.setImageResource(R.drawable.facebook_icon)
                     socialLoginImg.visibility = View.VISIBLE
+                    socialLoginImg.setImageResource(R.drawable.facebook_icon)
                 }
                 "kakao" -> {
-                    socialLoginImg.setImageResource(R.drawable.kakaotalk_icon)
                     socialLoginImg.visibility = View.VISIBLE
+                    socialLoginImg.setImageResource(R.drawable.kakaotalk_icon)
                 }
                 else -> {
                     socialLoginImg.visibility = View.GONE
@@ -41,17 +41,14 @@ class MyFriendsRecyclerAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.search_user_list_item, parent, false)
-        return FriendViewHolder(view)
+        return UserViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: FriendViewHolder, position: Int) {
-        val data = mList[position]
-        holder.bind(mContext, data)
+    override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
+        holder.bind(mContext, mList[position])
     }
 
-    override fun getItemCount(): Int {
-        return mList.size
-    }
+    override fun getItemCount() = mList.size
 }

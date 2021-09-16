@@ -162,6 +162,11 @@ class MySettingActivity : BaseActivity() {
             alert.setNegativeButton("취소", null)
             alert.show()
         }
+
+        binding.myFriendsLayout.setOnClickListener {
+            val myIntent = Intent(mContext, ViewMyFriendsListActivity::class.java)
+            startActivity(myIntent)
+        }
     }
 
     override fun setValues() {

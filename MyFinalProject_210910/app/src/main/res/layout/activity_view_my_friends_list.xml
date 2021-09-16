@@ -8,10 +8,10 @@
         android:orientation="vertical"
         tools:context=".ViewMyFriendsListActivity">
 
-        <TableLayout
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/friendsTabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/friendsTabLayout"/>
+            android:layout_height="wrap_content" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/friendsViewPager"

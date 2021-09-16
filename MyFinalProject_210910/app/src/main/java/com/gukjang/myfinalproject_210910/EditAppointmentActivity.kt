@@ -65,6 +65,9 @@ class EditAppointmentActivity : BaseActivity() {
     // 선택된 출발지를 보여줄 마커
     val mStartPlaceMarker = Marker()
 
+    // 선택된 도착지를 보여줄 마커 하나만 생성
+    val selectedPointMarker = Marker()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_appointment)
@@ -119,7 +122,8 @@ class EditAppointmentActivity : BaseActivity() {
                 inputTitle,
                 finalDatetime,
                 inputPlaceName,
-                mSelectedLat, mSelectedLng).enqueue(object : Callback<BasicResponse>{
+                mSelectedLat,
+                mSelectedLng).enqueue(object : Callback<BasicResponse>{
                 override fun onResponse(
                     call: Call<BasicResponse>,
                     response: Response<BasicResponse>
@@ -196,6 +200,17 @@ class EditAppointmentActivity : BaseActivity() {
 
             }
 
+        }
+
+//        지도 영역에 손을 대면 => 스크롤뷰를 정지.
+//        대안 : 지도 위에 겹쳐둔 텍스트뷰에 손을대면 => 스크롤뷰를 정지.
+
+        binding.scrollHelpTxt.setOnTouchListener { view, motionEvent ->
+
+            binding.scrollView.requestDisallowInterceptTouchEvent(true)
+
+//            터치 이벤트만 먹히게? X. => 뒤에 가려진 지도 동작도 같이 실행.
+            return@setOnTouchListener false
         }
     }
 
@@ -275,6 +290,8 @@ class EditAppointmentActivity : BaseActivity() {
                 // 좌표를 받아서 미리 만들어둔 마커의 좌표로 연결
                 selectedPointMarker.position = LatLng(mSelectedLat, mSelectedLng)
                 selectedPointMarker.map = it
+
+                drawStartPlaceToDestination(it)
             }
         }
     }
@@ -319,8 +336,16 @@ class EditAppointmentActivity : BaseActivity() {
 
                     Log.d("총 소요시간", totalTime.toString())
 
-                    // 경우지들 좌표를 목록에 추가
-                    // 지도에 선을 긋는데 필요한 좌표 목록 추출
+                    // 멤버변수로 만들어둔 정보창의 내용 설정, 열어주기
+                    mInfoWindow.adapter = object : InfoWindow.DefaultTextAdapter(mContext) {
+                        override fun getText(p0: InfoWindow): CharSequence {
+                            return "${totalTime}분 소요 예정"
+                        }
+                    }
+                    mInfoWindow.open(selectedPointMarker)
+
+                    // 경유지들 좌표를 목록에 추가
+                   // 지도에 선을 긋는데 필요한 좌표 목록 추출
                     val subPathArr = firstPathObj.getJSONArray("subPath")
 
                     for (i in 0 until subPathArr.length()) {

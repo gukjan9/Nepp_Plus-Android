@@ -14,12 +14,18 @@ import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.gukjang.myfinalproject_210910.databinding.ActivityMySettingBinding
 import com.gukjang.myfinalproject_210910.datas.BasicResponse
+import com.gukjang.myfinalproject_210910.utils.ContextUtil
 import com.gukjang.myfinalproject_210910.utils.GlobalData
+import com.gukjang.myfinalproject_210910.utils.URIPathHelper
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 class MySettingActivity : BaseActivity() {
     lateinit var binding : ActivityMySettingBinding
@@ -36,7 +42,8 @@ class MySettingActivity : BaseActivity() {
     override fun setupEvents() {
         binding.readyTimeLayout.setOnClickListener {
 
-            val customView = LayoutInflater.from(mContext).inflate(R.layout.my_custom_alert_edit, null)
+            val customView =
+                LayoutInflater.from(mContext).inflate(R.layout.my_custom_alert_edit, null)
             val alert = AlertDialog.Builder(mContext)
 
             alert.setTitle("준비 시간 설정")
@@ -45,25 +52,26 @@ class MySettingActivity : BaseActivity() {
                 val minuteEdt = customView.findViewById<EditText>(R.id.minuteEdt)
 
                 // Toast.makeText(mContext, "${minuteEdt.text.toString()}", Toast.LENGTH_SHORT).show()
-                apiService.patchRequestMyInfo("ready_minute", minuteEdt.text.toString()).enqueue(object : Callback<BasicResponse>{
-                    override fun onResponse(
-                        call: Call<BasicResponse>,
-                        response: Response<BasicResponse>
-                    ) {
-                        if(response.isSuccessful){
-                            // 외출 소요시간 수정된 정보 파싱 -> 로그인한 사용자의 정보로 갱신
-                            val basicResponse = response.body()!!
+                apiService.patchRequestMyInfo("ready_minute", minuteEdt.text.toString())
+                    .enqueue(object : Callback<BasicResponse> {
+                        override fun onResponse(
+                            call: Call<BasicResponse>,
+                            response: Response<BasicResponse>
+                        ) {
+                            if (response.isSuccessful) {
+                                // 외출 소요시간 수정된 정보 파싱 -> 로그인한 사용자의 정보로 갱신
+                                val basicResponse = response.body()!!
 
-                            GlobalData.loginUser = basicResponse.data.user
+                                GlobalData.loginUser = basicResponse.data.user
 
-                            setUserInfo()
+                                setUserInfo()
+                            }
                         }
-                    }
 
-                    override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+                        override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
 
-                    }
-                })
+                        }
+                    })
             })
             alert.setNegativeButton("취소", null)
             alert.show()
@@ -75,30 +83,33 @@ class MySettingActivity : BaseActivity() {
         }
 
         binding.editNicknameLayout.setOnClickListener {
-            val customView = LayoutInflater.from(mContext).inflate(R.layout.my_custom_alert_nickname, null)
+            val customView =
+                LayoutInflater.from(mContext).inflate(R.layout.my_custom_alert_nickname, null)
             val alert = AlertDialog.Builder(mContext)
             alert.setTitle("닉네임 변경")
             alert.setView(customView)
-            alert.setPositiveButton("확인", DialogInterface.OnClickListener{ dialogInterface, i ->
+            alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialogInterface, i ->
                 val nicknameEdt = customView.findViewById<EditText>(R.id.nicknameEdt)
 
-                apiService.patchRequestMyInfo("nickname", nicknameEdt.text.toString()).enqueue(object : Callback<BasicResponse>{
-                    override fun onResponse(
-                        call: Call<BasicResponse>,
-                        response: Response<BasicResponse>
-                    ) {
-                        if(response.isSuccessful){
-                            val basicResponse = response.body()!!
-                            GlobalData.loginUser = basicResponse.data.user
+                apiService.patchRequestMyInfo("nickname", nicknameEdt.text.toString())
+                    .enqueue(object : Callback<BasicResponse> {
+                        override fun onResponse(
+                            call: Call<BasicResponse>,
+                            response: Response<BasicResponse>
+                        ) {
+                            if (response.isSuccessful) {
+                                val basicResponse = response.body()!!
+                                GlobalData.loginUser = basicResponse.data.user
 
-                            setUserInfo()
+                                setUserInfo()
+                            }
                         }
-                    }
-                    override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
 
-                    }
+                        override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
 
-                })
+                        }
+
+                    })
             })
             alert.setNegativeButton("취소", null)
             alert.show()
@@ -109,7 +120,7 @@ class MySettingActivity : BaseActivity() {
 //        }
 
         binding.profileImg.setOnClickListener {
-            val permissionListener = object : PermissionListener{
+            val permissionListener = object : PermissionListener {
                 override fun onPermissionGranted() {
                     val myIntent = Intent()
                     myIntent.action = Intent.ACTION_GET_CONTENT
@@ -127,6 +138,29 @@ class MySettingActivity : BaseActivity() {
                 .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
                 .setDeniedMessage("[설정] > [권한] 에서 갤러리 권한을 열어주세요.")
                 .check()
+        }
+
+        binding.logoutLayout.setOnClickListener {
+            val alert = AlertDialog.Builder(mContext)
+            alert.setMessage("정말 로그아웃 하시겠습니까?")
+            alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialogInterface, i ->
+                // 로그아웃 - 토큰 제거
+                ContextUtil.setToken(mContext, "")
+
+                // 추가 작업 : GlobalData 의 로그인 사용자 정보도 같이 제거
+                GlobalData.loginUser = null
+
+                // splash 화면으로 이동
+                val myIntent = Intent(mContext, SplashActivity::class.java)
+
+                // 필요 없는 화면들 모두 종료 -> mySetting, main 종료
+                // FLAG 활용하여 다른 모든 화면 제거
+                myIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(myIntent)
+            })
+
+            alert.setNegativeButton("취소", null)
+            alert.show()
         }
     }
 
@@ -182,9 +216,26 @@ class MySettingActivity : BaseActivity() {
 
                 // API 서버에 사진을 전송 -> PUT /user/image 로 API 활용
                 // Multipart 형식의 데이터로 첨부 (formData 랑은 다름)
-            }
-            else{
-                Log.d("프사 선택", "선택까지는 하지 않음 (취소)")
+
+                // Uri -> File 형태로 변환
+                val file = File(URIPathHelper().getPath(mContext, dataUri!!))
+
+                // 파일을 Retrofit 에 첨부할 수 있는 RequestBody 형태로 변환 후 -> MultipartBody 형태로 변환
+                val fileReqBody = RequestBody.create(MediaType.get("image/*"), file)
+                val body = MultipartBody.Part.createFormData("profile_image", "myFile.jpg", fileReqBody)
+
+                apiService.putRequestProfileImg(body).enqueue(object : Callback<BasicResponse> {
+                    override fun onResponse(
+                        call: Call<BasicResponse>,
+                        response: Response<BasicResponse>
+                    ) {
+
+                    }
+
+                    override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+                    }
+                })
             }
         }
     }

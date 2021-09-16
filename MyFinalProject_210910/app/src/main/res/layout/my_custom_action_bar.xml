@@ -14,6 +14,14 @@
         android:layout_gravity="center" />
 
     <ImageView
+        android:id="@+id/companyLogoImg"
+        android:layout_width="70dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:src="@drawable/nasa_icon" />
+
+    <ImageView
         android:id="@+id/profileImg"
         android:layout_width="40dp"
         android:layout_height="40dp"

@@ -218,6 +218,9 @@ class LoginActivity : BaseActivity() {
             md.update(signature.toByteArray())
             Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT))
         }
+
+        titleTxt.visibility = View.GONE
+        companyLogoImg.visibility = View.VISIBLE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

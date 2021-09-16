@@ -1,22 +1,30 @@
 package com.gukjang.myfinalproject_210910
 
+import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.gukjang.myfinalproject_210910.databinding.ActivityMySettingBinding
 import com.gukjang.myfinalproject_210910.datas.BasicResponse
 import com.gukjang.myfinalproject_210910.utils.GlobalData
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.normal.TedPermission
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MySettingActivity : BaseActivity() {
     lateinit var binding : ActivityMySettingBinding
+
+    val REQ_FOR_GALLERY = 1000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,6 +107,27 @@ class MySettingActivity : BaseActivity() {
 //        binding.myPlacesLayout.setOnClickListener{
 //            val myIntent = Intent(mContext, ViewMyPlaceListActivity)
 //        }
+
+        binding.profileImg.setOnClickListener {
+            val permissionListener = object : PermissionListener{
+                override fun onPermissionGranted() {
+                    val myIntent = Intent()
+                    myIntent.action = Intent.ACTION_GET_CONTENT
+                    myIntent.type = "image/*"
+                    startActivityForResult(Intent.createChooser(myIntent, ""), REQ_FOR_GALLERY)
+                }
+
+                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+                    Toast.makeText(mContext, "권한이 거부되어 갤러리에 접근이 불가능합니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            // 실제로 권한 체크
+            TedPermission.create()
+                .setPermissionListener(permissionListener)
+                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .setDeniedMessage("[설정] > [권한] 에서 갤러리 권한을 열어주세요.")
+                .check()
+        }
     }
 
     override fun setValues() {
@@ -131,7 +160,26 @@ class MySettingActivity : BaseActivity() {
         when(GlobalData.loginUser!!.provider){
             "default" -> binding.passwordLayout.visibility = View.VISIBLE
             else -> binding.passwordLayout.visibility = View.GONE
+        }
 
+        // 로그인한 사용자는 프로필 사진 경로도 들고 있다.
+        Glide.with(mContext).load(GlobalData.loginUser!!.profileImgURL).into(binding.profileImg)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        // 갤러리에서 가진 가져온 경우
+        if(requestCode == REQ_FOR_GALLERY){
+            if(resultCode == RESULT_OK){
+                Log.d("프사 선택", "실제로 선택까지 완료")
+
+                data?.let{
+                    Log.d("돌려준 사진", it.toString())
+                }
+            }
+            else{
+                Log.d("프사 선택", "선택까지는 하지 않음 (취소)")
+            }
         }
     }
 }

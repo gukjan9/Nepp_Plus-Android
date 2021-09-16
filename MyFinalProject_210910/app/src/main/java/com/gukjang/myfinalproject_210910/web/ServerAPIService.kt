@@ -1,6 +1,7 @@
 package com.gukjang.myfinalproject_210910.web
 
 import com.gukjang.myfinalproject_210910.datas.BasicResponse
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -60,4 +61,10 @@ interface ServerAPIService {
 
     @GET("/user/place")
     fun getRequestMyPlaceList() : Call<BasicResponse>
+
+    // 프로필 사진 첨부 -> Multipart 활용
+    // Multipart 통신에서는 Field 를 담지 않고, MultipartBody.Part 양식으로 데이터 첨부
+    @Multipart
+    @PUT("/user/image")
+    fun putRequestProfileImg(@Part profileImg : MultipartBody.Part) : Call<BasicResponse>
 }

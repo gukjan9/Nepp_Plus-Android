@@ -171,11 +171,17 @@ class MySettingActivity : BaseActivity() {
         // 갤러리에서 가진 가져온 경우
         if(requestCode == REQ_FOR_GALLERY){
             if(resultCode == RESULT_OK){
-                Log.d("프사 선택", "실제로 선택까지 완료")
+                // 어떤 사진을 골랐는지
 
-                data?.let{
-                    Log.d("돌려준 사진", it.toString())
-                }
+                // data? -> 이전 화면이 넘겨준 intent
+                // data?.data -> 선택한 사진이 들어있는 경로 정보
+                val dataUri = data?.data
+
+                // Uri -> imageView 의 사진으로 (임시)
+                // Glide.with(mContext).load(dataUri).into(binding.profileImg)
+
+                // API 서버에 사진을 전송 -> PUT /user/image 로 API 활용
+                // Multipart 형식의 데이터로 첨부 (formData 랑은 다름)
             }
             else{
                 Log.d("프사 선택", "선택까지는 하지 않음 (취소)")

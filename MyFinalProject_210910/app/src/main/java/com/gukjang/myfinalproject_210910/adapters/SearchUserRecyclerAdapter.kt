@@ -52,7 +52,9 @@ class SearchUserRecyclerAdapter(
                 alert.setMessage("${data.nickName}님을 친구로 추가하겠습니까?")
                 alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialogInterface, i ->
 
-                     (context as AddFriendActivity).apiService.postRequestAddFriend(data.id).enqueue(object : Callback<BasicResponse>{
+                     (context as AddFriendActivity)
+                         .apiService
+                         .postRequestAddFriend(data.id).enqueue(object : Callback<BasicResponse>{
                          override fun onResponse(
                              call: Call<BasicResponse>,
                              response: Response<BasicResponse>

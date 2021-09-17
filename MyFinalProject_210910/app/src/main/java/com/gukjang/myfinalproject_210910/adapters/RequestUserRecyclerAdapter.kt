@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gukjang.myfinalproject_210910.AddFriendActivity
 import com.gukjang.myfinalproject_210910.R
+import com.gukjang.myfinalproject_210910.ViewMyFriendsListActivity
 import com.gukjang.myfinalproject_210910.datas.BasicResponse
 import com.gukjang.myfinalproject_210910.datas.UserData
+import com.gukjang.myfinalproject_210910.fragments.RequestedUserListFragment
 import com.gukjang.myfinalproject_210910.web.ServerAPI
 import com.gukjang.myfinalproject_210910.web.ServerAPIService
 import retrofit2.Call
@@ -62,7 +64,8 @@ class RequestUserRecyclerAdapter(
                             call: Call<BasicResponse>,
                             response: Response<BasicResponse>
                         ) {
-
+                            // 어댑터 -> 액티비티 -> ViewPager 어댑터 -> 1번째 Fragment -> 요청목록 Frag 로 변신 : context 변수 활용
+                            ((context as ViewMyFriendsListActivity).mFPA.getItem(1) as RequestedUserListFragment).getRequestUserListFromServer()
                         }
 
                         override fun onFailure(call: Call<BasicResponse>, t: Throwable) {

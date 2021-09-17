@@ -16,6 +16,18 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class RequestedUserListFragment : BaseFragment() {
+
+    companion object{
+        private var frag : RequestedUserListFragment? = null
+
+        fun getFrag() : RequestedUserListFragment{
+            if(frag == null){
+                frag = RequestedUserListFragment()
+            }
+            return frag!!
+        }
+    }
+
     lateinit var binding : FragmentRequestedUserListBinding
 
     val mRequestUserList = ArrayList<UserData>()

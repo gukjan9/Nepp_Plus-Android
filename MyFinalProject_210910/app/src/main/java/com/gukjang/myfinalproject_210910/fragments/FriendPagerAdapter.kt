@@ -1,4 +1,4 @@
-package com.gukjang.myfinalproject_210910.fragment
+package com.gukjang.myfinalproject_210910.fragments
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

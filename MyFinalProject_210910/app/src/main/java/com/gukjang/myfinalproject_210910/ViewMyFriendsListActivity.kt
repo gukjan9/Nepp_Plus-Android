@@ -1,12 +1,11 @@
 package com.gukjang.myfinalproject_210910
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.gukjang.myfinalproject_210910.databinding.ActivityViewMyFriendsListBinding
-import com.gukjang.myfinalproject_210910.fragment.FriendPagerAdapter
+import com.gukjang.myfinalproject_210910.fragments.FriendPagerAdapter
 
 class ViewMyFriendsListActivity : BaseActivity() {
 

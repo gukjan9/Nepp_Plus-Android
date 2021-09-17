@@ -7,7 +7,7 @@
     android:padding="10dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/friendsProfileImg"
+        android:id="@+id/friendProfileImg"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@mipmap/ic_launcher"
@@ -17,7 +17,7 @@
         android:id="@+id/nicknameTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="닉네임 자리"
+        android:text="닉네임자리"
         android:layout_marginLeft="10dp"
         android:textSize="17sp"
         android:textColor="@color/black" />
@@ -28,25 +28,5 @@
         android:layout_height="25dp"
         android:layout_marginLeft="5dp"
         android:src="@drawable/kakaotalk_icon" />
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
-
-    <Button
-        android:id="@+id/acceptBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:tag="수락"
-        android:text="수락" />
-
-    <Button
-        android:id="@+id/refuseBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:tag="거절"
-        android:layout_marginLeft="5dp"
-        android:text="거절" />
 
 </LinearLayout>

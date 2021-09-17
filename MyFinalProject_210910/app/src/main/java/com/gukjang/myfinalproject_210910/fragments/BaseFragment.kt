@@ -1,4 +1,4 @@
-package com.gukjang.myfinalproject_210910.fragment
+package com.gukjang.myfinalproject_210910.fragments
 
 import android.content.Context
 import android.os.Bundle

@@ -16,6 +16,8 @@ import com.gukjang.myfinalproject_210910.AddFriendActivity
 import com.gukjang.myfinalproject_210910.R
 import com.gukjang.myfinalproject_210910.datas.BasicResponse
 import com.gukjang.myfinalproject_210910.datas.UserData
+import com.gukjang.myfinalproject_210910.web.ServerAPI
+import com.gukjang.myfinalproject_210910.web.ServerAPIService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,6 +49,31 @@ class RequestUserRecyclerAdapter(
                     socialLoginImg.visibility = View.GONE
                 }
             }
+
+            // 수락 / 거절 Button - type 에 첨부할 값만 다르다
+
+            val sendOkOrNoToServer = object : View.OnClickListener{
+                override fun onClick(p0: View?) {
+                    val okOrNo = p0!!.tag.toString()
+
+                    val apiService = ServerAPI.getRetrofit(context).create(ServerAPIService::class.java)
+                    apiService.putRequestSendOkOrNoFriend(data.id, okOrNo).enqueue(object : Callback<BasicResponse>{
+                        override fun onResponse(
+                            call: Call<BasicResponse>,
+                            response: Response<BasicResponse>
+                        ) {
+
+                        }
+
+                        override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+                        }
+
+                    })
+                }
+            }
+            acceptBtn.setOnClickListener(sendOkOrNoToServer)
+            refuseBtn.setOnClickListener(sendOkOrNoToServer)
         }
     }
 

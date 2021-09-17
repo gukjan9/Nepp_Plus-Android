@@ -20,15 +20,16 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SearchUserRecyclerAdapter(
+class RequestUserRecyclerAdapter(
     val mContext : Context,
-    val mList : List<UserData>) : RecyclerView.Adapter<SearchUserRecyclerAdapter.UserViewHolder>() {
+    val mList : List<UserData>) : RecyclerView.Adapter<RequestUserRecyclerAdapter.UserViewHolder>() {
 
     class UserViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val profileImg = view.findViewById<ImageView>(R.id.profileImg)
         val nicknameTxt = view.findViewById<TextView>(R.id.nicknameTxt)
         val socialLoginImg = view.findViewById<ImageView>(R.id.socialLoginImg)
-        val addFriendBtn = view.findViewById<Button>(R.id.addFriendBtn)
+        val acceptBtn = view.findViewById<Button>(R.id.acceptBtn)
+        val refuseBtn = view.findViewById<Button>(R.id.refuseBtn)
 
         fun bind(context: Context, data : UserData){
             Glide.with(context).load(data.profileImgURL).into(profileImg)
@@ -46,39 +47,11 @@ class SearchUserRecyclerAdapter(
                     socialLoginImg.visibility = View.GONE
                 }
             }
-
-            addFriendBtn.setOnClickListener {
-                val alert = AlertDialog.Builder(context)
-                alert.setMessage("${data.nickName}님을 친구로 추가하겠습니까?")
-                alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialogInterface, i ->
-
-                     (context as AddFriendActivity).apiService.postRequestAddFriend(data.id).enqueue(object : Callback<BasicResponse>{
-                         override fun onResponse(
-                             call: Call<BasicResponse>,
-                             response: Response<BasicResponse>
-                         ) {
-                                Toast.makeText(context, "${data.nickName} 님에게 친구 요청을 보냈습니다.", Toast.LENGTH_SHORT).show()
-                         }
-
-                         override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
-
-                         }
-
-                     })
-
-//                    val retrofit = ServerAPI.getRetrofit(context)
-//                    val apiServerAPI = retrofit.create(ServerAPIService::class.java)
-//
-//                    apiService.
-                })
-                alert.setNegativeButton("취소", null)
-                alert.show()
-            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val view = LayoutInflater.from(mContext).inflate(R.layout.search_user_list_item, parent, false)
+        val view = LayoutInflater.from(mContext).inflate(R.layout.request_user_list_item, parent, false)
         return UserViewHolder(view)
     }
 

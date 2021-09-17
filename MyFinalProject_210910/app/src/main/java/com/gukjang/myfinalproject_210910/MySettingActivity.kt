@@ -123,9 +123,10 @@ class MySettingActivity : BaseActivity() {
             val permissionListener = object : PermissionListener {
                 override fun onPermissionGranted() {
                     val myIntent = Intent()
-                    myIntent.action = Intent.ACTION_GET_CONTENT
+                    myIntent.action = Intent.ACTION_PICK
                     myIntent.type = "image/*"
-                    startActivityForResult(Intent.createChooser(myIntent, ""), REQ_FOR_GALLERY)
+                    myIntent.type = android.provider.MediaStore.Images.Media.CONTENT_TYPE
+                    startActivityForResult(myIntent, REQ_FOR_GALLERY)
                 }
 
                 override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
@@ -234,7 +235,10 @@ class MySettingActivity : BaseActivity() {
                         call: Call<BasicResponse>,
                         response: Response<BasicResponse>
                     ) {
-
+                        if(response.isSuccessful){
+                            Glide.with(mContext).load(dataUri).into(binding.profileImg)
+                            Toast.makeText(mContext, "프로필 사진이 변경되었습니다.", Toast.LENGTH_SHORT).show()
+                        }
                     }
 
                     override fun onFailure(call: Call<BasicResponse>, t: Throwable) {

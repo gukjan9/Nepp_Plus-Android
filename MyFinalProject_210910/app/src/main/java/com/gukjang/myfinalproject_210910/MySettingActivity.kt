@@ -124,7 +124,7 @@ class MySettingActivity : BaseActivity() {
                 override fun onPermissionGranted() {
                     val myIntent = Intent()
                     myIntent.action = Intent.ACTION_PICK
-                    myIntent.type = "image/*"
+                    // myIntent.type = "image/*"
                     myIntent.type = android.provider.MediaStore.Images.Media.CONTENT_TYPE
                     startActivityForResult(myIntent, REQ_FOR_GALLERY)
                 }

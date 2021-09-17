@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.gukjang.myfinalproject_210910.adapters.AppointmentAdapter
 import com.gukjang.myfinalproject_210910.adapters.MyPlaceRecyclerAdapter
 import com.gukjang.myfinalproject_210910.databinding.ActivityViewMyPlaceListBinding
 import com.gukjang.myfinalproject_210910.datas.BasicResponse

@@ -16,6 +16,8 @@ import com.gukjang.myfinalproject_210910.AddFriendActivity
 import com.gukjang.myfinalproject_210910.R
 import com.gukjang.myfinalproject_210910.datas.BasicResponse
 import com.gukjang.myfinalproject_210910.datas.UserData
+import com.gukjang.myfinalproject_210910.web.ServerAPI
+import com.gukjang.myfinalproject_210910.web.ServerAPIService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

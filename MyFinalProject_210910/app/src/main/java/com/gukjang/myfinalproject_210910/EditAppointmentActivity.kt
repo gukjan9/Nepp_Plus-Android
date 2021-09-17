@@ -6,15 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.DatePicker
-import android.widget.TimePicker
-import android.widget.Toast
+import android.widget.*
 import androidx.databinding.DataBindingUtil
+import com.gukjang.myfinalproject_210910.adapters.MyFriendSpinnerAdapter
 import com.gukjang.myfinalproject_210910.adapters.StartPlaceSpinnerAdapter
 import com.gukjang.myfinalproject_210910.databinding.ActivityEditAppointmentBinding
 import com.gukjang.myfinalproject_210910.datas.BasicResponse
 import com.gukjang.myfinalproject_210910.datas.PlaceData
+import com.gukjang.myfinalproject_210910.datas.UserData
 import com.gukjang.myfinalproject_210910.utils.ContextUtil
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -49,6 +48,10 @@ class EditAppointmentActivity : BaseActivity() {
     // 출발지 목록을 담아둘 리스트
     val mStartPlaceList = ArrayList<PlaceData>()
     lateinit var mSpinnerAdapter : StartPlaceSpinnerAdapter
+
+    // 내 친구 목록을 담아둘 스피너
+    val mMyFriendsList = ArrayList<UserData>()
+    lateinit var mFriendSpinnerAdapter : MyFriendSpinnerAdapter
 
     // 선택된 출발지를 담아줄 변수
     lateinit var mSelectedStartPlace : PlaceData
@@ -118,12 +121,13 @@ class EditAppointmentActivity : BaseActivity() {
 
             // 서버에 API 호출
             apiService.postRequestAppointment(
-                // ContextUtil.getToken(mContext),
                 inputTitle,
                 finalDatetime,
+                mSelectedStartPlace.name,
+                mSelectedStartPlace.latitude,
+                mSelectedStartPlace.longitude,
                 inputPlaceName,
-                mSelectedLat,
-                mSelectedLng).enqueue(object : Callback<BasicResponse>{
+                mSelectedLat, mSelectedLng).enqueue(object : Callback<BasicResponse> {
                 override fun onResponse(
                     call: Call<BasicResponse>,
                     response: Response<BasicResponse>
@@ -212,6 +216,20 @@ class EditAppointmentActivity : BaseActivity() {
 //            터치 이벤트만 먹히게? X. => 뒤에 가려진 지도 동작도 같이 실행.
             return@setOnTouchListener false
         }
+
+        binding.addFriendToListBtn.setOnClickListener {
+            // 고른 친구가 누구인지
+            val selectedFriend = mMyFriendsList[binding.myFriendsSpinner.selectedItemPosition]
+
+            // Toast.makeText(mContext, selectedFriend.nickName, Toast.LENGTH_SHORT).show()
+
+            // 텍스트뷰 생성
+            val textView = TextView(mContext)
+            textView.text = selectedFriend.nickName
+
+            // 레이아웃에 추가 + 친구 목록
+            binding.friendListLayout.addView(textView)
+        }
     }
 
     override fun setValues() {
@@ -241,6 +259,27 @@ class EditAppointmentActivity : BaseActivity() {
 
             }
 
+        })
+
+
+        // 내 친구 목록
+
+        mFriendSpinnerAdapter = MyFriendSpinnerAdapter(mContext, R.layout.friend_list_item, mMyFriendsList)
+        binding.myFriendsSpinner.adapter = mFriendSpinnerAdapter
+
+        apiService.getRequestFriendList("my").enqueue(object : Callback<BasicResponse>{
+            override fun onResponse(call: Call<BasicResponse>, response: Response<BasicResponse>) {
+                if(response.isSuccessful){
+                    mMyFriendsList.clear()
+                    mMyFriendsList.addAll(response.body()!!.data.friends)
+
+                    mFriendSpinnerAdapter.notifyDataSetChanged()
+                }
+            }
+
+            override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+            }
         })
 
 

@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MyFinalProject_210910"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ViewAppointmentDetailActivity"
+            android:exported="true" />
+        <activity
             android:name=".AddFriendActivity"
             android:exported="true" />
         <activity

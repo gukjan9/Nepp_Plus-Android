@@ -43,7 +43,6 @@ class MainActivity : BaseActivity() {
         binding.addAppointmentBtn.setOnClickListener{
             val myIntent = Intent(mContext, EditAppointmentActivity::class.java)
             startActivity(myIntent)
-            finish()
         }
 
         profileImg.setOnClickListener {

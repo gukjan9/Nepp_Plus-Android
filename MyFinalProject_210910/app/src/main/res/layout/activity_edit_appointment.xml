@@ -101,31 +101,14 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <com.nex3z.flowlayout.FlowLayout
                     android:id="@+id/friendListLayout"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="김국장"
-                        android:layout_marginRight="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="이국장"
-                        android:layout_marginRight="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="삼국장"
-                        android:layout_marginRight="5dp" />
-
-                </LinearLayout>
+                </com.nex3z.flowlayout.FlowLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -178,6 +161,7 @@
                         android:layout_height="match_parent" />
 
                 </FrameLayout>
+
 
                 <Button
                     android:id="@+id/okBtn"

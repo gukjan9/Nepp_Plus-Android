@@ -36,7 +36,8 @@ interface ServerAPIService {
         @Field("start_longitude") startLng: Double,
         @Field("place") placeName: String,
         @Field("latitude") lat: Double,
-        @Field("longitude") lng: Double
+        @Field("longitude") lng: Double,
+        @Field("friend_list") list : String
     ) : Call<BasicResponse>
 
     // GET - 약속 목록 가져오기

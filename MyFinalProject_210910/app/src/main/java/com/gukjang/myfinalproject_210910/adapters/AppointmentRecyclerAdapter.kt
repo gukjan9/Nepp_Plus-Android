@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gukjang.myfinalproject_210910.R
+import com.gukjang.myfinalproject_210910.ViewAppointmentDetailActivity
 import com.gukjang.myfinalproject_210910.ViewMapActivity
 import com.gukjang.myfinalproject_210910.datas.AppointmentData
 import java.text.SimpleDateFormat
@@ -21,15 +23,29 @@ class AppointmentRecyclerAdapter(
         val dateTimeTxt = view.findViewById<TextView>(R.id.dateTimeTxt)
         val placeNameTxt = view.findViewById<TextView>(R.id.placeNameTxt)
         val viewPlaceMapBtn = view.findViewById<ImageView>(R.id.viewPlaceMapBtn)
+        val rootLayout = view.findViewById<LinearLayout>(R.id.rootLayout)
 
         // val dateTimeSDF = SimpleDateFormat("M/d h:mm")
 
-        fun bind(data : AppointmentData){
+        fun bind(context : Context, data : AppointmentData){
             titleTxt.text = data.title
 
             // Date 형태로 파싱 -> String 으로 가공
             dateTimeTxt.text = data.getFormattedDateTime()
             placeNameTxt.text = data.placeName
+
+            // 이벤트 처리
+            viewPlaceMapBtn.setOnClickListener {
+                val myIntent = Intent(context, ViewMapActivity::class.java)
+                myIntent.putExtra("appointment", data)
+                context.startActivity(myIntent)
+            }
+
+            rootLayout.setOnClickListener {
+                val myIntent = Intent(context, ViewAppointmentDetailActivity::class.java)
+                myIntent.putExtra("appointment",  data)
+                context.startActivity(myIntent)
+            }
         }
     }
 
@@ -41,13 +57,7 @@ class AppointmentRecyclerAdapter(
     override fun onBindViewHolder(holder: AppointmentViewHoler, position: Int) {
         val data = mList[position]
 
-        holder.bind(data)
-
-        holder.viewPlaceMapBtn.setOnClickListener {
-            val myIntent = Intent(mContext, ViewMapActivity::class.java)
-            myIntent.putExtra("appointment", data)
-            mContext.startActivity(myIntent)
-        }
+        holder.bind(mContext, data)
     }
 
     override fun getItemCount() = mList.size

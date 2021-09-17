@@ -39,7 +39,7 @@ class LoginActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
-        callbackManager = CallbackManager.Factory.create()
+        callbackManager = CallbackManager.Factory.create();
 
         binding.loginButton.setReadPermissions("email")
 
@@ -148,10 +148,17 @@ class LoginActivity : BaseActivity() {
                                     call: Call<BasicResponse>,
                                     response: Response<BasicResponse>
                                 ) {
-                                    val basicResponse = response.body()!!
-                                    ContextUtil.setToken(mContext, basicResponse.data.token)
-                                    GlobalData.loginUser = basicResponse.data.user
-                                    moveToMain()
+                                    if (response.isSuccessful) {
+                                        val basicResponse = response.body()!!
+                                        ContextUtil.setToken(mContext, basicResponse.data.token)
+                                        GlobalData.loginUser = basicResponse.data.user
+                                        moveToMain()
+                                    }
+                                    else {
+                                        val errorBody = response.errorBody()!!.string()
+                                        val jsonObj = JSONObject(errorBody)
+                                        Log.d("응답내용", jsonObj.toString())
+                                    }
                                 }
 
                                 override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
@@ -196,7 +203,10 @@ class LoginActivity : BaseActivity() {
                     else{
                         val errorBodyStr = response.errorBody()!!.string()
                         val jsonObj = JSONObject(errorBodyStr)
-                        Log.d("응답 본문", jsonObj.toString())
+                        Log.d("응답본문", jsonObj.toString())
+                        val message = jsonObj.getString("message")
+
+                        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -209,6 +219,9 @@ class LoginActivity : BaseActivity() {
     }
 
     override fun setValues() {
+        titleTxt.visibility = View.GONE
+        companyLogoImg.visibility = View.VISIBLE
+
         val info = packageManager.getPackageInfo(
             "com.gukjang.myfinalproject_210910",
             PackageManager.GET_SIGNATURES
@@ -218,9 +231,6 @@ class LoginActivity : BaseActivity() {
             md.update(signature.toByteArray())
             Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT))
         }
-
-        titleTxt.visibility = View.GONE
-        companyLogoImg.visibility = View.VISIBLE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

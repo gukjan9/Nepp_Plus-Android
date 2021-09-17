@@ -30,7 +30,11 @@ class EditMyPlaceActivity : BaseActivity() {
             val inputName = binding.nameEdt.text.toString()
 
             // 멤버변수에 있는 Lat / Lng 사용
-            apiService.postRequestAddMyPlace(inputName, mSelectedLat, mSelectedLng, true).enqueue(object : Callback<BasicResponse>{
+            apiService.postRequestAddMyPlace(
+                inputName,
+                mSelectedLat,
+                mSelectedLng,
+                true).enqueue(object : Callback<BasicResponse>{
                 override fun onResponse(
                     call: Call<BasicResponse>,
                     response: Response<BasicResponse>

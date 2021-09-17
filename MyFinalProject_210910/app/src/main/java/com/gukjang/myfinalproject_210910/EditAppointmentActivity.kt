@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.core.view.setPadding
 import androidx.databinding.DataBindingUtil
 import com.gukjang.myfinalproject_210910.adapters.MyFriendSpinnerAdapter
 import com.gukjang.myfinalproject_210910.adapters.StartPlaceSpinnerAdapter
@@ -14,12 +15,11 @@ import com.gukjang.myfinalproject_210910.databinding.ActivityEditAppointmentBind
 import com.gukjang.myfinalproject_210910.datas.BasicResponse
 import com.gukjang.myfinalproject_210910.datas.PlaceData
 import com.gukjang.myfinalproject_210910.datas.UserData
-import com.gukjang.myfinalproject_210910.utils.ContextUtil
+import com.gukjang.myfinalproject_210910.utils.SizeUtil
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
-import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
@@ -52,6 +52,9 @@ class EditAppointmentActivity : BaseActivity() {
     // 내 친구 목록을 담아둘 스피너
     val mMyFriendsList = ArrayList<UserData>()
     lateinit var mFriendSpinnerAdapter : MyFriendSpinnerAdapter
+
+    // 약속에 참가시킬 친구 리스트.
+    val mSelectedFriendsList = ArrayList<UserData>()
 
     // 선택된 출발지를 담아줄 변수
     lateinit var mSelectedStartPlace : PlaceData
@@ -119,6 +122,20 @@ class EditAppointmentActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
+            // 선택한 친구 목록
+            var friendListStr = ""
+
+            for(friend in mSelectedFriendsList){
+                friendListStr += friend.id
+                friendListStr += ","
+            }
+
+            if(friendListStr != ""){
+                friendListStr = friendListStr.substring(0, friendListStr.length-1)
+            }
+            return@setOnClickListener
+
+
             // 서버에 API 호출
             apiService.postRequestAppointment(
                 inputTitle,
@@ -127,7 +144,8 @@ class EditAppointmentActivity : BaseActivity() {
                 mSelectedStartPlace.latitude,
                 mSelectedStartPlace.longitude,
                 inputPlaceName,
-                mSelectedLat, mSelectedLng).enqueue(object : Callback<BasicResponse> {
+                mSelectedLat, mSelectedLng,
+                friendListStr).enqueue(object : Callback<BasicResponse> {
                 override fun onResponse(
                     call: Call<BasicResponse>,
                     response: Response<BasicResponse>
@@ -221,14 +239,32 @@ class EditAppointmentActivity : BaseActivity() {
             // 고른 친구가 누구인지
             val selectedFriend = mMyFriendsList[binding.myFriendsSpinner.selectedItemPosition]
 
+            // 중복된 친구인지
+            if(mSelectedFriendsList.contains(selectedFriend)){
+                Toast.makeText(mContext, "이미 추가한 친구입니다.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             // Toast.makeText(mContext, selectedFriend.nickName, Toast.LENGTH_SHORT).show()
 
             // 텍스트뷰 생성
             val textView = TextView(mContext)
+            textView.setBackgroundResource(R.drawable.selected_friend_box)
+
+            textView.setPadding(SizeUtil.dpToPx(mContext, 5f).toInt() )
+
             textView.text = selectedFriend.nickName
+
+            // 클릭되면 삭제 (레이아웃, 친구목록)
+            textView.setOnClickListener {
+                binding.friendListLayout.removeView(textView)
+                mSelectedFriendsList.remove(selectedFriend)
+            }
 
             // 레이아웃에 추가 + 친구 목록
             binding.friendListLayout.addView(textView)
+
+            mSelectedFriendsList.add(selectedFriend)
         }
     }
 
@@ -303,7 +339,7 @@ class EditAppointmentActivity : BaseActivity() {
             // it.minZoom = 4.0
 
             // 좌표를 다루는 변수 - LatLng 클래스 활용
-            val neppplusCoord = LatLng(33.5779, 127.0335)
+            val neppplusCoord = LatLng(37.57793737795487, 127.03355269913862)
 
             val cameraUpdate = CameraUpdate.scrollTo(neppplusCoord)
             it.moveCamera(cameraUpdate)
@@ -313,7 +349,7 @@ class EditAppointmentActivity : BaseActivity() {
             uiSettings.isScaleBarEnabled = false            // 축척바
 
             // 선택된 위치를 보여줄 마커 하나만 생성
-            val selectedPointMarker = Marker()
+
             selectedPointMarker.icon = OverlayImage.fromResource(R.drawable.map_marker_icon)
 
             it.setOnMapClickListener { pointF, latLng ->

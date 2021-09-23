@@ -189,7 +189,8 @@ class EditAppointmentActivity : BaseActivity() {
 
                         // 언제 어떤 일을 할지 모아주는 클래스
                         val jobInfo = JobInfo.Builder(basicResponse.data.appointment.id, serviceComponent)
-                            .setMinimumLatency(TimeUnit.SECONDS.toMillis(20))        // 얼마 후에 실행할건지, 약속 시간 기준으로 하려면 계산 필요
+                            .setMinimumLatency(jobTime)
+                            //.setMinimumLatency(TimeUnit.SECONDS.toMillis(20))        // 얼마 후에 실행할건지, 약속 시간 기준으로 하려면 계산 필요
                             .setOverrideDeadline(TimeUnit.MINUTES.toMillis(3))      // 3분까지 기다리겠다 -> 안드로이드가 배터리 이슈로 정확한 시간예약 x
                             .build()
 

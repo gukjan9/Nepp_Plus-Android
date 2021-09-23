@@ -102,6 +102,9 @@
         </activity>
         <service android:name=".services.MyJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <receiver android:name=".receivers.AlarmReceiver"
+            android:exported="false" />
     </application>
 
 </manifest>

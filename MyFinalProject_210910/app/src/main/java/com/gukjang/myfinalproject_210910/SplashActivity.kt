@@ -25,6 +25,8 @@ class SplashActivity : BaseActivity() {
     }
 
     override fun setValues() {
+        GlobalData.context = mContext
+
         apiService.getRequestMyInfo().enqueue(object : Callback<BasicResponse>{
             override fun onResponse(
                 call: Call<BasicResponse>,

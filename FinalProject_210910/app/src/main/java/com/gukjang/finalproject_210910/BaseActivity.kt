@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
-class BaseActivity: AppCompatActivity() {
+abstract class BaseActivity: AppCompatActivity() {
     lateinit var mContext : Context
 
     override fun onCreate(savedInstanceState: Bundle?) {

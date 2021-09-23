@@ -2,6 +2,9 @@ package com.gukjang.myfinalproject_210910
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.app.job.JobInfo
+import android.app.job.JobScheduler
+import android.content.ComponentName
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +18,8 @@ import com.gukjang.myfinalproject_210910.databinding.ActivityEditAppointmentBind
 import com.gukjang.myfinalproject_210910.datas.BasicResponse
 import com.gukjang.myfinalproject_210910.datas.PlaceData
 import com.gukjang.myfinalproject_210910.datas.UserData
+import com.gukjang.myfinalproject_210910.services.MyJobService
+import com.gukjang.myfinalproject_210910.services.MyJobService.Companion.JOB_TIME_SET
 import com.gukjang.myfinalproject_210910.utils.SizeUtil
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -34,6 +39,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 class EditAppointmentActivity : BaseActivity() {
@@ -159,6 +165,23 @@ class EditAppointmentActivity : BaseActivity() {
                     response: Response<BasicResponse>
                 ) {
                     if(response.isSuccessful){
+                        // 약속시간 2~3시간 전에 교통 상황 파악 작업 - JobScheduler 클래스
+                            // 예약을 걸도록 도와주는 도구
+                        val js = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
+
+                        // 실제로 예약시간이 되면 어떤 일을 할지 적어둔 클래스 필요
+                        // 백그라운드 작업 가정 -> 서비스 클래스 작업 필요
+                       val serviceComponent = ComponentName(mContext, MyJobService::class.java)
+
+                        // 언제 어떤 일을 할지 모아주는 클래스
+                        val jobInfo = JobInfo.Builder(MyJobService.JOB_TIME_SET, serviceComponent)
+                            .setMinimumLatency(TimeUnit.MINUTES.toMillis(1))        // 얼마 후에 실행할건지, 약속 시간 기준으로 하려면 계산 필요
+                            .setOverrideDeadline(TimeUnit.MINUTES.toMillis(3))      // 3분까지 기다리겠다 -> 안드로이드가 배터리 이슈로 정확한 시간예약 x
+                            .build()
+
+                        // 예약 도구를 이용해 스케줄 설정
+                        js.schedule(jobInfo)
+
                         Toast.makeText(mContext, "약속을 등록했습니다.", Toast.LENGTH_SHORT).show()
                         finish()
                     }

@@ -100,6 +100,8 @@
                     android:scheme="kakao93c06c309e92fc6259e148ae8fc11b43" />
             </intent-filter>
         </activity>
+        <service android:name=".services.MyJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

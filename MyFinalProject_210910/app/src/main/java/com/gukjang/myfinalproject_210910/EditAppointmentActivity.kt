@@ -171,11 +171,25 @@ class EditAppointmentActivity : BaseActivity() {
 
                         // 실제로 예약시간이 되면 어떤 일을 할지 적어둔 클래스 필요
                         // 백그라운드 작업 가정 -> 서비스 클래스 작업 필요
-                       val serviceComponent = ComponentName(mContext, MyJobService::class.java)
+                        val serviceComponent = ComponentName(mContext, MyJobService::class.java)
+
+                        // 약속 시간 : 시차 보정 -> 2시간 빼기
+                        mSelectedDateTime.add(Calendar.HOUR_OF_DAY, -2)
+
+                        // 현재 시간 : 시차 보정 x -> 시차 보정
+                        val now = Calendar.getInstance()
+                        val timeOffset = now.timeZone.rawOffset / 1000 / 60 / 60
+                        now.add(Calendar.HOUR_OF_DAY, -timeOffset)
+
+                        // 필요한 시간이 지나면 예약 작업 실행되도록
+                        val jobTime = mSelectedDateTime.timeInMillis - now.timeInMillis
+
+                        // 약속의 ID 값을 넣자
+                        val basicResponse = response.body()!!
 
                         // 언제 어떤 일을 할지 모아주는 클래스
-                        val jobInfo = JobInfo.Builder(MyJobService.JOB_TIME_SET, serviceComponent)
-                            .setMinimumLatency(TimeUnit.MINUTES.toMillis(1))        // 얼마 후에 실행할건지, 약속 시간 기준으로 하려면 계산 필요
+                        val jobInfo = JobInfo.Builder(basicResponse.data.appointment.id, serviceComponent)
+                            .setMinimumLatency(TimeUnit.SECONDS.toMillis(20))        // 얼마 후에 실행할건지, 약속 시간 기준으로 하려면 계산 필요
                             .setOverrideDeadline(TimeUnit.MINUTES.toMillis(3))      // 3분까지 기다리겠다 -> 안드로이드가 배터리 이슈로 정확한 시간예약 x
                             .build()
 

@@ -11,6 +11,8 @@ class DataResponse(
     // 친구 목록
     var friends : List<UserData>,
     // 검색된 사용자 목록
-    var users : List<UserData>
+    var users : List<UserData>,
+    // 하나의 상세 약속 정보
+    var appointment : AppointmentData
 ) {
 }

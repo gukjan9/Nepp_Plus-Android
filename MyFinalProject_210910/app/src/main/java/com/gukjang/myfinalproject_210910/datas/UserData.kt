@@ -2,6 +2,7 @@ package com.gukjang.myfinalproject_210910.datas
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import java.util.*
 
 class UserData(
     var id : Int,
@@ -12,5 +13,7 @@ class UserData(
     @SerializedName("profile_img")
     var profileImgURL: String,
     @SerializedName("ready_minute")
-    var readyMinute : Int) : Serializable {
+    var readyMinute : Int,
+    @SerializedName("Arrived_at")
+    var arrivedAt : Date?) : Serializable {
 }

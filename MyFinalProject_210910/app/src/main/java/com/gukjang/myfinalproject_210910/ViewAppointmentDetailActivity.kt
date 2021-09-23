@@ -94,10 +94,10 @@ class ViewAppointmentDetailActivity : BaseActivity() {
                                             response: Response<BasicResponse>
                                         ) {
                                             if(response.isSuccessful){
-
+                                                needLocationSendServer = false
                                             }
                                             else{
-                                                val jsonObj = JSONObject(response.errorBody().string())
+                                                val jsonObj = JSONObject(response.errorBody()!!.string())
                                                 Log.d("응답 전문", jsonObj.toString())
 
                                                 val message = jsonObj.getString("message")
@@ -115,7 +115,6 @@ class ViewAppointmentDetailActivity : BaseActivity() {
 
                                 })
 
-                                needLocationSendServer = false
                             }
                         }
 
@@ -148,6 +147,10 @@ class ViewAppointmentDetailActivity : BaseActivity() {
                 .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
                 .check()
         }
+
+        binding.refreshBtn.setOnClickListener {
+            getAppointmentFromServer()
+        }
     }
 
     override fun setValues() {
@@ -168,22 +171,7 @@ class ViewAppointmentDetailActivity : BaseActivity() {
         // 도착지 좌표 지도에 설정
         setNaverMap()
 
-        // 친구 목록 -> 레이아웃에 xml
-        val inflater = LayoutInflater.from(mContext)
-
-        for(friend in mAppointmentData.invitedFriendList){
-            val friendView = inflater.inflate(R.layout.invited_friends_list, null)
-
-            val friendProfileImg = friendView.findViewById<ImageView>(R.id.friendProfileImg)
-            val nicknameTxt = friendView.findViewById<TextView>(R.id.nicknameTxt)
-            val statusTxt = friendView.findViewById<TextView>(R.id.statusTxt)
-
-            Glide.with(mContext).load(friend.profileImgURL).into(friendProfileImg)
-            nicknameTxt.text = friend.nickName
-
-            binding.invitedFriendsLayout.addView(friendView)
-        }
-
+        getAppointmentFromServer()
     }
 
     fun setNaverMap(){
@@ -335,5 +323,47 @@ class ViewAppointmentDetailActivity : BaseActivity() {
                     }
                 })
         }
+    }
+
+    fun getAppointmentFromServer(){
+        // 친구 목록 등의 내용을 서버에서 새로 받자
+        apiService.getRequestAppointmentDatail(mAppointmentData.id).enqueue(object : Callback<BasicResponse>{
+            override fun onResponse(call: Call<BasicResponse>, response: Response<BasicResponse>) {
+                val basicResponse = response.body()!!
+
+                mAppointmentData = basicResponse.data.appointment
+
+                // 기존 친구목록 view 들을 전부 제거 -> 그러고 친구 다시 추가
+                binding.invitedFriendsLayout.removeAllViews()
+
+               // 친구 목록 -> 레이아웃에 xml
+                val inflater = LayoutInflater.from(mContext)
+
+                val sdf = SimpleDateFormat("H:mm 도착")
+
+                for(friend in mAppointmentData.invitedFriendList){
+                    val friendView = inflater.inflate(R.layout.invited_friends_list, null)
+
+                    val friendProfileImg = friendView.findViewById<ImageView>(R.id.friendProfileImg)
+                    val nicknameTxt = friendView.findViewById<TextView>(R.id.nicknameTxt)
+                    val statusTxt = friendView.findViewById<TextView>(R.id.statusTxt)
+
+                    if(friend.arrivedAt == null){
+                        statusTxt.text = "도착 전"
+                    }
+                    else{
+                        statusTxt.text = sdf.format(friend.arrivedAt!!)
+                    }
+
+                    Glide.with(mContext).load(friend.profileImgURL).into(friendProfileImg)
+                    nicknameTxt.text = friend.nickName
+
+                    binding.invitedFriendsLayout.addView(friendView)
+                }
+            }
+            override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+            }
+        })
     }
 }

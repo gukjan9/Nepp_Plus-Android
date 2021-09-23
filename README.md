@@ -2,13 +2,13 @@
 Developing Android Apps with Kotlin<br>
 
 ### 📚 Class Progress 👩‍💻
-&nbsp;&nbsp;&nbsp;&nbsp;🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨⬜️⬜️⬜️⬜️⬜️⬜️⬜️ __(__ 6️⃣7️⃣ __% )__ <br>
+&nbsp;&nbsp;&nbsp;&nbsp;🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜️⬜️⬜️⬜️ __(__ 8️⃣0️⃣ __% )__ <br>
 210818&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;211001<br></br>
-💬  __HALF Way To Go__ 💪
+💬  __OMG__ It's already Green Bar? 😱
 
 ***
 

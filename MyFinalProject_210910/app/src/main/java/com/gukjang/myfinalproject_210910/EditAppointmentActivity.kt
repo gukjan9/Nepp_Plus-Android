@@ -101,6 +101,14 @@ class EditAppointmentActivity : BaseActivity() {
                 return@setOnClickListener
             }
 
+            // 서버가 사용하는 시간 UTC / 약속 시간을 UTC 시간대로 변경하자
+
+            val myTimeZone = mSelectedDateTime.timeZone
+
+            val myTimeOffset = myTimeZone.rawOffset / 1000 / 60 / 60
+
+            mSelectedDateTime.add(Calendar.HOUR_OF_DAY, -myTimeOffset)
+
             val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
             val finalDatetime = sdf.format(mSelectedDateTime.time)
 

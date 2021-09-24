@@ -88,124 +88,47 @@ class EditAppointmentActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
-        // 확인 버튼이 눌리면?
-        binding.okBtn.setOnClickListener {
-            // 입력 값 받아오기
-            // 1. 일정 제목
-            val inputTitle = binding.titleEdt.text.toString()
+        binding.addFriendToListBtn.setOnClickListener {
+            // 고른 친구가 누구인지
+            val selectedFriend = mMyFriendsList[binding.myFriendsSpinner.selectedItemPosition]
 
-            // 2. 약속 일시
-            // 날짜 / 시간 설정 안했으면 하라고 Toast 날리기
-            if(binding.dateTxt.text == "일자 설정"){
-                Toast.makeText(mContext, "일자를 선택하지 않았습니다.", Toast.LENGTH_SHORT).show()
+            // 중복된 친구인지
+            if(mSelectedFriendsList.contains(selectedFriend)){
+                Toast.makeText(mContext, "이미 추가한 친구입니다.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
+            // Toast.makeText(mContext, selectedFriend.nickName, Toast.LENGTH_SHORT).show()
 
-            if(binding.timeTxt.text == "시간 설정"){
-                Toast.makeText(mContext, "시간을 설정하지 않았습니다", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            // 텍스트뷰 생성
+            val textView = TextView(mContext)
+            textView.setBackgroundResource(R.drawable.selected_friend_box)
+
+            textView.setPadding(SizeUtil.dpToPx(mContext, 5f).toInt() )
+
+            textView.text = selectedFriend.nickName
+
+            // 클릭되면 삭제 (레이아웃, 친구목록)
+            textView.setOnClickListener {
+                binding.friendListLayout.removeView(textView)
+                mSelectedFriendsList.remove(selectedFriend)
             }
 
-            // 서버가 사용하는 시간 UTC / 약속 시간을 UTC 시간대로 변경하자
+            // 레이아웃에 추가 + 친구 목록
+            binding.friendListLayout.addView(textView)
 
-            val myTimeZone = mSelectedDateTime.timeZone
+            mSelectedFriendsList.add(selectedFriend)
+        }
 
-            val myTimeOffset = myTimeZone.rawOffset / 1000 / 60 / 60
+//        지도 영역에 손을 대면 => 스크롤뷰를 정지.
+//        대안 : 지도 위에 겹쳐둔 텍스트뷰에 손을대면 => 스크롤뷰를 정지.
 
-            mSelectedDateTime.add(Calendar.HOUR_OF_DAY, -myTimeOffset)
+        binding.scrollHelpTxt.setOnTouchListener { view, motionEvent ->
 
-            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
-            val finalDatetime = sdf.format(mSelectedDateTime.time)
+            binding.scrollView.requestDisallowInterceptTouchEvent(true)
 
-            Log.d("서버에 보낼 약속 일시", finalDatetime)
-
-
-            // 3. 약속 장소
-            // 장소 이름
-            val inputPlaceName = binding.placeSearchEdt.text.toString()
-
-            // 장소 위도/경도
-//            val lat = 37.724520
-//            val lng = 126.752466
-
-            // 지도에서 클릭한 좌표로 위경도 첨부
-
-            if(mSelectedLat == 0.0 && mSelectedLng == 0.0){
-                Toast.makeText(mContext, "약속 장소를 지도를 클릭해 선택해주세요.", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            // 선택한 친구 목록
-            var friendListStr = ""
-
-            for(friend in mSelectedFriendsList){
-                friendListStr += friend.id
-                friendListStr += ","
-            }
-
-            if(friendListStr != ""){
-                friendListStr = friendListStr.substring(0, friendListStr.length-1)
-            }
-            return@setOnClickListener
-
-
-            // 서버에 API 호출
-            apiService.postRequestAppointment(
-                inputTitle,
-                finalDatetime,
-                mSelectedStartPlace.name,
-                mSelectedStartPlace.latitude,
-                mSelectedStartPlace.longitude,
-                inputPlaceName,
-                mSelectedLat, mSelectedLng,
-                friendListStr).enqueue(object : Callback<BasicResponse> {
-                override fun onResponse(
-                    call: Call<BasicResponse>,
-                    response: Response<BasicResponse>
-                ) {
-                    if(response.isSuccessful){
-                        // 약속시간 2~3시간 전에 교통 상황 파악 작업 - JobScheduler 클래스
-                            // 예약을 걸도록 도와주는 도구
-                        val js = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
-
-                        // 실제로 예약시간이 되면 어떤 일을 할지 적어둔 클래스 필요
-                        // 백그라운드 작업 가정 -> 서비스 클래스 작업 필요
-                        val serviceComponent = ComponentName(mContext, MyJobService::class.java)
-
-                        // 약속 시간 : 시차 보정 -> 2시간 빼기
-                        mSelectedDateTime.add(Calendar.HOUR_OF_DAY, -2)
-
-                        // 현재 시간 : 시차 보정 x -> 시차 보정
-                        val now = Calendar.getInstance()
-                        val timeOffset = now.timeZone.rawOffset / 1000 / 60 / 60
-                        now.add(Calendar.HOUR_OF_DAY, -timeOffset)
-
-                        // 필요한 시간이 지나면 예약 작업 실행되도록
-                        val jobTime = mSelectedDateTime.timeInMillis - now.timeInMillis
-
-                        // 약속의 ID 값을 넣자
-                        val basicResponse = response.body()!!
-
-                        // 언제 어떤 일을 할지 모아주는 클래스
-                        val jobInfo = JobInfo.Builder(basicResponse.data.appointment.id, serviceComponent)
-                            .setMinimumLatency(jobTime)
-                            //.setMinimumLatency(TimeUnit.SECONDS.toMillis(20))        // 얼마 후에 실행할건지, 약속 시간 기준으로 하려면 계산 필요
-                            .setOverrideDeadline(TimeUnit.MINUTES.toMillis(3))      // 3분까지 기다리겠다 -> 안드로이드가 배터리 이슈로 정확한 시간예약 x
-                            .build()
-
-                        // 예약 도구를 이용해 스케줄 설정
-                        js.schedule(jobInfo)
-
-                        Toast.makeText(mContext, "약속을 등록했습니다.", Toast.LENGTH_SHORT).show()
-                        finish()
-                    }
-                }
-
-                override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
-
-                }
-            })
+//            터치 이벤트만 먹히게? X. => 뒤에 가려진 지도 동작도 같이 실행.
+            return@setOnTouchListener false
         }
 
         // 날짜 선택
@@ -270,47 +193,124 @@ class EditAppointmentActivity : BaseActivity() {
 
         }
 
-//        지도 영역에 손을 대면 => 스크롤뷰를 정지.
-//        대안 : 지도 위에 겹쳐둔 텍스트뷰에 손을대면 => 스크롤뷰를 정지.
+        // 확인 버튼이 눌리면?
+        binding.okBtn.setOnClickListener {
+            // 입력 값 받아오기
+            // 1. 일정 제목
+            val inputTitle = binding.titleEdt.text.toString()
 
-        binding.scrollHelpTxt.setOnTouchListener { view, motionEvent ->
-
-            binding.scrollView.requestDisallowInterceptTouchEvent(true)
-
-//            터치 이벤트만 먹히게? X. => 뒤에 가려진 지도 동작도 같이 실행.
-            return@setOnTouchListener false
-        }
-
-        binding.addFriendToListBtn.setOnClickListener {
-            // 고른 친구가 누구인지
-            val selectedFriend = mMyFriendsList[binding.myFriendsSpinner.selectedItemPosition]
-
-            // 중복된 친구인지
-            if(mSelectedFriendsList.contains(selectedFriend)){
-                Toast.makeText(mContext, "이미 추가한 친구입니다.", Toast.LENGTH_SHORT).show()
+            // 2. 약속 일시
+            // 날짜 / 시간 설정 안했으면 하라고 Toast 날리기
+            if(binding.dateTxt.text == "일자 설정"){
+                Toast.makeText(mContext, "일자를 선택하지 않았습니다.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Toast.makeText(mContext, selectedFriend.nickName, Toast.LENGTH_SHORT).show()
 
-            // 텍스트뷰 생성
-            val textView = TextView(mContext)
-            textView.setBackgroundResource(R.drawable.selected_friend_box)
-
-            textView.setPadding(SizeUtil.dpToPx(mContext, 5f).toInt() )
-
-            textView.text = selectedFriend.nickName
-
-            // 클릭되면 삭제 (레이아웃, 친구목록)
-            textView.setOnClickListener {
-                binding.friendListLayout.removeView(textView)
-                mSelectedFriendsList.remove(selectedFriend)
+            if(binding.timeTxt.text == "시간 설정"){
+                Toast.makeText(mContext, "시간을 설정하지 않았습니다", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
-            // 레이아웃에 추가 + 친구 목록
-            binding.friendListLayout.addView(textView)
+            // 서버가 사용하는 시간 UTC / 약속 시간을 UTC 시간대로 변경하자
 
-            mSelectedFriendsList.add(selectedFriend)
+            val myTimeZone = mSelectedDateTime.timeZone
+
+            val myTimeOffset = myTimeZone.rawOffset / 1000 / 60 / 60
+
+            mSelectedDateTime.add(Calendar.HOUR_OF_DAY, -myTimeOffset)
+
+            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
+            val finalDatetime = sdf.format(mSelectedDateTime.time)
+
+            Log.d("서버에 보낼 약속 일시", finalDatetime)
+
+
+            // 3. 약속 장소
+            // 장소 이름
+            val inputPlaceName = binding.placeSearchEdt.text.toString()
+
+            // 장소 위도/경도
+//            val lat = 37.724520
+//            val lng = 126.752466
+
+            // 지도에서 클릭한 좌표로 위경도 첨부
+
+            if(mSelectedLat == 0.0 && mSelectedLng == 0.0){
+                Toast.makeText(mContext, "약속 장소를 지도를 클릭해 선택해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // 선택한 친구 목록
+            var friendListStr = ""
+
+            for(friend in mSelectedFriendsList){
+                friendListStr += friend.id
+                friendListStr += ","
+            }
+
+            if(friendListStr != ""){
+                friendListStr = friendListStr.substring(0, friendListStr.length-1)
+            }
+            // return@setOnClickListener - API 호출하기 전에 return 하면 호출 안함
+
+
+            // 서버에 API 호출
+            apiService.postRequestAppointment(
+                inputTitle,
+                finalDatetime,
+                mSelectedStartPlace.name,
+                mSelectedStartPlace.latitude,
+                mSelectedStartPlace.longitude,
+                inputPlaceName,
+                mSelectedLat, mSelectedLng,
+                friendListStr).enqueue(object : Callback<BasicResponse> {
+                override fun onResponse(
+                    call: Call<BasicResponse>,
+                    response: Response<BasicResponse>
+                ) {
+                    if(response.isSuccessful){
+                        // 약속시간 2~3시간 전에 교통 상황 파악 작업 - JobScheduler 클래스
+                        // 예약을 걸도록 도와주는 도구
+                        val js = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
+
+                        // 실제로 예약시간이 되면 어떤 일을 할지 적어둔 클래스 필요
+                        // 백그라운드 작업 가정 -> 서비스 클래스 작업 필요
+                        val serviceComponent = ComponentName(mContext, MyJobService::class.java)
+
+                        // 약속 시간 : 시차 보정 -> 2시간 빼기
+                        mSelectedDateTime.add(Calendar.HOUR_OF_DAY, -2)
+
+                        // 현재 시간 : 시차 보정 x -> 시차 보정
+                        val now = Calendar.getInstance()
+                        val timeOffset = now.timeZone.rawOffset / 1000 / 60 / 60
+                        now.add(Calendar.HOUR_OF_DAY, -timeOffset)
+
+                        // 필요한 시간이 지나면 예약 작업 실행되도록
+                        val jobTime = mSelectedDateTime.timeInMillis - now.timeInMillis
+
+                        // 약속의 ID 값을 넣자
+                        val basicResponse = response.body()!!
+
+                        // 언제 어떤 일을 할지 모아주는 클래스
+                        val jobInfo = JobInfo.Builder(basicResponse.data.appointment.id, serviceComponent)
+                            .setMinimumLatency(jobTime)
+                            //.setMinimumLatency(TimeUnit.SECONDS.toMillis(20))        // 얼마 후에 실행할건지, 약속 시간 기준으로 하려면 계산 필요
+                            .setOverrideDeadline(TimeUnit.MINUTES.toMillis(3))      // 3분까지 기다리겠다 -> 안드로이드가 배터리 이슈로 정확한 시간예약 x
+                            .build()
+
+                        // 예약 도구를 이용해 스케줄 설정
+                        js.schedule(jobInfo)
+
+                        Toast.makeText(mContext, "약속을 등록했습니다.", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                }
+
+                override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+                }
+            })
         }
     }
 

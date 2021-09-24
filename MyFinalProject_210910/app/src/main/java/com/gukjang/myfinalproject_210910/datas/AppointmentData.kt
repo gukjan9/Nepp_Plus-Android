@@ -51,7 +51,5 @@ class AppointmentData(
             val sdf = SimpleDateFormat("M/d a h:mm")
             return sdf.format(dateTimeToTimeZone)
         }
-
-       return "테스트"
     }
 }

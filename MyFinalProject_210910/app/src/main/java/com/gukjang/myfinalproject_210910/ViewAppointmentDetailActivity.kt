@@ -327,7 +327,7 @@ class ViewAppointmentDetailActivity : BaseActivity() {
 
     fun getAppointmentFromServer(){
         // 친구 목록 등의 내용을 서버에서 새로 받자
-        apiService.getRequestAppointmentDatail(mAppointmentData.id).enqueue(object : Callback<BasicResponse>{
+        apiService.getRequestAppointmentDetail(mAppointmentData.id).enqueue(object : Callback<BasicResponse>{
             override fun onResponse(call: Call<BasicResponse>, response: Response<BasicResponse>) {
                 val basicResponse = response.body()!!
 

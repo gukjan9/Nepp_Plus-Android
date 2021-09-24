@@ -8,7 +8,7 @@ class GlobalData {
 
     companion object {
 
-        var context: Context? = null
+        var context : Context? = null
 
 //        로그인한 사람은 없을 수도 있다. => null로 로그인한 사람이 없다는걸 표현.
 //        UserData?  로 null 허용.

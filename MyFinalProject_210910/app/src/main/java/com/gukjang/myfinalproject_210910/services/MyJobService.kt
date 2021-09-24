@@ -34,7 +34,7 @@ class MyJobService : JobService() {
         val retrofit = ServerAPI.getRetrofit(applicationContext)
         val apiService = retrofit.create(ServerAPIService::class.java)
 
-        apiService.getRequestAppointmentDatail(p0!!.jobId).enqueue(object : Callback<BasicResponse>{
+        apiService.getRequestAppointmentDetail(p0!!.jobId).enqueue(object : Callback<BasicResponse>{
             override fun onResponse(call: Call<BasicResponse>, response: Response<BasicResponse>) {
                 if(response.isSuccessful){
                     val basicResponse = response.body()!!
@@ -90,10 +90,6 @@ class MyJobService : JobService() {
         return false
     }
 
-    override fun onStopJob(p0: JobParameters?): Boolean {
-        return false
-    }
-
     // 언제 알람을 울릴지 계산해서 넘겨주면 단순히 울리기만 하는 함수
     fun setAlarmByMilliSecond(timeInMillis : Long){
         // 약속시간 - 교통 소요시간 - 내 준비시간 -> 계산된 시간에 알람
@@ -115,5 +111,9 @@ class MyJobService : JobService() {
 
         // 실제 알람 기능 설정
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerTime, pendingIntent)          // WAKEUP - 폰이 잠겨 있어도 알람
+    }
+
+    override fun onStopJob(p0: JobParameters?): Boolean {
+        return false
     }
 }

@@ -25,11 +25,6 @@ class ViewMyFriendsListActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
-        addBtn.setOnClickListener {
-            val myIntent = Intent(mContext, AddFriendActivity::class.java)
-            startActivity(myIntent)
-        }
-
         binding.friendsViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
             override fun onPageScrolled(
                 position: Int,
@@ -59,6 +54,11 @@ class ViewMyFriendsListActivity : BaseActivity() {
             }
 
         })
+
+        addBtn.setOnClickListener {
+            val myIntent = Intent(mContext, AddFriendActivity::class.java)
+            startActivity(myIntent)
+        }
     }
 
     override fun setValues() {

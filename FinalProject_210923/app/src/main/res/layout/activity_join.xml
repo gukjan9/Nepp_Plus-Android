@@ -13,17 +13,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="닉네임"/>
-
-        <EditText
-            android:id="@+id/nicknameEdt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="이름을 입력하세요" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="아이디"/>
 
         <EditText
@@ -35,6 +24,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="이메일"/>
+
+        <EditText
+            android:id="@+id/emailEdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="이메일을 입력하세요" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="비밀번호" />
 
         <EditText
@@ -42,6 +42,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="비밀번호를 입력하세요" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="닉네임"/>
+
+        <EditText
+            android:id="@+id/nicknameEdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="닉네임을 입력하세요" />
 
         <Button
             android:id="@+id/joinBtn"

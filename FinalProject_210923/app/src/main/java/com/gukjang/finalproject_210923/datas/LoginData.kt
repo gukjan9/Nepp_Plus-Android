@@ -3,13 +3,13 @@ package com.gukjang.finalproject_210923.datas
 import com.google.gson.annotations.SerializedName
 
 class LoginData (
-    @SerializedName("userEmail")
-    var userEmail: String,
-    @SerializedName("userPwd")
-    var userPwd: String){
+    @SerializedName("userId")
+    var userId: String,
+    @SerializedName("userPw")
+    var userPw: String){
 
-    fun LoginData(userEmail: String, userPwd: String){
-        this.userEmail = userEmail
-        this.userPwd = userPwd
+    fun LoginData(userId: String, userPw: String){
+        this.userId = userId
+        this.userPw = userPw
     }
 }

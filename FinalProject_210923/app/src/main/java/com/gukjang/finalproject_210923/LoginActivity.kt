@@ -47,7 +47,7 @@ class LoginActivity : BaseActivity() {
                 response : Response<LoginResponse>
             ) {
                 val result = response.body()!!
-                Toast.makeText(mContext, result.message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, result.message, Toast.LENGTH_SHORT).show()
 
                 if (result.code == 200) {
                     finish();
@@ -55,7 +55,7 @@ class LoginActivity : BaseActivity() {
             }
 
             override fun onFailure(call : Call<LoginResponse>, t : Throwable) {
-                Toast.makeText(mContext, "로그인 에러 발생", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "로그인 에러 발생", Toast.LENGTH_SHORT).show()
             }
         })
     }

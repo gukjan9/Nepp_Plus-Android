@@ -3,17 +3,20 @@ package com.gukjang.finalproject_210923.datas
 import com.google.gson.annotations.SerializedName
 
 class JoinData (
-    @SerializedName("userName")
-    var userName : String,
+    @SerializedName("userId")
+    var userId : String,
     @SerializedName("userEmail")
     var userEmail : String,
-    @SerializedName("userPwd")
-    var userPwd : String
+    @SerializedName("userPw")
+    var userPw : String,
+    @SerializedName("userNickname")
+    var userNickname : String
     ){
 
-    fun JoinData(userName: String, userEmail: String, userPwd: String){
-        this.userName = userName
+    fun JoinData(userId : String, userEmail: String, userPw: String, userNickname: String){
+        this.userId = userId
         this.userEmail = userEmail
-        this.userPwd = userPwd
+        this.userPw = userPw
+        this.userNickname = userNickname
     }
 }

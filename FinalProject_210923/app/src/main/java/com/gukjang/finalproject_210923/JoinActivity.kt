@@ -26,11 +26,13 @@ class JoinActivity : BaseActivity() {
 
     override fun setEvents() {
         binding.joinBtn.setOnClickListener {
-            val inputNickname = binding.nicknameEdt.text.toString()
-            val inputId = binding.idEdt.text.toString()
-            val inputPw = binding.pwEdt.text.toString()
 
-            startJoin(JoinData(inputNickname, inputId, inputPw))
+            val inputId = binding.idEdt.text.toString()
+            val inputEmail = binding.emailEdt.text.toString()
+            val inputPw = binding.pwEdt.text.toString()
+            val inputNickname = binding.nicknameEdt.text.toString()
+
+            startJoin(JoinData(inputId, inputEmail, inputPw, inputNickname))
             finish()
         }
     }

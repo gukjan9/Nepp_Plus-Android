@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ServerAPI {
     companion object{
-        private val hostURL = "http://13.125.208.95:3000"    // :3000 붙여보기
+        private val hostURL = "http://13.124.208.95:3000"
 
         // ServiceApi 객체 생성
         private var retrofit : Retrofit? = null

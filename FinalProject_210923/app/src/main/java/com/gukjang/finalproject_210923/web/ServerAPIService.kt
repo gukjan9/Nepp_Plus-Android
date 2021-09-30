@@ -7,9 +7,17 @@ import com.gukjang.finalproject_210923.datas.LoginResponse
 import retrofit2.Call
 
 interface ServerAPIService {
-    @POST("/user/login")
-    fun userLogin(@Body data : LoginData): Call<LoginResponse>
-
+    // 회원가입
     @POST("/user/join")
     fun userJoin(@Body data : JoinData): Call<JoinResponse>
+
+    // 아이디, 이메일, 닉네임 중복검사
+    @GET("/user/check")
+    fun userCheck(
+        @Query("type") type : String,
+        @Query("value") value : String): Call<JoinResponse>
+
+    // 로그인
+    @POST("/user/login")
+    fun userLogin(@Body data : LoginData): Call<LoginResponse>
 }

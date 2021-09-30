@@ -15,44 +15,89 @@
             android:layout_height="wrap_content"
             android:text="아이디"/>
 
-        <EditText
-            android:id="@+id/idEdt"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="아이디를 입력하세요" />
+            android:layout_gravity="center_vertical" >
+
+            <EditText
+                android:id="@+id/idEdt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="아이디를 입력하세요"
+                android:inputType="text"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/idDuplCheckBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="중복 검사" />
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="이메일"/>
 
-        <EditText
-            android:id="@+id/emailEdt"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="이메일을 입력하세요" />
+            android:layout_gravity="center_vertical" >
+
+            <EditText
+                android:id="@+id/emailEdt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="이메일을 입력하세요"
+                android:inputType="textEmailAddress"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/emailDuplCheckBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="중복 검사" />
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="비밀번호" />
+            android:text="비밀번호"/>
 
         <EditText
             android:id="@+id/pwEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="비밀번호를 입력하세요" />
+            android:hint="비밀번호를 입력하세요"
+            android:inputType="textPassword"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="닉네임"/>
 
-        <EditText
-            android:id="@+id/nicknameEdt"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="닉네임을 입력하세요" />
+            android:layout_gravity="center_vertical" >
+
+            <EditText
+                android:id="@+id/nicknameEdt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="닉네임을 입력하세요"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/nicknameDuplCheckBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="중복 검사" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/joinBtn"
